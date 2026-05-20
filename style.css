@@ -62,10 +62,10 @@ body {
   padding-bottom: 48px;
 }
 .section--tinted {
-  background: color-mix(in srgb, var(--paper-2) 50%, var(--paper));
+  background: color-mix(in srgb, var(--paper-2) 50%, var(--paper) 50%);
 }
 @media (max-width: 640px) {
-  :root { --pad-x: 20px; }
+  :root { --pad-x: var(--pad-x-m); }
   .section { padding: 28px var(--pad-x); }
   .section--masthead { padding-bottom: 36px; }
 }
