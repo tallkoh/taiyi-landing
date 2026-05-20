@@ -358,3 +358,100 @@ body {
   }
   .row-form .btn { width: 100%; }
 }
+
+/* ── Snapshot form card ────────────────────────────────────────────── */
+.snapshot-card {
+  border: 1.5px dashed var(--line-soft);
+  padding: 18px;
+  border-radius: 2px;
+  background: rgba(0,0,0,0.015);
+  margin-top: 10px;
+}
+.snapshot-cta { margin-top: 14px; }
+
+/* ── How it works ──────────────────────────────────────────────────── */
+.how-list {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.how-item {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 14px;
+  align-items: flex-start;
+}
+.how-num {
+  width: 26px; height: 26px;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.how-title {
+  font-family: var(--display);
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.012em;
+  margin-bottom: 3px;
+}
+.how-title .cn { font-size: 16px; margin-left: 4px; }
+.how-desc {
+  font-family: var(--body);
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.5;
+}
+
+/* ── Why Taiyi / sources table ─────────────────────────────────────── */
+.sources-table { margin-top: 12px; }
+.sources-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  padding: 7px 0;
+  border-top: 1px dashed var(--line-very-soft);
+  align-items: baseline;
+}
+.sources-row--header {
+  border-top: 1px solid var(--line-soft);
+  border-bottom: none;
+  padding: 0 0 6px;
+}
+.sources-row--header .sources-title,
+.sources-row--header .sources-date {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.sources-cn {
+  font-family: var(--cn);
+  font-size: 15px;
+  font-weight: 600;
+  display: inline;
+}
+.sources-py {
+  font-family: var(--body);
+  font-size: 11.5px;
+  color: var(--muted);
+  font-style: italic;
+  margin-left: 8px;
+}
+.sources-date {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--muted);
+  white-space: nowrap;
+}
