@@ -455,3 +455,137 @@ body {
   color: var(--muted);
   white-space: nowrap;
 }
+
+/* ── Newsletter preview ────────────────────────────────────────────── */
+.nl-preview {
+  border: 1.5px solid var(--ink);
+  background: color-mix(in srgb, var(--paper) 80%, white 20%);
+  padding: 18px;
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 1.45;
+  font-family: var(--body);
+}
+
+/* Header row */
+.nl-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  gap: 10px;
+}
+.nl-issue {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.nl-title {
+  font-family: var(--display);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.018em;
+  color: var(--ink);
+}
+
+/* Personalization */
+.nl-personalization {
+  font-family: var(--mono);
+  font-size: 8.5px;
+  color: var(--muted);
+  margin-bottom: 8px;
+  letter-spacing: 0.04em;
+}
+
+/* Placeholder lines */
+.nl-lines { margin-bottom: 10px; }
+.nl-ph {
+  height: 5px;
+  background: var(--line-very-soft);
+  border-radius: 3px;
+  margin: 4px 0;
+}
+.nl-ph--long { width: 95%; }
+.nl-ph--med { width: 70%; }
+
+/* Data strip inside newsletter */
+.nl-data-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  background: var(--paper-2);
+  border: 1px dashed var(--line-very-soft);
+  padding: 8px;
+  margin-bottom: 10px;
+  font-size: 8px;
+}
+.nl-data-label {
+  font-family: var(--mono);
+  font-size: 7.5px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.nl-data-main { line-height: 1.2; margin-bottom: 1px; }
+.nl-data-sub { font-size: 8.5px; color: var(--ink-2); }
+
+/* Day rows */
+.nl-days { border-top: 1px solid var(--line-soft); }
+.nl-day {
+  display: grid;
+  grid-template-columns: 36px 1fr 1fr;
+  gap: 10px;
+  padding: 5px 0;
+  border-top: 1px dashed var(--line-very-soft);
+  font-size: 9.5px;
+  align-items: start;
+}
+.nl-day:first-child { border-top: none; }
+.nl-day-date {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--mono);
+  color: var(--muted);
+}
+.nl-day-name { font-size: 8px; }
+.nl-day-num {
+  font-family: var(--display);
+  font-size: 16px;
+  color: var(--ink);
+  line-height: 1.1;
+}
+.nl-day-good { color: var(--ink-2); }
+.nl-day-bad { color: var(--muted); }
+.nl-yj { font-size: 12px; margin-right: 3px; }
+.nl-day-good .nl-yj { color: var(--accent); }
+
+/* Quote block */
+.nl-quote {
+  margin: 12px 0 0;
+  padding-left: 10px;
+  border-left: 2px solid var(--accent);
+  font-family: var(--cn);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.nl-source {
+  font-size: 9.5px;
+  color: var(--muted);
+  font-style: italic;
+  margin-top: 4px;
+  font-family: var(--body);
+}
+.nl-source-note { font-style: normal; }
+
+@media (max-width: 480px) {
+  .nl-day { grid-template-columns: 32px 1fr; }
+  .nl-day-bad { display: none; }
+  .nl-data-strip { grid-template-columns: 1fr 1fr; }
+  .nl-data-strip > *:last-child { display: none; }
+}
