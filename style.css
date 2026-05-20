@@ -300,3 +300,61 @@ body {
   .site-nav { padding: 0 var(--pad-x-m); }
   .nav-links { display: none; }
 }
+
+/* ── Masthead / Hero ───────────────────────────────────────────────── */
+.masthead-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.masthead-vertical {
+  font-family: var(--cn);
+  font-weight: 700;
+  line-height: 1;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  letter-spacing: 0.15em;
+  user-select: none;
+}
+.masthead-vertical--left {
+  font-size: 32px;
+  color: var(--accent);
+}
+.masthead-vertical--right {
+  font-size: 26px;
+  color: var(--ink-2);
+  font-weight: 600;
+}
+.masthead-center { text-align: center; }
+.masthead-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.masthead-week { color: var(--ink-2); }
+.masthead-headline { margin: 8px auto 6px; max-width: 400px; }
+.masthead-sub { max-width: 360px; margin: 0 auto 0; font-size: 13.5px; }
+
+.masthead-strip { margin-top: 8px; }
+
+.email-capture { margin-top: 0; }
+
+@media (max-width: 520px) {
+  .masthead-header {
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    gap: 12px;
+  }
+  .masthead-vertical--right { display: none; }
+  .masthead-vertical--left { font-size: 26px; }
+  .masthead-headline { font-size: 28px; }
+  .row-form {
+    grid-template-columns: 1fr;
+  }
+  .row-form .btn { width: 100%; }
+}
