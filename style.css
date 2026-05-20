@@ -1,0 +1,71 @@
+/* ── Design tokens ─────────────────────────────────────────────────── */
+:root {
+  --paper:           #f4eee0;
+  --paper-2:         #ebe3d0;
+  --ink:             #1a1612;
+  --ink-2:           #3a322a;
+  --muted:           #847b6a;
+  --line:            rgba(26,22,18,.55);
+  --line-soft:       rgba(26,22,18,.22);
+  --line-very-soft:  rgba(26,22,18,.10);
+  --seal:            #b83828;
+  --seal-2:          #8b2418;
+  --accent:          #b83828;
+  --highlight:       #ffe888;
+
+  --display: 'Newsreader', 'Source Serif Pro', Georgia, serif;
+  --body:    'Inter Tight', 'IBM Plex Sans', system-ui, sans-serif;
+  --mono:    'IBM Plex Mono', ui-monospace, monospace;
+  --cn:      'Noto Serif SC', serif;
+  --hand:    'Kalam', cursive;
+
+  --max-w:  680px;
+  --pad-x:  48px;
+  --pad-x-m: 20px;
+}
+
+/* ── Reset ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+/* ── Body base ─────────────────────────────────────────────────────── */
+body {
+  font-family: var(--body);
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(ellipse 1000px 700px at 20% 0%, rgba(184,56,40,0.05), transparent 70%),
+    repeating-linear-gradient(0deg, transparent 0, transparent 28px,
+      rgba(27,23,20,0.022) 28px, rgba(27,23,20,0.022) 29px);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+}
+
+/* ── Inner content wrapper (used by all sections) ──────────────────── */
+.inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ── Section ───────────────────────────────────────────────────────── */
+.section {
+  padding: 40px var(--pad-x);
+  border-top: 1px dashed var(--line-soft);
+}
+.section--masthead {
+  background: var(--paper-2);
+  border-top: none;
+  padding-bottom: 48px;
+}
+.section--tinted {
+  background: color-mix(in srgb, var(--paper-2) 50%, var(--paper));
+}
+@media (max-width: 640px) {
+  :root { --pad-x: 20px; }
+  .section { padding: 28px var(--pad-x); }
+  .section--masthead { padding-bottom: 36px; }
+}
