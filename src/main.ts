@@ -354,6 +354,17 @@ app.innerHTML = `
   </footer>
 `;
 
+// Handle Stripe post-checkout redirect: /?checkout=success
+if (new URLSearchParams(window.location.search).get('checkout') === 'success') {
+  window.history.replaceState({}, '', '/');
+  const statusEl = document.querySelector<HTMLParagraphElement>('#checkout-status');
+  if (statusEl) {
+    statusEl.textContent = 'Subscribed! Check your inbox for confirmation.';
+    statusEl.dataset.status = 'success';
+  }
+  document.querySelector('#pricing')?.scrollIntoView({ behavior: 'smooth' });
+}
+
 const setStatus = (elementId: string, status: FormStatus, message: string) => {
   const statusNode = document.querySelector<HTMLParagraphElement>(`#${elementId}`);
   if (!statusNode) return;
@@ -380,10 +391,11 @@ document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach(link => {
   });
 });
 
-document.querySelector<HTMLFormElement>('#subscribe-form')?.addEventListener('submit', event => {
+document.querySelector<HTMLFormElement>('#subscribe-form')?.addEventListener('submit', async event => {
   event.preventDefault();
 
   const form = event.currentTarget as HTMLFormElement;
+  const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
   const email = getStringValue(new FormData(form), 'email');
 
   if (!email) {
@@ -391,29 +403,83 @@ document.querySelector<HTMLFormElement>('#subscribe-form')?.addEventListener('su
     return;
   }
 
-  setStatus('subscribe-status', 'success', `Preview reserved for ${email}. Connect this form to your email provider next.`);
-  form.reset();
+  if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+
+  try {
+    const res = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+    const data = await res.json() as { ok?: boolean; error?: string };
+    if (res.ok) {
+      setStatus('subscribe-status', 'success', `Check your inbox — confirmation on its way to ${email}.`);
+      form.reset();
+    } else {
+      setStatus('subscribe-status', 'error', data.error ?? 'Something went wrong. Try again.');
+    }
+  } catch {
+    setStatus('subscribe-status', 'error', 'Network error. Check your connection and try again.');
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'Subscribe'; }
+  }
 });
 
-document.querySelector<HTMLFormElement>('#snapshot-form')?.addEventListener('submit', event => {
+document.querySelector<HTMLFormElement>('#snapshot-form')?.addEventListener('submit', async event => {
   event.preventDefault();
 
   const form = event.currentTarget as HTMLFormElement;
+  const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
   const formData = new FormData(form);
   const email = getStringValue(formData, 'email');
-  const dob = getStringValue(formData, 'dob');
-  const tob = getStringValue(formData, 'tob');
-  const pob = getStringValue(formData, 'pob');
+  const dob   = getStringValue(formData, 'dob');
+  const tob   = getStringValue(formData, 'tob');
+  const pob   = getStringValue(formData, 'pob');
 
   if (!email || !dob || !tob || !pob) {
     setStatus('snapshot-status', 'error', 'Complete all four fields to cast the snapshot.');
     return;
   }
 
-  setStatus('snapshot-status', 'success', `Snapshot request queued for ${email}. Backend hookup is the next deploy step.`);
-  form.reset();
+  if (btn) { btn.disabled = true; btn.textContent = 'Casting…'; }
+
+  try {
+    const res = await fetch('/api/snapshot', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, dob, tob, pob }),
+    });
+    const data = await res.json() as { ok?: boolean; error?: string };
+    if (res.ok) {
+      setStatus('snapshot-status', 'success', `Snapshot queued for ${email} — you'll hear from us soon.`);
+      form.reset();
+    } else {
+      setStatus('snapshot-status', 'error', data.error ?? 'Something went wrong. Try again.');
+    }
+  } catch {
+    setStatus('snapshot-status', 'error', 'Network error. Check your connection and try again.');
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'Cast my pillars →'; }
+  }
 });
 
-document.querySelector<HTMLButtonElement>('#checkout-button')?.addEventListener('click', () => {
-  setStatus('checkout-status', 'success', 'Checkout is ready for a Stripe Payment Link or hosted checkout URL.');
+document.querySelector<HTMLButtonElement>('#checkout-button')?.addEventListener('click', async event => {
+  const btn = event.currentTarget as HTMLButtonElement;
+  btn.disabled = true;
+  btn.textContent = 'Loading…';
+
+  try {
+    const res = await fetch('/api/checkout', { method: 'POST' });
+    const data = await res.json() as { url?: string; error?: string };
+    if (res.ok && data.url) {
+      window.location.href = data.url;
+      return;
+    }
+    setStatus('checkout-status', 'error', data.error ?? 'Checkout unavailable. Try again shortly.');
+  } catch {
+    setStatus('checkout-status', 'error', 'Network error. Try again.');
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Start — $12 / month';
 });
