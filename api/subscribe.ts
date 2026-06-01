@@ -1,4 +1,5 @@
-export const config = { runtime: 'edge' };
+import { sql } from '../lib/db.ts';
+import { createTransport, FROM } from '../lib/mailer.ts';
 
 export default async function handler(req: Request): Promise<Response> {
   if (req.method !== 'POST') return new Response('Method Not Allowed', { status: 405 });
@@ -13,29 +14,33 @@ export default async function handler(req: Request): Promise<Response> {
 
   if (!email) return json({ error: 'Email required' }, 400);
 
-  const apiKey = process.env.MAILCHIMP_API_KEY ?? '';
-  const listId = process.env.MAILCHIMP_LIST_ID ?? '';
-  const dc = apiKey.split('-')[1] ?? '';
-
-  const res = await fetch(`https://${dc}.api.mailchimp.com/3.0/lists/${listId}/members`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      email_address: email,
-      status: 'pending',
-      tags: ['subscriber'],
-    }),
-  });
-
-  if (!res.ok) {
-    const body = await res.json() as { title?: string };
-    if (body.title === 'Member Exists') return json({ ok: true });
-    console.error('Mailchimp subscribe error', body);
-    return json({ error: 'Could not subscribe. Try again.' }, 500);
+  try {
+    await sql`
+      INSERT INTO subscribers (email, type)
+      VALUES (${email}, 'subscriber')
+      ON CONFLICT (email, type) DO NOTHING
+    `;
+  } catch (err) {
+    console.error('DB insert error', err);
+    return json({ error: 'Could not save subscription. Try again.' }, 500);
   }
+
+  const transport = createTransport();
+
+  await Promise.all([
+    transport.sendMail({
+      from: FROM,
+      to: email,
+      subject: 'Your Taiyi preview is coming Sunday',
+      text: `You're on the list.\n\nYou'll receive your first letter this Sunday morning — a weekly almanac combining your bazi with where you live and the qimen calendar.\n\nIf you have questions, reply to this email.\n\n— Taiyi 太乙`,
+    }),
+    transport.sendMail({
+      from: FROM,
+      to: process.env.GMAIL_USER,
+      subject: `New subscriber — ${email}`,
+      text: `Email: ${email}\nTime: ${new Date().toISOString()}`,
+    }),
+  ]).catch(err => console.error('Mail send error', err));
 
   return json({ ok: true });
 }

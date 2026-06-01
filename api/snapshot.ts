@@ -1,18 +1,11 @@
-export const config = { runtime: 'edge' };
+import { sql } from '../lib/db.ts';
+import { createTransport, FROM } from '../lib/mailer.ts';
 
 interface SnapshotBody {
   email?: unknown;
   dob?: unknown;
   tob?: unknown;
   pob?: unknown;
-}
-
-interface MailchimpMember {
-  id: string;
-}
-
-interface MailchimpSearchResult {
-  exact_matches?: { members?: MailchimpMember[] };
 }
 
 export default async function handler(req: Request): Promise<Response> {
@@ -32,55 +25,33 @@ export default async function handler(req: Request): Promise<Response> {
 
   if (!email || !dob || !tob || !pob) return json({ error: 'All fields required' }, 400);
 
-  const apiKey = process.env.MAILCHIMP_API_KEY ?? '';
-  const listId = process.env.MAILCHIMP_LIST_ID ?? '';
-  const dc     = apiKey.split('-')[1] ?? '';
-  const base   = `https://${dc}.api.mailchimp.com/3.0`;
-  const auth   = { Authorization: `Bearer ${apiKey}` };
+  try {
+    await sql`
+      INSERT INTO subscribers (email, type, dob, tob, pob)
+      VALUES (${email}, 'snapshot', ${dob}, ${tob}, ${pob})
+      ON CONFLICT (email, type) DO UPDATE SET dob = ${dob}, tob = ${tob}, pob = ${pob}
+    `;
+  } catch (err) {
+    console.error('DB insert error', err);
+    return json({ error: 'Could not save request. Try again.' }, 500);
+  }
 
-  // Subscribe (pending = double opt-in confirmation email)
-  const subRes = await fetch(`${base}/lists/${listId}/members`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...auth },
-    body: JSON.stringify({
-      email_address: email,
-      status: 'pending',
-      tags: ['snapshot-request'],
+  const transport = createTransport();
+
+  await Promise.all([
+    transport.sendMail({
+      from: FROM,
+      to: process.env.GMAIL_USER,
+      subject: `Snapshot request — ${email}`,
+      text: `Email: ${email}\nDOB:   ${dob}\nTOB:   ${tob}\nPOB:   ${pob}\nTime:  ${new Date().toISOString()}`,
     }),
-  });
-
-  let memberId: string | null = null;
-
-  if (subRes.ok) {
-    const data = await subRes.json() as MailchimpMember;
-    memberId = data.id;
-  } else {
-    const err = await subRes.json() as { title?: string };
-    if (err.title !== 'Member Exists') {
-      console.error('Mailchimp snapshot subscribe error', err);
-      return json({ error: 'Could not process request. Try again.' }, 500);
-    }
-    // Member already exists — look up their ID via search
-    const searchRes = await fetch(
-      `${base}/search-members?query=${encodeURIComponent(email)}&list_id=${listId}&count=1`,
-      { headers: auth }
-    );
-    if (searchRes.ok) {
-      const searchData = await searchRes.json() as MailchimpSearchResult;
-      memberId = searchData.exact_matches?.members?.[0]?.id ?? null;
-    }
-  }
-
-  // Append bazi data as a member note
-  if (memberId) {
-    await fetch(`${base}/lists/${listId}/members/${memberId}/notes`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...auth },
-      body: JSON.stringify({
-        note: `Bazi snapshot request\nDOB: ${dob}\nTOB: ${tob}\nPOB: ${pob}`,
-      }),
-    });
-  }
+    transport.sendMail({
+      from: FROM,
+      to: email,
+      subject: 'Your Taiyi snapshot is queued',
+      text: `We've received your birth data and will send your bazi snapshot shortly.\n\nIf anything looks wrong, just reply to this email.\n\n— Taiyi 太乙`,
+    }),
+  ]).catch(err => console.error('Mail send error', err));
 
   return json({ ok: true });
 }

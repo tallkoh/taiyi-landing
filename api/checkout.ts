@@ -1,14 +1,9 @@
 import Stripe from 'stripe';
 
-export const config = { runtime: 'edge' };
-
 export default async function handler(req: Request): Promise<Response> {
   if (req.method !== 'POST') return new Response('Method Not Allowed', { status: 405 });
 
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '', {
-    httpClient: Stripe.createFetchHttpClient(),
-    apiVersion: '2025-04-30.basil',
-  });
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '');
 
   const origin = req.headers.get('origin') ?? process.env.SITE_URL ?? '';
 
