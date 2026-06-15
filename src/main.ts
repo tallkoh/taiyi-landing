@@ -18,6 +18,7 @@ app.innerHTML = `
       <div class="nav-links" role="list">
         <a href="#how" role="listitem">How it works</a>
         <a href="#why" role="listitem">Why Taiyi</a>
+        <a href="#about" role="listitem">About</a>
         <a href="#pricing" role="listitem">Pricing</a>
         <a href="#faq" role="listitem">FAQ</a>
       </div>
@@ -34,7 +35,7 @@ app.innerHTML = `
             <h1 class="headline headline--lg masthead-headline">Your week, read through the four pillars.</h1>
             <p class="sub-headline masthead-sub">
               A weekly letter combining your bazi with where you live and the qimen calendar.
-              Sundays, by email. $12&thinsp;/&thinsp;month.
+              Sundays, by email. $18&thinsp;/&thinsp;month.
             </p>
           </div>
           <div class="masthead-vertical masthead-vertical--right" aria-hidden="true">壬寅日</div>
@@ -73,7 +74,7 @@ app.innerHTML = `
             />
             <button class="btn btn--primary btn--lg" type="submit">Subscribe</button>
           </div>
-          <p class="form-hint">free preview first · cancel anytime · $12/mo to keep reading</p>
+          <p class="form-hint">free preview first · cancel anytime · $18/mo to keep reading</p>
           <p class="form-status" id="subscribe-status" role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -192,6 +193,36 @@ app.innerHTML = `
       </div>
     </section>
 
+    <section class="section" id="about">
+      <div class="inner">
+        <span class="eyebrow">Who we are</span>
+        <h2 class="headline headline--md">A Singapore project, classically sourced.</h2>
+        <p class="sub-headline">
+          Taiyi is built in Singapore by a small team of qimen practitioners and the indexed source library
+          they spent years assembling. We grew up watching aunties and mothers pay reasonable money for
+          unreasonable readings — generic horoscopes dressed in Chinese characters — and we wanted something
+          that actually consulted the texts.
+        </p>
+        <p class="sub-headline">
+          The depth of the moat is the library. <span class="cn">奇門遁甲統宗</span> (1641),
+          <span class="cn">烟波釣叟賦</span> (Tang), <span class="cn">紫白訣</span> (Song) and three sister
+          classics — indexed verse by verse, cross-referenced to your chart. Every Sunday's letter is reviewed
+          against a working practitioner's chart-reading before it ships. We don't sign with master titles;
+          the texts do.
+        </p>
+        <p class="sub-headline">
+          Write to us — we read every reply. Sundays, after the letter goes out.
+        </p>
+        <div class="about-signature">
+          <span class="stamp" aria-hidden="true">太</span>
+          <div class="about-sig-text">
+            <div class="about-sig-name">The Taiyi readers</div>
+            <div class="about-sig-where"><span class="cn">新加坡</span> · Singapore</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section section--tinted" id="sample">
       <div class="inner">
         <span class="eyebrow">Last Sunday's letter</span>
@@ -210,11 +241,20 @@ app.innerHTML = `
             For Jessica · Yang Fire day master · KL · 3.1°N
           </div>
 
-          <div class="nl-lines">
-            <div class="nl-ph nl-ph--long"></div>
-            <div class="nl-ph nl-ph--long"></div>
-            <div class="nl-ph nl-ph--med"></div>
-          </div>
+          <p class="nl-prose">
+            Dear Jessica — the week opens with <span class="cn">天輔</span>, the scholarly star, landing in your career palace.
+            For a yang-fire day master this is unambiguous: the heavens are handing you contracts, exams, applications.
+            Sign the lease, send the proposal, file the application. Take it Monday before noon — the plate weakens after.
+          </p>
+          <p class="nl-prose">
+            Wednesday is to read, not ship. The <span class="cn">戊辰</span> hour pulls your output palace into shadow;
+            whatever you publish that morning will read flatter than you mean it to. Move it to Friday when <span class="cn">丙寅</span>
+            brings <span class="cn">文昌</span> into view. Same draft, twice the reception.
+          </p>
+          <p class="nl-prose">
+            Travel south and southeast on Thursday — Hong Kong, Manila, Singapore. Avoid the north for moving money this week;
+            <span class="cn">太歲</span> sits there and the friction compounds. If you must send funds north, wait until the 23rd.
+          </p>
 
           <div class="nl-data-strip">
             <div class="nl-data-cell">
@@ -279,7 +319,7 @@ app.innerHTML = `
         <div class="pricing-card">
           <div class="pricing-top">
             <div class="pricing-amount">
-              $12<span class="pricing-period">/ month</span>
+              $18<span class="pricing-period">/ month</span>
             </div>
             <span class="stamp stamp--lg" aria-hidden="true">月</span>
           </div>
@@ -293,7 +333,7 @@ app.innerHTML = `
             <li>Source-cited classical quotes</li>
             <li>Annual luck-pillar update (Lunar New Year)</li>
           </ul>
-          <button class="btn btn--primary btn--lg btn--block" type="button" id="checkout-button">Start — $12 / month</button>
+          <button class="btn btn--primary btn--lg btn--block" type="button" id="checkout-button">Start — $18 / month</button>
           <p class="form-status" id="checkout-status" role="status" aria-live="polite"></p>
         </div>
       </div>
@@ -311,30 +351,30 @@ app.innerHTML = `
           </details>
 
           <details class="faq-item">
-            <summary class="faq-question">Why not just ask DeepSeek for the same thing?</summary>
+            <summary class="faq-question">How is this different from a generic weekly horoscope?</summary>
             <div class="faq-answer">
-              <p>You can, but you'll get a generic response that doesn't know what qimen plate is active right now, doesn't know your local weather, and doesn't cite a source. Taiyi cross-references your pillar to a specific indexed verse in a classical text, adds real geolocation, and delivers it Sunday morning so you can actually use it.</p>
+              <p>A generic horoscope reads the same week for everyone born in your month. Taiyi reads <em>your</em> week — calculated from your specific date, time, and place of birth, cross-referenced against the qimen calendar plate active that week, and adjusted for the latitude you actually live at. KL ≠ London. Yang fire ≠ yang water. We don't ship one letter to twelve audiences; we ship one letter to one reader.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">Is the same letter sent to everyone?</summary>
+            <div class="faq-answer">
+              <p>No. Every Sunday's letter is written for a single subscriber from four inputs: your four pillars (bazi), your latitude and longitude, the current solar term, and the qimen plate active that week. Two subscribers born the same day in different cities receive different letters; two subscribers in the same city with different birth times receive different letters. The framing, citation, and day-by-day <span class="cn">宜</span> / <span class="cn">忌</span> are all yours alone.</p>
             </div>
           </details>
 
           <details class="faq-item">
             <summary class="faq-question">What happens to my date-of-birth data? (PDPA / PDPL)</summary>
             <div class="faq-answer">
-              <p>Your date of birth and birth time are used only to calculate your four pillars — they are stored encrypted and never shared or sold. You can request deletion at any time; your data is purged within 7 days. We comply with Singapore PDPA 2012 and Malaysia PDPA 2010. Delete button is in your account settings.</p>
-            </div>
-          </details>
-
-          <details class="faq-item">
-            <summary class="faq-question">Who is writing the readings — an AI or a master?</summary>
-            <div class="faq-answer">
-              <p>The readings are AI-generated, cross-referenced against an indexed library of classical qimen texts (all pre-1929, all public domain). We don't pretend otherwise. The value is in the sourcing discipline and the calendrical accuracy, not a human signature. A practitioner review tier is planned for 2027.</p>
+              <p>Your date of birth and birth time are used only to calculate your four pillars — they are stored encrypted and never shared or sold. You can request deletion at any time; your data is purged within 7 days. We comply with Singapore PDPA 2012 and Malaysia PDPA 2010.</p>
             </div>
           </details>
 
           <details class="faq-item">
             <summary class="faq-question">Can I cancel? Will you keep emailing me?</summary>
             <div class="faq-answer">
-              <p>Cancel any time from your account page — one click, no form, no retention email. The subscription stops immediately. We send only what you signed up for: one letter per Sunday and, if you opt in, a Lunar New Year luck-pillar update. No upsells, no notifications, no ads.</p>
+              <p>Cancel any time — one click from the link at the bottom of any letter, no form, no retention email. The subscription stops immediately. We send only what you signed up for: one letter per Sunday and, if you opt in, a Lunar New Year luck-pillar update. No upsells, no notifications, no ads.</p>
             </div>
           </details>
         </div>
@@ -481,5 +521,5 @@ document.querySelector<HTMLButtonElement>('#checkout-button')?.addEventListener(
   }
 
   btn.disabled = false;
-  btn.textContent = 'Start — $12 / month';
+  btn.textContent = 'Start — $18 / month';
 });

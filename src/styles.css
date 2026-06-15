@@ -1,7 +1,7 @@
 /* ── Design tokens ─────────────────────────────────────────────────── */
 :root {
-  --paper:           #f4eee0;
-  --paper-2:         #ebe3d0;
+  --paper:           #faf8f3;
+  --paper-2:         #f1ede2;
   --ink:             #1a1612;
   --ink-2:           #3a322a;
   --muted:           #847b6a;
@@ -512,16 +512,16 @@ body {
   letter-spacing: 0.04em;
 }
 
-/* Placeholder lines */
-.nl-lines { margin-bottom: 10px; }
-.nl-ph {
-  height: 5px;
-  background: var(--line-very-soft);
-  border-radius: 3px;
-  margin: 4px 0;
+/* Letter prose */
+.nl-prose {
+  font-family: var(--body);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin: 0 0 10px;
 }
-.nl-ph--long { width: 95%; }
-.nl-ph--med { width: 70%; }
+.nl-prose:last-of-type { margin-bottom: 14px; }
+.nl-prose .cn { font-size: 13px; }
 
 /* Data strip inside newsletter */
 .nl-data-strip {
@@ -599,6 +599,41 @@ body {
   .nl-day-bad { display: none; }
   .nl-data-strip { grid-template-columns: 1fr 1fr; }
   .nl-data-strip > *:last-child { display: none; }
+}
+
+/* ── About signature ───────────────────────────────────────────────── */
+.about-signature {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  padding: 8px 12px 8px 8px;
+  border: 1px dashed var(--line-soft);
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--paper-2) 40%, var(--paper) 60%);
+}
+.about-sig-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.about-sig-name {
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.about-sig-where {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+.about-sig-where .cn {
+  font-size: 12px;
+  margin-right: 2px;
 }
 
 /* ── Pricing ───────────────────────────────────────────────────────── */
