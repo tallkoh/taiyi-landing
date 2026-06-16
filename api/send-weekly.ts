@@ -1,7 +1,7 @@
-import { sql } from '../lib/db.ts';
-import { createTransport, FROM } from '../lib/mailer.ts';
-import { calculateBazi } from '../lib/bazi.ts';
-import { generateLetter } from '../lib/letter.ts';
+import { sql } from '../lib/db.js';
+import { createTransport, FROM } from '../lib/mailer.js';
+import { calculateBazi } from '../lib/bazi.js';
+import { generateLetter } from '../lib/letter.js';
 
 interface SubscriberRow {
   email: string;

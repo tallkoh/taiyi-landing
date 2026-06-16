@@ -1,5 +1,5 @@
-import type { FourPillars } from './bazi.ts';
-import { currentSolarTerm } from './bazi.ts';
+import type { FourPillars } from './bazi.js';
+import { currentSolarTerm } from './bazi.js';
 
 export interface Letter {
   subject: string;

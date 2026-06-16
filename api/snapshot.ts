@@ -1,5 +1,5 @@
-import { sql } from '../lib/db.ts';
-import { createTransport, FROM } from '../lib/mailer.ts';
+import { sql } from '../lib/db.js';
+import { createTransport, FROM } from '../lib/mailer.js';
 
 interface SnapshotBody {
   email?: unknown;

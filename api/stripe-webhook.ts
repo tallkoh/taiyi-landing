@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-import { sql } from '../lib/db.ts';
+import { sql } from '../lib/db.js';
 
 export default async function handler(req: Request): Promise<Response> {
   if (req.method !== 'POST') return new Response('Method Not Allowed', { status: 405 });
