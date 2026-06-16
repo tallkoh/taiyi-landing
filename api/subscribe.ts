@@ -1,18 +1,19 @@
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { sql } from '../lib/db.js';
 import { createTransport, FROM } from '../lib/mailer.js';
 
-export default async function handler(req: Request): Promise<Response> {
-  if (req.method !== 'POST') return new Response('Method Not Allowed', { status: 405 });
-
-  let email: string;
-  try {
-    const body = await req.json() as { email?: unknown };
-    email = typeof body.email === 'string' ? body.email.trim() : '';
-  } catch {
-    return json({ error: 'Bad request' }, 400);
+export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
+  if (req.method !== 'POST') {
+    res.status(405).send('Method Not Allowed');
+    return;
   }
 
-  if (!email) return json({ error: 'Email required' }, 400);
+  const body = (req.body ?? {}) as { email?: unknown };
+  const email = typeof body.email === 'string' ? body.email.trim() : '';
+  if (!email) {
+    res.status(400).json({ error: 'Email required' });
+    return;
+  }
 
   try {
     await sql`
@@ -22,7 +23,8 @@ export default async function handler(req: Request): Promise<Response> {
     `;
   } catch (err) {
     console.error('DB insert error', err);
-    return json({ error: 'Could not save subscription. Try again.' }, 500);
+    res.status(500).json({ error: 'Could not save subscription. Try again.' });
+    return;
   }
 
   const transport = createTransport();
@@ -42,12 +44,5 @@ export default async function handler(req: Request): Promise<Response> {
     }),
   ]).catch(err => console.error('Mail send error', err));
 
-  return json({ ok: true });
-}
-
-function json(body: unknown, status = 200): Response {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { 'Content-Type': 'application/json' },
-  });
+  res.status(200).json({ ok: true });
 }

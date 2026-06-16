@@ -1,3 +1,4 @@
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { sql } from '../lib/db.js';
 import { createTransport, FROM } from '../lib/mailer.js';
 
@@ -8,22 +9,22 @@ interface SnapshotBody {
   pob?: unknown;
 }
 
-export default async function handler(req: Request): Promise<Response> {
-  if (req.method !== 'POST') return new Response('Method Not Allowed', { status: 405 });
-
-  let body: SnapshotBody;
-  try {
-    body = await req.json() as SnapshotBody;
-  } catch {
-    return json({ error: 'Bad request' }, 400);
+export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
+  if (req.method !== 'POST') {
+    res.status(405).send('Method Not Allowed');
+    return;
   }
 
+  const body = (req.body ?? {}) as SnapshotBody;
   const email = typeof body.email === 'string' ? body.email.trim() : '';
   const dob   = typeof body.dob   === 'string' ? body.dob.trim()   : '';
   const tob   = typeof body.tob   === 'string' ? body.tob.trim()   : '';
   const pob   = typeof body.pob   === 'string' ? body.pob.trim()   : '';
 
-  if (!email || !dob || !tob || !pob) return json({ error: 'All fields required' }, 400);
+  if (!email || !dob || !tob || !pob) {
+    res.status(400).json({ error: 'All fields required' });
+    return;
+  }
 
   try {
     await sql`
@@ -33,7 +34,8 @@ export default async function handler(req: Request): Promise<Response> {
     `;
   } catch (err) {
     console.error('DB insert error', err);
-    return json({ error: 'Could not save request. Try again.' }, 500);
+    res.status(500).json({ error: 'Could not save request. Try again.' });
+    return;
   }
 
   const transport = createTransport();
@@ -53,12 +55,5 @@ export default async function handler(req: Request): Promise<Response> {
     }),
   ]).catch(err => console.error('Mail send error', err));
 
-  return json({ ok: true });
-}
-
-function json(body: unknown, status = 200): Response {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { 'Content-Type': 'application/json' },
-  });
+  res.status(200).json({ ok: true });
 }

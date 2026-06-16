@@ -1,3 +1,4 @@
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { sql } from '../lib/db.js';
 import { createTransport, FROM } from '../lib/mailer.js';
 import { calculateBazi } from '../lib/bazi.js';
@@ -10,11 +11,12 @@ interface SubscriberRow {
   pob: string;
 }
 
-export default async function handler(req: Request): Promise<Response> {
+export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
   const expected = process.env.CRON_SECRET;
-  const authHeader = req.headers.get('authorization');
+  const authHeader = req.headers.authorization;
   if (!expected || authHeader !== `Bearer ${expected}`) {
-    return new Response('Unauthorized', { status: 401 });
+    res.status(401).send('Unauthorized');
+    return;
   }
 
   const rows = (await sql`
@@ -54,8 +56,5 @@ export default async function handler(req: Request): Promise<Response> {
     }
   }
 
-  return new Response(JSON.stringify({ sent, failed, eligible: rows.length }), {
-    status: 200,
-    headers: { 'Content-Type': 'application/json' },
-  });
+  res.status(200).json({ sent, failed, eligible: rows.length });
 }
