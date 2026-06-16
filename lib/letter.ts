@@ -1,5 +1,6 @@
 import type { FourPillars } from './bazi.js';
 import { currentSolarTerm } from './bazi.js';
+import { signToken, TTL } from './token.js';
 
 export interface Letter {
   subject: string;
@@ -18,13 +19,18 @@ function weekRangeLabel(now: Date = new Date()): string {
   return `${fmt(monday)} – ${fmt(sunday)}`;
 }
 
+function siteUrl(): string {
+  return (process.env.SITE_URL ?? 'https://taiyi.guru').replace(/\/$/, '');
+}
+
 // STUB. The real generator will fold in the qimen library + day-master prose;
 // the function signature here is the contract that swap will honour.
-export function generateLetter(_email: string, bazi: FourPillars): Letter {
+export function generateLetter(email: string, bazi: FourPillars): Letter {
   const term = currentSolarTerm();
   const week = weekRangeLabel();
   const pillars = [bazi.year, bazi.month, bazi.day, bazi.hour]
     .map(p => `${p.stem}${p.branch}`).join(' · ');
+  const unsubUrl = `${siteUrl()}/api/unsubscribe?t=${signToken(email, TTL.UNSUBSCRIBE)}`;
 
   const text = `Dear reader,
 
@@ -37,11 +43,14 @@ The current solar term is ${term}.
 practitioner will review and replace this body before it goes to a paying
 subscriber.]
 
-If you wish to stop receiving these letters, simply reply with the word
-UNSUBSCRIBE and we will remove you within 24 hours.
-
 — Taiyi 太乙
   Singapore
+
+────────────────────────────────────────────
+To stop receiving these letters and cancel your subscription, click:
+${unsubUrl}
+
+To request deletion of your data (PDPA), visit ${siteUrl()}/delete
 `;
 
   return {

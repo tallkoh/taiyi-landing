@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Privacy · Taiyi 太乙</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500&family=IBM+Plex+Mono:wght@400&family=Inter+Tight:wght@400;500&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #faf8f3; --paper-2: #f1ede2;
+      --ink: #1a1612; --ink-2: #3a322a; --muted: #847b6a;
+      --seal: #b83828; --line-soft: rgba(26,22,18,.22);
+      --display: 'Newsreader', Georgia, serif;
+      --body: 'Inter Tight', system-ui, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, monospace;
+      --cn:   'Noto Serif SC', serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: var(--body);
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    .nav {
+      padding: 0 24px;
+      height: 52px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--paper-2);
+      border-bottom: 1px dashed var(--line-soft);
+    }
+    .nav-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--display);
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .stamp {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px; height: 22px;
+      background: var(--seal);
+      color: var(--paper);
+      font-family: var(--cn);
+      font-weight: 700;
+      font-size: 14px;
+      border-radius: 2px;
+      transform: rotate(-3deg);
+    }
+    .nav-back {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+    }
+    main {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    h1 {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: 32px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin: 6px 0 24px;
+    }
+    h2 {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 1.2;
+      margin: 28px 0 8px;
+      letter-spacing: -0.01em;
+    }
+    p, li { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+    ul { padding-left: 18px; margin: 0 0 12px; }
+    a { color: var(--seal); }
+    .updated {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      margin-top: 32px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--line-soft);
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="/" class="nav-logo"><span class="stamp">太</span>Taiyi</a>
+    <a href="/" class="nav-back">← back</a>
+  </nav>
+  <main>
+    <div class="eyebrow">Privacy policy</div>
+    <h1>What we collect, and why.</h1>
+
+    <p>Taiyi is operated from Singapore. We comply with Singapore PDPA 2012 and Malaysia PDPA 2010. This page explains, in plain language, what data we collect from you and what happens to it.</p>
+
+    <h2>What we collect</h2>
+    <ul>
+      <li><strong>Your email address</strong> — to send the weekly letter and account-level communication (subscription receipts, deletion confirmations).</li>
+      <li><strong>Your date of birth, time of birth, and place of birth</strong> — only if you submit the bazi snapshot form. Used to calculate your four pillars and to personalize the weekly letter. Never used for anything else.</li>
+      <li><strong>Stripe customer and subscription identifiers</strong> — if you become a paying subscriber. Used to associate your subscription state to your email so we know whether to send you the letter.</li>
+      <li><strong>Time of subscription and time of last letter sent</strong> — internal bookkeeping so we don't double-send.</li>
+    </ul>
+    <p>We do <strong>not</strong> collect your IP address for behavioral analytics, run third-party advertising trackers, or share your data with any other party.</p>
+
+    <h2>What we do with it</h2>
+    <p>Your date of birth and birth time are passed to a bazi calculation library (calendrical arithmetic — converting Gregorian time to lunar stems and branches) and then to the practitioner-supervised weekly letter generation pipeline. The output of that pipeline — the letter — is emailed only to you.</p>
+    <p>Stripe processes your card on its own servers; we never see or store card numbers. We only see the Stripe identifiers.</p>
+
+    <h2>Where it lives</h2>
+    <p>All data is stored encrypted at rest in a managed Postgres database (Neon) hosted in the AWS Singapore region (ap-southeast-1). Email is dispatched via Gmail SMTP. Application code runs on Vercel.</p>
+
+    <h2>Deletion</h2>
+    <p>You can request deletion at any time from <a href="/delete">/delete</a>. We will:</p>
+    <ul>
+      <li>Send a confirmation link to the email on file.</li>
+      <li>On your confirmation, immediately null your date of birth, time of birth, and place of birth, and cancel any active Stripe subscription.</li>
+      <li>Hard-delete the remaining row (your email + the deletion marker) within 7 days.</li>
+    </ul>
+    <p>If you have questions or want to exercise any other PDPA right (access, correction, withdrawal of consent), write to <a href="mailto:hello@taiyi.guru">hello@taiyi.guru</a>.</p>
+
+    <h2>Children</h2>
+    <p>Taiyi is not intended for individuals under 18. We do not knowingly collect data from minors.</p>
+
+    <h2>Changes</h2>
+    <p>If we change this policy materially, we will email every subscriber on file before the change takes effect.</p>
+
+    <div class="updated">Last updated 2026-06-16 · Taiyi · 太乙 · Singapore</div>
+  </main>
+</body>
+</html>

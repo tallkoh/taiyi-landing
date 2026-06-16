@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Delete my data · Taiyi 太乙</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500&family=IBM+Plex+Mono:wght@400&family=Inter+Tight:wght@400;500&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #faf8f3; --paper-2: #f1ede2;
+      --ink: #1a1612; --ink-2: #3a322a; --muted: #847b6a;
+      --seal: #b83828; --line-soft: rgba(26,22,18,.22);
+      --display: 'Newsreader', Georgia, serif;
+      --body: 'Inter Tight', system-ui, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, monospace;
+      --cn:   'Noto Serif SC', serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: var(--body);
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.55;
+      min-height: 100vh;
+    }
+    .nav {
+      padding: 0 24px;
+      height: 52px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--paper-2);
+      border-bottom: 1px dashed var(--line-soft);
+    }
+    .nav-logo {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--display); font-size: 18px; font-weight: 500;
+      color: var(--ink); text-decoration: none;
+    }
+    .stamp {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 22px; height: 22px; background: var(--seal); color: var(--paper);
+      font-family: var(--cn); font-weight: 700; font-size: 14px;
+      border-radius: 2px; transform: rotate(-3deg);
+    }
+    .nav-back {
+      font-family: var(--mono); font-size: 11px;
+      color: var(--muted); text-decoration: none; letter-spacing: 0.06em;
+    }
+    main {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+    .eyebrow {
+      font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 6px;
+    }
+    h1 {
+      font-family: var(--display); font-weight: 400; font-size: 28px;
+      line-height: 1.1; letter-spacing: -0.02em; margin: 6px 0 16px;
+    }
+    p { font-size: 14px; color: var(--ink-2); margin: 0 0 14px; }
+    a { color: var(--seal); }
+    form {
+      border: 1.5px dashed var(--line-soft);
+      padding: 18px;
+      margin-top: 8px;
+      background: rgba(0,0,0,0.015);
+    }
+    label {
+      font-family: var(--body); font-size: 11.5px;
+      color: var(--muted); display: block; margin-bottom: 4px;
+    }
+    .input {
+      width: 100%; min-height: 40px;
+      border: 1.5px solid var(--ink);
+      background: color-mix(in srgb, var(--paper) 80%, white 20%);
+      padding: 9px 12px; font-family: var(--body);
+      font-size: 14px; color: var(--ink);
+      border-radius: 2px; outline: none;
+    }
+    .input:focus { border-color: var(--seal); }
+    .btn {
+      width: 100%; margin-top: 12px;
+      background: var(--seal); color: var(--paper);
+      border: 1.5px solid var(--seal); padding: 12px 16px;
+      box-shadow: 2px 2px 0 0 var(--ink);
+      font-family: var(--body); font-weight: 500; font-size: 14px;
+      border-radius: 2px; cursor: pointer;
+    }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .status {
+      font-family: var(--mono); font-size: 11px;
+      color: var(--muted); margin-top: 12px; min-height: 16px;
+      text-align: center;
+    }
+    .status[data-status="success"] { color: #8b2418; }
+    .status[data-status="error"]   { color: var(--seal); }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="/" class="nav-logo"><span class="stamp">太</span>Taiyi</a>
+    <a href="/" class="nav-back">← back</a>
+  </nav>
+  <main>
+    <div class="eyebrow">PDPA · Right to deletion</div>
+    <h1>Delete my data.</h1>
+
+    <p>Enter the email on file. We'll send a confirmation link to that address — clicking it nulls your date of birth, time of birth, and place of birth immediately, cancels any active subscription, and queues the rest of the row for hard-deletion within 7 days. Confirmation is required so nobody can delete someone else's data.</p>
+
+    <form id="delete-form">
+      <label for="email">email</label>
+      <input class="input" id="email" name="email" type="email" autocomplete="email" required placeholder="you@somewhere.com" />
+      <button class="btn" type="submit">Send confirmation link</button>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </form>
+
+    <p style="margin-top:24px;font-size:12.5px;color:var(--muted);">Prefer a human? Write to <a href="mailto:hello@taiyi.guru?subject=Delete my data">hello@taiyi.guru</a> with the subject "Delete my data" and we'll handle it within 24 hours.</p>
+  </main>
+  <script>
+    const form = document.getElementById('delete-form');
+    const status = document.getElementById('status');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('button');
+      const email = new FormData(form).get('email');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      status.dataset.status = '';
+      status.textContent = '';
+      try {
+        const res = await fetch('/api/delete-request', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        if (res.ok) {
+          status.dataset.status = 'success';
+          status.textContent = 'Check your inbox for the confirmation link. Good for 7 days.';
+          form.reset();
+        } else {
+          const data = await res.json().catch(() => ({}));
+          status.dataset.status = 'error';
+          status.textContent = data.error || 'Something went wrong. Try again.';
+        }
+      } catch {
+        status.dataset.status = 'error';
+        status.textContent = 'Network error. Try again.';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Send confirmation link';
+      }
+    });
+  </script>
+</body>
+</html>

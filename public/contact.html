@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact · Taiyi 太乙</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500&family=IBM+Plex+Mono:wght@400&family=Inter+Tight:wght@400;500&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #faf8f3; --paper-2: #f1ede2;
+      --ink: #1a1612; --ink-2: #3a322a; --muted: #847b6a;
+      --seal: #b83828; --line-soft: rgba(26,22,18,.22);
+      --display: 'Newsreader', Georgia, serif;
+      --body: 'Inter Tight', system-ui, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, monospace;
+      --cn:   'Noto Serif SC', serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: var(--body);
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.55;
+      min-height: 100vh;
+    }
+    .nav {
+      padding: 0 24px; height: 52px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: var(--paper-2);
+      border-bottom: 1px dashed var(--line-soft);
+    }
+    .nav-logo {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--display); font-size: 18px; font-weight: 500;
+      color: var(--ink); text-decoration: none;
+    }
+    .stamp {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 22px; height: 22px; background: var(--seal); color: var(--paper);
+      font-family: var(--cn); font-weight: 700; font-size: 14px;
+      border-radius: 2px; transform: rotate(-3deg);
+    }
+    .nav-back {
+      font-family: var(--mono); font-size: 11px;
+      color: var(--muted); text-decoration: none; letter-spacing: 0.06em;
+    }
+    main {
+      max-width: 520px; margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+    .eyebrow {
+      font-family: var(--mono); font-size: 9.5px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 6px;
+    }
+    h1 {
+      font-family: var(--display); font-weight: 400; font-size: 28px;
+      line-height: 1.1; letter-spacing: -0.02em; margin: 6px 0 16px;
+    }
+    p { font-size: 14px; color: var(--ink-2); margin: 0 0 14px; }
+    a { color: var(--seal); }
+    .card {
+      border: 1.5px dashed var(--line-soft);
+      padding: 20px;
+      margin-top: 8px;
+      background: rgba(0,0,0,0.015);
+    }
+    .card h2 {
+      font-family: var(--display); font-weight: 500;
+      font-size: 16px; margin: 0 0 8px;
+    }
+    .card p { font-size: 13.5px; margin: 0 0 6px; }
+    .card + .card { margin-top: 14px; }
+    .sig {
+      font-family: var(--mono); font-size: 10px;
+      color: var(--muted); letter-spacing: 0.06em;
+      margin-top: 28px; padding-top: 14px;
+      border-top: 1px dashed var(--line-soft);
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="/" class="nav-logo"><span class="stamp">太</span>Taiyi</a>
+    <a href="/" class="nav-back">← back</a>
+  </nav>
+  <main>
+    <div class="eyebrow">Contact</div>
+    <h1>We read every reply.</h1>
+
+    <p>Taiyi is a small Singapore-based project. There is no support queue, no ticketing system, no chatbot. We just read email.</p>
+
+    <div class="card">
+      <h2>For most things</h2>
+      <p><a href="mailto:hello@taiyi.guru">hello@taiyi.guru</a></p>
+      <p>Questions about your reading, the texts we cite, how the chart was calculated, billing, anything else. Replies usually go out Sunday evening after the letter ships.</p>
+    </div>
+
+    <div class="card">
+      <h2>To stop receiving letters</h2>
+      <p>Click the unsubscribe link at the bottom of any weekly letter — one click, no form. Or write to <a href="mailto:hello@taiyi.guru?subject=Unsubscribe">hello@taiyi.guru</a> with the subject "Unsubscribe".</p>
+    </div>
+
+    <div class="card">
+      <h2>To delete your data (PDPA)</h2>
+      <p>Visit <a href="/delete">/delete</a>. You'll receive a confirmation link by email; clicking it nulls your date, time, and place of birth immediately and queues the rest of the row for hard-deletion within 7 days.</p>
+    </div>
+
+    <div class="card">
+      <h2>For practitioners and press</h2>
+      <p>Reply to the weekly letter or write to <a href="mailto:hello@taiyi.guru">hello@taiyi.guru</a> with your enquiry. We're working slowly and don't take many calls.</p>
+    </div>
+
+    <div class="sig">Taiyi · <span style="font-family:'Noto Serif SC',serif;color:var(--seal);">太乙</span> · 新加坡 · Singapore · 2026</div>
+  </main>
+</body>
+</html>

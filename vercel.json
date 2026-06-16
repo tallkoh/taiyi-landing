@@ -2,7 +2,9 @@
   "buildCommand": "bun run build",
   "outputDirectory": "dist",
   "framework": "vite",
+  "cleanUrls": true,
   "crons": [
-    { "path": "/api/send-weekly", "schedule": "0 22 * * 0" }
+    { "path": "/api/send-weekly",    "schedule": "0 22 * * 0" },
+    { "path": "/api/delete-cleanup", "schedule": "0 3 * * *" }
   ]
 }
