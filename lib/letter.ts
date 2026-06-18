@@ -3,6 +3,7 @@ import { currentSolarTerm } from './bazi.js';
 import { signToken, TTL } from './token.js';
 import { openai, modelName, costUsd } from './openai.js';
 import { runGuardrails, type LetterOutput } from './guardrails.js';
+import { corpusDigest, retrieve, type RetrievedNote } from './knowledge.js';
 
 export interface Letter {
   subject: string;
@@ -64,19 +65,27 @@ To request deletion of your data (PDPA), visit ${siteUrl()}/delete
 `;
 }
 
-const SYSTEM_PROMPT = `You are Taiyi 太乙, a contemporary writer rooted in Chinese metaphysics — bazi (four pillars), the solar calendar, and qimen. You write weekly letters to one subscriber at a time. The register is calm, grounded, and personal — like a senior friend who happens to know the system. Never grandiose. Never wellness-jargon. Never astrology clichés.
+function buildSystemPrompt(): string {
+  return `You are Taiyi 太乙, a contemporary writer rooted in Chinese metaphysics — bazi (four pillars), the solar calendar, and qimen. You write weekly letters to one subscriber at a time. The register is calm, grounded, and personal — like a senior friend who happens to know the system. Never grandiose. Never wellness-jargon. Never astrology clichés.
 
 You receive a context bundle with the reader's four pillars, day master, the current solar term, their current country, gender, and (optionally) their answers to a short mid-week pulse questionnaire. Some pulse answers may be missing — write more generally when they are.
+
+You also receive (a) a fixed corpus overview describing the body of Chinese metaphysics teachings available to you, and (b) a small set of source-attributed teaching notes selected for this reader's chart and week. Ground your writing in those notes: prefer concepts, vocabulary, and frames that appear in them over inventing new ones. Do not quote the notes verbatim. Do not cite sources to the reader. Translate any classical terms briefly on first use.
 
 Hard rules:
 - No medical, legal, or financial advice. Do not name medications, conditions, lawyers, investments, or stock tickers.
 - No specific dated predictions outside the current week's range.
-- Do not name any individual people (no celebrities, no public figures, no friends).
+- Do not name any individual people (no celebrities, no public figures, no friends, no teachers from the source notes).
 - Do not invent biographical facts about the reader you weren't given.
 - Do not use the words "diagnose", "guarantee", or numbered ratings.
 - Use simple English. Translate any Chinese terms briefly on first use.
 
-Output JSON matching the provided schema. Each section is 1–4 sentences. Total body 200–500 words. The subject line is 4–9 words, no emoji, no colons.`;
+Output JSON matching the provided schema. Each section is 1–4 sentences. Total body 200–500 words. The subject line is 4–9 words, no emoji, no colons.
+
+──────────── CORPUS OVERVIEW ────────────
+${corpusDigest()}
+─────────────────────────────────────────`;
+}
 
 const SCHEMA = {
   type: 'object',
@@ -98,7 +107,17 @@ const SCHEMA = {
   },
 } as const;
 
-function buildUserPrompt(ctx: LetterContext, week: { startISO: string; endISO: string; label: string }, solarTerm: string): string {
+function formatRetrieved(notes: RetrievedNote[]): string {
+  if (notes.length === 0) return '(no source notes matched this chart and week)';
+  return notes.map((n, i) => `[note ${i + 1}] (${n.source})\n${n.content}`).join('\n\n');
+}
+
+function buildUserPrompt(
+  ctx: LetterContext,
+  week: { startISO: string; endISO: string; label: string },
+  solarTerm: string,
+  retrieved: RetrievedNote[],
+): string {
   const pillars = `${ctx.bazi.year.stem}${ctx.bazi.year.branch} · ${ctx.bazi.month.stem}${ctx.bazi.month.branch} · ${ctx.bazi.day.stem}${ctx.bazi.day.branch} · ${ctx.bazi.hour.stem}${ctx.bazi.hour.branch}`;
   const pulse = [
     ctx.energy ? `- energy: ${ctx.energy}` : '- energy: (not answered)',
@@ -121,6 +140,10 @@ ${pulse}
 
 Recent letter subjects (avoid repeating their language):
 ${recent}
+
+──── Source notes for grounding (do not quote, do not cite) ────
+${formatRetrieved(retrieved)}
+─────────────────────────────────────────────────────────────────
 
 Write this week's letter. Output JSON only.`;
 }
@@ -158,7 +181,16 @@ export async function generateLetter(ctx: LetterContext): Promise<GeneratedLette
   const solarTerm = currentSolarTerm();
   const model = modelName();
 
-  const userPrompt = buildUserPrompt(ctx, week, solarTerm);
+  const retrieved = retrieve({
+    dayMasterStem: ctx.bazi.dayMaster,
+    solarTerm,
+    energy: ctx.energy,
+    focus: ctx.focus,
+    weight: ctx.weight,
+  });
+
+  const systemPrompt = buildSystemPrompt();
+  const userPrompt = buildUserPrompt(ctx, week, solarTerm, retrieved);
 
   let output: LetterOutput | null = null;
   let inputTokens = 0;
@@ -171,7 +203,7 @@ export async function generateLetter(ctx: LetterContext): Promise<GeneratedLette
       const resp = await openai().chat.completions.create({
         model,
         messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt },
         ],
         response_format: {
