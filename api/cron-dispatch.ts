@@ -1,21 +1,22 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-// Vercel Hobby caps at 2 cron entries per project. This dispatcher fires
-// at 04:00, 14:00, and 22:00 UTC every day, then forwards to the right
-// weekly endpoint based on day-of-week + hour. Skips silently at other times.
+// Vercel Hobby caps cron entries at 2/project AND each schedule must be
+// at most once-per-day. This dispatcher fires once daily at 22:00 UTC and
+// forwards to the right weekly endpoint based on day-of-week. Skips on
+// the other 4 days of the week.
 //
 // Schedule (in vercel.json):
-//   { path: "/api/cron-dispatch", schedule: "0 4,14,22 * * *" }
+//   { path: "/api/cron-dispatch", schedule: "0 22 * * *" }
 //
 // Day-of-week → endpoint mapping:
-//   Wed 14:00 UTC → /api/send-questionnaire
-//   Sat 04:00 UTC → /api/generate-letters
-//   Sun 22:00 UTC → /api/send-weekly
+//   Wed → /api/send-questionnaire   (mid-week pulse)
+//   Sat → /api/generate-letters     (LLM batch, 24h before send)
+//   Sun → /api/send-weekly          (the letter itself)
 
-const TARGETS: Record<string, string> = {
-  '3:14': '/api/send-questionnaire', // Wednesday 14:00 UTC
-  '6:4':  '/api/generate-letters',   // Saturday 04:00 UTC
-  '0:22': '/api/send-weekly',        // Sunday 22:00 UTC
+const TARGETS: Record<number, string> = {
+  3: '/api/send-questionnaire',
+  6: '/api/generate-letters',
+  0: '/api/send-weekly',
 };
 
 function siteUrl(): string {
@@ -32,12 +33,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
 
   const now = new Date();
   const dow = now.getUTCDay();      // 0=Sun ... 6=Sat
-  const hour = now.getUTCHours();
-  const key = `${dow}:${hour}`;
-  const path = TARGETS[key];
+  const path = TARGETS[dow];
 
   if (!path) {
-    res.status(200).json({ skipped: true, dow, hour });
+    res.status(200).json({ skipped: true, dow });
     return;
   }
 
