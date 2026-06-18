@@ -1,14 +1,21 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { sql } from '../lib/db.js';
 import { createTransport, FROM } from '../lib/mailer.js';
-import { calculateBazi } from '../lib/bazi.js';
-import { generateLetter } from '../lib/letter.js';
 
-interface SubscriberRow {
+interface QueuedLetter {
+  id: number;
+  subscriber_id: number;
   email: string;
-  dob: string;
-  tob: string;
-  pob: string;
+  subject: string;
+  body: string;
+}
+
+function mondayOfThisWeekISO(now: Date = new Date()): string {
+  const day = now.getUTCDay();
+  const monday = new Date(now);
+  monday.setUTCDate(now.getUTCDate() - ((day + 6) % 7));
+  monday.setUTCHours(0, 0, 0, 0);
+  return monday.toISOString().slice(0, 10);
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
@@ -19,42 +26,53 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     return;
   }
 
-  const rows = (await sql`
-    SELECT email, dob, tob, pob
-      FROM subscribers
-     WHERE subscription_status = 'active'
-       AND type = 'subscriber'
-       AND dob IS NOT NULL
-       AND tob IS NOT NULL
-       AND (last_sent_at IS NULL OR last_sent_at < now() - INTERVAL '6 days')
-  `) as unknown as SubscriberRow[];
+  const weekStart = mondayOfThisWeekISO();
+
+  const queued = (await sql`
+    SELECT l.id, l.subscriber_id, s.email, l.subject, l.body
+      FROM letters l
+      JOIN subscribers s ON s.id = l.subscriber_id
+     WHERE l.week_start = ${weekStart}
+       AND l.status     = 'approved'
+       AND l.sent_at    IS NULL
+       AND s.subscription_status = 'active'
+       AND s.delete_requested_at IS NULL
+  `) as unknown as QueuedLetter[];
 
   const transport = createTransport();
   let sent = 0;
   let failed = 0;
 
-  for (const sub of rows) {
+  for (const item of queued) {
     try {
-      const bazi = calculateBazi(sub.dob, sub.tob, sub.pob);
-      const letter = generateLetter(sub.email, bazi);
       await transport.sendMail({
         from: FROM,
-        to: sub.email,
-        subject: letter.subject,
-        text: letter.text,
+        to: item.email,
+        subject: item.subject,
+        text: item.body,
       });
+      await sql`
+        UPDATE letters
+           SET sent_at = now(),
+               status  = 'sent'
+         WHERE id = ${item.id}
+      `;
       await sql`
         UPDATE subscribers
            SET last_sent_at = now()
-         WHERE email = ${sub.email}
-           AND type = 'subscriber'
+         WHERE id = ${item.subscriber_id}
       `;
       sent++;
     } catch (err) {
-      console.error('Send failed for', sub.email, err);
+      console.error('Send failed for letter', item.id, err);
+      await sql`
+        UPDATE letters
+           SET status = 'failed'
+         WHERE id = ${item.id}
+      `;
       failed++;
     }
   }
 
-  res.status(200).json({ sent, failed, eligible: rows.length });
+  res.status(200).json({ sent, failed, queued: queued.length, weekStart });
 }

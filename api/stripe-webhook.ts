@@ -47,12 +47,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
           : session.subscription?.id;
         if (email && customerId) {
           await sql`
-            INSERT INTO subscribers (email, type, stripe_customer_id, stripe_subscription_id, subscription_status)
-            VALUES (${email}, 'subscriber', ${customerId}, ${subscriptionId ?? null}, 'active')
+            INSERT INTO subscribers (
+              email, type, stripe_customer_id, stripe_subscription_id,
+              subscription_status, stripe_session_id
+            )
+            VALUES (
+              ${email}, 'subscriber', ${customerId}, ${subscriptionId ?? null},
+              'active', ${session.id}
+            )
             ON CONFLICT (email, type) DO UPDATE
               SET stripe_customer_id     = EXCLUDED.stripe_customer_id,
                   stripe_subscription_id = EXCLUDED.stripe_subscription_id,
-                  subscription_status    = 'active'
+                  subscription_status    = 'active',
+                  stripe_session_id      = EXCLUDED.stripe_session_id
           `;
         }
         break;

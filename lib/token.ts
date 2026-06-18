@@ -46,4 +46,39 @@ export function verifyToken(token: unknown): { email: string } | null {
 export const TTL = {
   UNSUBSCRIBE: 60 * 60 * 24 * 365, // 1 year — old emails should still work
   DELETE:      60 * 60 * 24 * 7,   // 7 days — must act fast
+  ANSWER:      60 * 60 * 24 * 14,  // 2 weeks — questionnaire links die after that
 };
+
+// Generic signed payload. Payload must not contain '|' or '.'; caller
+// is responsible for escaping. Used for questionnaire answer links where
+// we need (subscriber_id, week, question, choice) not just email.
+export function signPayload(parts: (string | number)[], ttlSeconds: number): string {
+  const expires = Math.floor(Date.now() / 1000) + ttlSeconds;
+  const payload = `${parts.join('|')}|${expires}`;
+  const sig = hmacHex(payload);
+  return Buffer.from(payload).toString('base64url') + '.' + sig;
+}
+
+export function verifyPayload(token: unknown): string[] | null {
+  if (typeof token !== 'string' || !token.includes('.')) return null;
+  const [payloadB64, sig] = token.split('.');
+  if (!payloadB64 || !sig) return null;
+
+  let payload: string;
+  try {
+    payload = Buffer.from(payloadB64, 'base64url').toString('utf8');
+  } catch {
+    return null;
+  }
+
+  const expected = hmacHex(payload);
+  if (sig.length !== expected.length) return null;
+  if (!timingSafeEqual(Buffer.from(sig, 'utf8'), Buffer.from(expected, 'utf8'))) return null;
+
+  const parts = payload.split('|');
+  if (parts.length < 2) return null;
+  const expires = parseInt(parts[parts.length - 1], 10);
+  if (!Number.isFinite(expires) || expires < Math.floor(Date.now() / 1000)) return null;
+
+  return parts.slice(0, -1);
+}

@@ -16,9 +16,11 @@
     "vite": "^7.2.6"
   },
   "dependencies": {
+    "@clerk/backend": "^3.8.0",
     "@neondatabase/serverless": "^1.1.0",
     "lunar-typescript": "^1.8.6",
     "nodemailer": "^8.0.10",
+    "openai": "^6.44.0",
     "stripe": "^22.1.1"
   }
 }
