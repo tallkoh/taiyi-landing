@@ -4,9 +4,7 @@
   "framework": "vite",
   "cleanUrls": true,
   "crons": [
-    { "path": "/api/send-questionnaire", "schedule": "0 14 * * 3" },
-    { "path": "/api/generate-letters",   "schedule": "0 4 * * 6"  },
-    { "path": "/api/send-weekly",        "schedule": "0 22 * * 0" },
-    { "path": "/api/delete-cleanup",     "schedule": "0 3 * * *"  }
+    { "path": "/api/cron-dispatch",  "schedule": "0 4,14,22 * * *" },
+    { "path": "/api/delete-cleanup", "schedule": "0 3 * * *"       }
   ]
 }
