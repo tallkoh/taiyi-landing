@@ -1,56 +1,53 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { runSendQuestionnaire, runGenerateLetters, runSendWeekly } from '../lib/cron-jobs.js';
 
 // Vercel Hobby caps cron entries at 2/project AND each schedule must be
 // at most once-per-day. This dispatcher fires once daily at 22:00 UTC and
-// forwards to the right weekly endpoint based on day-of-week. Skips on
-// the other 4 days of the week.
+// runs the right weekly job based on day-of-week. Skips on the other 4 days.
 //
 // Schedule (in vercel.json):
 //   { path: "/api/cron-dispatch", schedule: "0 22 * * *" }
 //
-// Day-of-week → endpoint mapping:
-//   Wed → /api/send-questionnaire   (mid-week pulse)
-//   Sat → /api/generate-letters     (LLM batch, 24h before send)
-//   Sun → /api/send-weekly          (the letter itself)
+// Day-of-week → job:
+//   Wed → send-questionnaire   (mid-week pulse)
+//   Sat → generate-letters     (LLM batch, 24h before send)
+//   Sun → send-weekly          (the letter itself)
+//
+// For manual testing: ?job=questionnaire|generate|send overrides day-of-week.
 
-const TARGETS: Record<number, string> = {
-  3: '/api/send-questionnaire',
-  6: '/api/generate-letters',
-  0: '/api/send-weekly',
+const JOBS: Record<string, () => Promise<Record<string, unknown>>> = {
+  questionnaire: runSendQuestionnaire,
+  generate:      runGenerateLetters,
+  send:          runSendWeekly,
 };
 
-function siteUrl(): string {
-  return (process.env.SITE_URL ?? 'https://taiyi.guru').replace(/\/$/, '');
-}
+const DOW_TO_JOB: Record<number, keyof typeof JOBS> = {
+  3: 'questionnaire',
+  6: 'generate',
+  0: 'send',
+};
 
 export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
   const expected = process.env.CRON_SECRET;
-  const authHeader = req.headers.authorization;
-  if (!expected || authHeader !== `Bearer ${expected}`) {
+  if (!expected || req.headers.authorization !== `Bearer ${expected}`) {
     res.status(401).send('Unauthorized');
     return;
   }
 
-  const now = new Date();
-  const dow = now.getUTCDay();      // 0=Sun ... 6=Sat
-  const path = TARGETS[dow];
+  const force = typeof req.query.job === 'string' ? req.query.job : '';
+  const dow = new Date().getUTCDay();
+  const jobKey = force || DOW_TO_JOB[dow];
 
-  if (!path) {
+  if (!jobKey || !JOBS[jobKey]) {
     res.status(200).json({ skipped: true, dow });
     return;
   }
 
   try {
-    const r = await fetch(`${siteUrl()}${path}`, {
-      method: 'GET',
-      headers: { Authorization: authHeader },
-    });
-    const text = await r.text();
-    let body: unknown = text;
-    try { body = JSON.parse(text); } catch { /* keep as text */ }
-    res.status(r.status).json({ dispatched: path, status: r.status, body });
+    const result = await JOBS[jobKey]();
+    res.status(200).json({ job: jobKey, ...result });
   } catch (err) {
-    console.error('Cron dispatch fetch failed', path, err);
-    res.status(500).json({ error: 'Dispatch failed', path });
+    console.error('Cron job failed', jobKey, err);
+    res.status(500).json({ job: jobKey, error: 'Job failed' });
   }
 }
