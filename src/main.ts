@@ -18,9 +18,9 @@ app.innerHTML = `
       <div class="nav-links" role="list">
         <a href="#how" role="listitem">How it works</a>
         <a href="#why" role="listitem">Why Taiyi</a>
-        <a href="#about" role="listitem">About</a>
+        <a href="#sample" role="listitem">See a sample</a>
+        <a href="/blog" role="listitem">Blog</a>
         <a href="#pricing" role="listitem">Pricing</a>
-        <a href="#faq" role="listitem">FAQ</a>
       </div>
     </div>
   </nav>
@@ -31,84 +31,23 @@ app.innerHTML = `
         <div class="masthead-header">
           <div class="masthead-vertical masthead-vertical--left" aria-hidden="true">太乙</div>
           <div class="masthead-center">
-            <div class="masthead-eyebrow">丙午年 · 立夏 · <span class="masthead-week">WEEK OF MAY 17</span></div>
-            <h1 class="headline headline--lg masthead-headline">Your week, read through the four pillars.</h1>
+            <div class="masthead-eyebrow">丙午年 · 芒種 · <span class="masthead-week">A WEEKLY LETTER</span></div>
+            <h1 class="headline headline--lg masthead-headline">A weekly letter, written for your chart.</h1>
             <p class="sub-headline masthead-sub">
-              A weekly letter combining your bazi with where you live and the qimen calendar.
-              Sundays, by email. $18&thinsp;/&thinsp;month.
+              Four pillars + qimen + the solar calendar, read against the week ahead.
+              One letter, Sunday morning, by email. $18&thinsp;/&thinsp;month — no free tier, no trial.
+            </p>
+            <div class="masthead-ctas">
+              <a class="btn btn--primary btn--lg" href="#sample">See a real sample →</a>
+              <a class="btn btn--ghost btn--lg" href="#pricing">Or subscribe ($18/mo)</a>
+            </div>
+            <p class="form-hint masthead-hint">
+              The sample is the same pipeline as a paid Sunday letter.
+              One sample per email. No list, no marketing follow-up.
             </p>
           </div>
           <div class="masthead-vertical masthead-vertical--right" aria-hidden="true">壬寅日</div>
         </div>
-
-        <div class="scribble"></div>
-
-        <div class="data-strip masthead-strip">
-          <div class="data-cell">
-            <div class="data-cell-label"><span class="cn" style="margin-right:3px">宜</span>TODAY</div>
-            <div class="data-cell-value">sign contracts</div>
-            <div class="data-cell-sub">before noon</div>
-          </div>
-          <div class="data-cell">
-            <div class="data-cell-label"><span class="cn" style="font-weight:600;margin-right:3px">忌</span>TODAY</div>
-            <div class="data-cell-value">west meetings</div>
-            <div class="data-cell-sub">after 3 pm</div>
-          </div>
-          <div class="data-cell">
-            <div class="data-cell-label" style="font-family:var(--mono)">QIMEN №427</div>
-            <div class="data-cell-value">天輔星</div>
-            <div class="data-cell-sub">of 1,080 plates</div>
-          </div>
-        </div>
-
-        <form class="email-capture" id="subscribe-form">
-          <div class="row-form">
-            <input
-              type="email"
-              class="input input--lg"
-              name="email"
-              placeholder="your email — free Sunday preview first"
-              aria-label="Email address"
-              autocomplete="email"
-              required
-            />
-            <button class="btn btn--primary btn--lg" type="submit">Subscribe</button>
-          </div>
-          <p class="form-hint">free preview first · cancel anytime · $18/mo to keep reading</p>
-          <p class="form-status" id="subscribe-status" role="status" aria-live="polite"></p>
-        </form>
-      </div>
-    </section>
-
-    <section class="section" id="snapshot">
-      <div class="inner">
-        <span class="eyebrow">Or try the free snapshot first</span>
-        <form class="snapshot-card" id="snapshot-form">
-          <span class="eyebrow" style="font-size:9px;margin-bottom:10px">Your free bazi snapshot</span>
-          <div class="form-grid">
-            <div>
-              <label class="input-label" for="dob">date of birth</label>
-              <input class="input" id="dob" name="dob" type="text" placeholder="1983 / 11 / 04" autocomplete="bday" required />
-            </div>
-            <div>
-              <label class="input-label" for="tob">time of birth</label>
-              <input class="input" id="tob" name="tob" type="text" placeholder="07:42 am" required />
-            </div>
-            <div class="full">
-              <label class="input-label" for="pob">place of birth</label>
-              <input class="input" id="pob" name="pob" type="text" placeholder="Kuala Lumpur, Malaysia" autocomplete="country-name" required />
-            </div>
-            <div class="full">
-              <label class="input-label" for="email-snap">email (so we can send the weekly)</label>
-              <input class="input" id="email-snap" name="email" type="email" placeholder="you@somewhere.com" autocomplete="email" required />
-            </div>
-          </div>
-          <button class="btn btn--primary btn--lg btn--block snapshot-cta" type="submit">
-            Cast my pillars →
-          </button>
-          <p class="form-hint">free · 30 seconds · no card required</p>
-          <p class="form-status" id="snapshot-status" role="status" aria-live="polite"></p>
-        </form>
       </div>
     </section>
 
@@ -134,15 +73,15 @@ app.innerHTML = `
           <li class="how-item">
             <div class="how-num" aria-hidden="true">3</div>
             <div class="how-body">
-              <div class="how-title">Weather + season <span class="cn">節氣</span></div>
-              <div class="how-desc">Local conditions mapped to the 24 solar terms.</div>
+              <div class="how-title">The week ahead <span class="cn">節氣</span></div>
+              <div class="how-desc">The 24 solar terms set the weather behind the week.</div>
             </div>
           </li>
           <li class="how-item">
             <div class="how-num" aria-hidden="true">4</div>
             <div class="how-body">
-              <div class="how-title">Qimen calendar <span class="cn">奇門</span></div>
-              <div class="how-desc">1,080 plates a year. Our indexed library is the moat.</div>
+              <div class="how-title">Your pulse <span class="cn">奇門</span></div>
+              <div class="how-desc">Three one-tap questions mid-week tune Sunday's writing.</div>
             </div>
           </li>
         </ol>
@@ -152,162 +91,242 @@ app.innerHTML = `
     <section class="section" id="why">
       <div class="inner">
         <span class="eyebrow">Why Taiyi</span>
-        <h2 class="headline headline--md">Public-domain classics, not vibes.</h2>
+        <h2 class="headline headline--md">Classical sources, not vibes.</h2>
         <p class="sub-headline">
-          Every reading is sourced. We index six classical qimen texts — all pre-1929, all public domain — verse by verse, cross-referenced to your chart.
+          Every reading is grounded in an indexed library of Chinese metaphysics teachings — bazi,
+          qimen dunjia, the solar calendar, date selection, and the I Ching — cross-referenced to
+          your chart. We don't ship horoscopes; we write letters.
         </p>
         <div class="sources-table">
           <div class="sources-row sources-row--header">
-            <div class="sources-title">Text</div>
-            <div class="sources-date">Date</div>
+            <div class="sources-title">Discipline</div>
+            <div class="sources-date">Use</div>
           </div>
           <div class="sources-row">
             <div class="sources-title">
-              <span class="cn sources-cn">奇門遁甲統宗</span>
-              <span class="sources-py">Qímén Dùnjiǎ Tǒngzōng</span>
+              <span class="cn sources-cn">四柱命理</span>
+              <span class="sources-py">Bazi (Four Pillars)</span>
             </div>
-            <div class="sources-date">1641</div>
+            <div class="sources-date">Identity</div>
           </div>
           <div class="sources-row">
             <div class="sources-title">
-              <span class="cn sources-cn">烟波釣叟賦</span>
-              <span class="sources-py">Yān Bō Diào Sǒu Fù</span>
+              <span class="cn sources-cn">奇門遁甲</span>
+              <span class="sources-py">Qi Men Dun Jia</span>
             </div>
-            <div class="sources-date">Tang dyn.</div>
+            <div class="sources-date">Forecasting</div>
           </div>
           <div class="sources-row">
             <div class="sources-title">
-              <span class="cn sources-cn">紫白訣</span>
-              <span class="sources-py">Zǐbái Jué</span>
+              <span class="cn sources-cn">節氣</span>
+              <span class="sources-py">24 Solar Terms</span>
             </div>
-            <div class="sources-date">Song dyn.</div>
+            <div class="sources-date">Season</div>
           </div>
           <div class="sources-row">
             <div class="sources-title">
-              <span class="sources-cn" style="font-size:14px;color:var(--muted)">+ 3 sister texts</span>
-              <span class="sources-py">indexed</span>
+              <span class="cn sources-cn">擇日學</span>
+              <span class="sources-py">Date Selection</span>
             </div>
-            <div class="sources-date">—</div>
+            <div class="sources-date">Timing</div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section class="section" id="about">
-      <div class="inner">
-        <span class="eyebrow">Who we are</span>
-        <h2 class="headline headline--md">A Singapore project, classically sourced.</h2>
-        <p class="sub-headline">
-          Taiyi is built in Singapore by a small team of qimen practitioners and the indexed source library
-          they spent years assembling. We grew up watching aunties and mothers pay reasonable money for
-          unreasonable readings — generic horoscopes dressed in Chinese characters — and we wanted something
-          that actually consulted the texts.
+        <p class="sub-headline" style="margin-top:24px;font-size:13px;color:var(--muted)">
+          Want to learn the systems? See the <a href="/blog">blog</a> for plain-English explainers.
         </p>
-        <p class="sub-headline">
-          The depth of the moat is the library. <span class="cn">奇門遁甲統宗</span> (1641),
-          <span class="cn">烟波釣叟賦</span> (Tang), <span class="cn">紫白訣</span> (Song) and three sister
-          classics — indexed verse by verse, cross-referenced to your chart. Every Sunday's letter is reviewed
-          against a working practitioner's chart-reading before it ships. We don't sign with master titles;
-          the texts do.
-        </p>
-        <p class="sub-headline">
-          Write to us — we read every reply. Sundays, after the letter goes out.
-        </p>
-        <div class="about-signature">
-          <span class="stamp" aria-hidden="true">太</span>
-          <div class="about-sig-text">
-            <div class="about-sig-name">The Taiyi readers</div>
-            <div class="about-sig-where"><span class="cn">新加坡</span> · Singapore</div>
-          </div>
-        </div>
       </div>
     </section>
 
     <section class="section section--tinted" id="sample">
       <div class="inner">
-        <span class="eyebrow">Last Sunday's letter</span>
-        <h2 class="headline headline--md">This is what lands in your inbox.</h2>
+        <span class="eyebrow">See a real sample</span>
+        <h2 class="headline headline--md">A real letter, written for your chart, in 10 seconds.</h2>
+        <p class="sub-headline">
+          Same pipeline, same model, same length as a Sunday letter to a paying reader.
+          We use your inputs to cast your four pillars and generate the week's letter live.
+          One sample per email. No marketing emails, no list.
+        </p>
 
-        <div class="nl-preview" aria-label="Sample newsletter issue 47">
+        <form class="sample-card" id="sample-form">
+          <div class="form-grid">
+            <div class="full">
+              <label class="input-label" for="s-name">your name</label>
+              <input class="input" id="s-name" name="name" type="text" placeholder="Jessica" autocomplete="given-name" required />
+            </div>
+            <div>
+              <label class="input-label" for="s-dob">date of birth</label>
+              <input class="input" id="s-dob" name="dob" type="date" required />
+            </div>
+            <div>
+              <label class="input-label" for="s-tob">time of birth</label>
+              <input class="input" id="s-tob" name="tob" type="time" required />
+              <label class="micro-check">
+                <input type="checkbox" id="s-tob-unknown" name="tobUnknown" />
+                I don't know — use noon
+              </label>
+            </div>
+            <div class="full">
+              <label class="input-label" for="s-pob">place of birth</label>
+              <input class="input" id="s-pob" name="pob" type="text" placeholder="Kuala Lumpur, Malaysia" required />
+            </div>
+            <div>
+              <label class="input-label" for="s-country">current country</label>
+              <select class="input" id="s-country" name="currentCountry" required>
+                <option value="">Select…</option>
+                <option value="SG">Singapore</option>
+                <option value="MY">Malaysia</option>
+                <option value="HK">Hong Kong</option>
+                <option value="TW">Taiwan</option>
+                <option value="CN">China</option>
+                <option value="US">United States</option>
+                <option value="GB">United Kingdom</option>
+                <option value="AU">Australia</option>
+                <option value="CA">Canada</option>
+                <option value="DE">Germany</option>
+                <option value="FR">France</option>
+                <option value="JP">Japan</option>
+                <option value="KR">South Korea</option>
+                <option value="IN">India</option>
+                <option value="ID">Indonesia</option>
+                <option value="TH">Thailand</option>
+                <option value="VN">Vietnam</option>
+                <option value="PH">Philippines</option>
+                <option value="AE">UAE</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </div>
+            <div>
+              <label class="input-label" for="s-gender">gender</label>
+              <select class="input" id="s-gender" name="gender" required>
+                <option value="">Select…</option>
+                <option value="f">Female</option>
+                <option value="m">Male</option>
+                <option value="nb">Non-binary</option>
+                <option value="unspecified">Prefer not to say</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="pulse-block">
+            <div class="pulse-eyebrow">Three quick questions — the week's pulse</div>
+            <div class="pulse-q">
+              <div class="pulse-q-label">1. How is your energy this week?</div>
+              <div class="pulse-q-opts">
+                <label class="pulse-opt"><input type="radio" name="energy" value="low" required /><span>Running low</span></label>
+                <label class="pulse-opt"><input type="radio" name="energy" value="steady" /><span>Steady</span></label>
+                <label class="pulse-opt"><input type="radio" name="energy" value="high" /><span>High</span></label>
+              </div>
+            </div>
+            <div class="pulse-q">
+              <div class="pulse-q-label">2. Where is your attention pointing?</div>
+              <div class="pulse-q-opts">
+                <label class="pulse-opt"><input type="radio" name="focus" value="work" required /><span>Work</span></label>
+                <label class="pulse-opt"><input type="radio" name="focus" value="relationships" /><span>Relationships</span></label>
+                <label class="pulse-opt"><input type="radio" name="focus" value="health" /><span>Health</span></label>
+                <label class="pulse-opt"><input type="radio" name="focus" value="creativity" /><span>Creativity</span></label>
+                <label class="pulse-opt"><input type="radio" name="focus" value="rest" /><span>Rest</span></label>
+              </div>
+            </div>
+            <div class="pulse-q">
+              <div class="pulse-q-label">3. What feels heavy right now?</div>
+              <div class="pulse-q-opts">
+                <label class="pulse-opt"><input type="radio" name="weight" value="decisions" required /><span>Decisions</span></label>
+                <label class="pulse-opt"><input type="radio" name="weight" value="people" /><span>People</span></label>
+                <label class="pulse-opt"><input type="radio" name="weight" value="uncertainty" /><span>Uncertainty</span></label>
+                <label class="pulse-opt"><input type="radio" name="weight" value="nothing" /><span>Nothing in particular</span></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="full">
+              <label class="input-label" for="s-email">email</label>
+              <input class="input" id="s-email" name="email" type="email" placeholder="you@somewhere.com" autocomplete="email" required />
+              <div class="micro-note">Used only to dedupe samples. We won't add you to any list.</div>
+            </div>
+          </div>
+
+          <button class="btn btn--primary btn--lg btn--block sample-cta" type="submit">
+            Write my sample letter →
+          </button>
+          <p class="form-hint">Takes ~10 seconds. One sample per email.</p>
+          <p class="form-status" id="sample-status" role="status" aria-live="polite"></p>
+        </form>
+
+        <div class="sample-output" id="sample-output" hidden>
+          <div class="nl-preview">
+            <div class="nl-header">
+              <div class="nl-header-left">
+                <div class="nl-issue" id="sample-issue">Taiyi · Your sample</div>
+                <div class="nl-title" id="sample-title">—</div>
+              </div>
+              <span class="stamp" aria-hidden="true">太</span>
+            </div>
+            <pre class="nl-body" id="sample-body">—</pre>
+          </div>
+          <div class="sample-cta-after">
+            <h3 class="headline headline--md" style="margin-bottom:8px">Want one of these every Sunday?</h3>
+            <p class="sub-headline" style="margin:0 0 16px">
+              No free tier, no trial. $18/month. Cancel one-click from any letter.
+            </p>
+            <button class="btn btn--primary btn--lg btn--block" type="button" id="checkout-after-sample">
+              Subscribe — $18 / month
+            </button>
+            <p class="form-status" id="checkout-status-after" role="status" aria-live="polite"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="format">
+      <div class="inner">
+        <span class="eyebrow">What a letter looks like</span>
+        <h2 class="headline headline--md">Four sections, ~400 words, every Sunday.</h2>
+        <div class="nl-preview" style="margin-top:18px">
           <div class="nl-header">
             <div class="nl-header-left">
-              <div class="nl-issue">Taiyi · Issue 47 · May 17</div>
-              <div class="nl-title">The week the <span class="cn">天輔</span> opens.</div>
+              <div class="nl-issue">Taiyi · Week of 15 Jun</div>
+              <div class="nl-title">Steady hands in a hot week.</div>
             </div>
             <span class="stamp" aria-hidden="true">太</span>
           </div>
-
           <div class="nl-personalization">
-            For Jessica · Yang Fire day master · KL · 3.1°N
+            For a <span class="cn">甲</span> yang-wood day master · Singapore · solar term <span class="cn">芒種</span> Grain in Ear
           </div>
 
-          <p class="nl-prose">
-            Dear Jessica — the week opens with <span class="cn">天輔</span>, the scholarly star, landing in your career palace.
-            For a yang-fire day master this is unambiguous: the heavens are handing you contracts, exams, applications.
-            Sign the lease, send the proposal, file the application. Take it Monday before noon — the plate weakens after.
-          </p>
-          <p class="nl-prose">
-            Wednesday is to read, not ship. The <span class="cn">戊辰</span> hour pulls your output palace into shadow;
-            whatever you publish that morning will read flatter than you mean it to. Move it to Friday when <span class="cn">丙寅</span>
-            brings <span class="cn">文昌</span> into view. Same draft, twice the reception.
-          </p>
-          <p class="nl-prose">
-            Travel south and southeast on Thursday — Hong Kong, Manila, Singapore. Avoid the north for moving money this week;
-            <span class="cn">太歲</span> sits there and the friction compounds. If you must send funds north, wait until the 23rd.
-          </p>
-
-          <div class="nl-data-strip">
-            <div class="nl-data-cell">
-              <div class="nl-data-label">SOLAR TERM</div>
-              <div class="nl-data-main cn" style="font-weight:600;font-size:18px;line-height:1">立夏</div>
-              <div class="nl-data-sub">Lìxià</div>
-            </div>
-            <div class="nl-data-cell">
-              <div class="nl-data-label">QIMEN</div>
-              <div class="nl-data-main" style="font-family:var(--mono);font-size:15px">№427</div>
-              <div class="nl-data-sub">of 1080</div>
-            </div>
-            <div class="nl-data-cell">
-              <div class="nl-data-label">KL TODAY</div>
-              <div class="nl-data-main" style="font-size:13px">27° monsoon</div>
-              <div class="nl-data-sub">east clear</div>
-            </div>
+          <div class="nl-section">
+            <div class="nl-section-h">This week's energy</div>
+            <p class="nl-prose">
+              For a <span class="cn">甲</span> wood day master, this week feels warm, active, and a little drying under <span class="cn">芒種</span>,
+              the Grain in Ear season. With so much fire around the chart, movement comes easily — but your pulse says energy is low,
+              so the task is not to push harder. It is to keep your root in place while the outer pace stays busy.
+            </p>
           </div>
 
-          <div class="nl-days" role="table" aria-label="Weekly almanac">
-            <div class="nl-day" role="row">
-              <div class="nl-day-date" role="cell"><span class="nl-day-name">Mon</span><span class="nl-day-num">18</span></div>
-              <div class="nl-day-good" role="cell"><span class="cn nl-yj">宜</span>sign contracts before noon</div>
-              <div class="nl-day-bad" role="cell"><span class="cn nl-yj">忌</span>west mtgs after 3pm</div>
-            </div>
-            <div class="nl-day" role="row">
-              <div class="nl-day-date" role="cell"><span class="nl-day-name">Tue</span><span class="nl-day-num">19</span></div>
-              <div class="nl-day-good" role="cell"><span class="cn nl-yj">宜</span>ask the hard question</div>
-              <div class="nl-day-bad" role="cell"><span class="cn nl-yj">忌</span>moving money north</div>
-            </div>
-            <div class="nl-day" role="row">
-              <div class="nl-day-date" role="cell"><span class="nl-day-name">Wed</span><span class="nl-day-num">20</span></div>
-              <div class="nl-day-good" role="cell"><span class="cn nl-yj">宜</span>edit, don't ship</div>
-              <div class="nl-day-bad" role="cell"><span class="cn nl-yj">忌</span>first dates</div>
-            </div>
-            <div class="nl-day" role="row">
-              <div class="nl-day-date" role="cell"><span class="nl-day-name">Thu</span><span class="nl-day-num">21</span></div>
-              <div class="nl-day-good" role="cell"><span class="cn nl-yj">宜</span>travel south + southeast</div>
-              <div class="nl-day-bad" role="cell"><span class="cn nl-yj">忌</span>dentist if you can</div>
-            </div>
-            <div class="nl-day" role="row">
-              <div class="nl-day-date" role="cell"><span class="nl-day-name">Fri</span><span class="nl-day-num">22</span></div>
-              <div class="nl-day-good" role="cell"><span class="cn nl-yj">宜</span>public-facing day</div>
-              <div class="nl-day-bad" role="cell"><span class="cn nl-yj">忌</span>—</div>
-            </div>
+          <div class="nl-section">
+            <div class="nl-section-h">What to focus on</div>
+            <p class="nl-prose">
+              Since work is where your attention is going, keep decisions close to the current situation rather than trying to solve
+              the whole season at once. In qimen terms, good forecasting starts with three parts: who is asking, what is happening now,
+              and what outcome actually matters. Stay with those three and the choices simplify.
+            </p>
           </div>
 
-          <blockquote class="nl-quote">
-            天輔之星，主文書、文章、考試、求名、出行、見貴。
-          </blockquote>
-          <div class="nl-source">
-            — 烟波釣叟賦
-            <span class="nl-source-note">(Yān Bō Diào Sǒu Fù, Tang dynasty, public domain)</span>
+          <div class="nl-section">
+            <div class="nl-section-h">What to watch for</div>
+            <p class="nl-prose">
+              The main risk is execution pressure: turning one problem into a larger crisis because too many threads are carried at once.
+              Fire energy makes urgency feel more important than accuracy. If a choice feels heavy, that is usually a sign to separate
+              the immediate task from the bigger story you are telling about it.
+            </p>
+          </div>
+
+          <div class="nl-section">
+            <div class="nl-section-h">A small practice</div>
+            <p class="nl-prose">
+              Pick one work decision and write three short lines: current situation, next useful move, likely result if kept simple.
+              Stop there for the day. Clarity comes from sequence, not force.
+            </p>
           </div>
         </div>
       </div>
@@ -316,6 +335,11 @@ app.innerHTML = `
     <section class="section" id="pricing">
       <div class="inner">
         <span class="eyebrow">Pricing</span>
+        <h2 class="headline headline--md">$18/month. No free tier.</h2>
+        <p class="sub-headline">
+          One letter, Sunday morning. Mid-week, three one-tap questions to tune the writing.
+          Cancel anytime — one click from any letter. Your data is deleted within 7 days of cancellation.
+        </p>
         <div class="pricing-card">
           <div class="pricing-top">
             <div class="pricing-amount">
@@ -323,58 +347,58 @@ app.innerHTML = `
             </div>
             <span class="stamp stamp--lg" aria-hidden="true">月</span>
           </div>
-          <p class="pricing-desc">
-            One letter, Sunday morning local. Your snapshot stays free.
-            Cancel anytime — your data is deleted within 7 days.
-          </p>
           <ul class="pricing-features">
-            <li>Weekly localized fengshui letter</li>
-            <li>Day-by-day <span class="cn">宜</span> / <span class="cn">忌</span> (do&thinsp;/&thinsp;don't)</li>
-            <li>Source-cited classical quotes</li>
-            <li>Annual luck-pillar update (Lunar New Year)</li>
+            <li>One weekly letter, Sunday morning</li>
+            <li>Four-section structure tuned to your chart and pulse</li>
+            <li>Grounded in an indexed library of bazi + qimen + date selection teachings</li>
+            <li>Mid-week pulse — three one-tap questions, no login</li>
+            <li>One-click cancel, 7-day data deletion</li>
           </ul>
-          <button class="btn btn--primary btn--lg btn--block" type="button" id="checkout-button">Start — $18 / month</button>
+          <button class="btn btn--primary btn--lg btn--block" type="button" id="checkout-button">Subscribe — $18 / month</button>
           <p class="form-status" id="checkout-status" role="status" aria-live="polite"></p>
         </div>
+        <p class="form-hint" style="text-align:center;margin-top:16px">
+          Curious before paying? <a href="#sample">Generate a free sample</a> with your actual chart.
+        </p>
       </div>
     </section>
 
     <section class="section" id="faq">
       <div class="inner">
-        <span class="eyebrow">Skeptics first · FAQ</span>
+        <span class="eyebrow">FAQ</span>
         <div class="faq-list">
           <details class="faq-item">
-            <summary class="faq-question">Isn't this just astrology? How is it different?</summary>
+            <summary class="faq-question">Why no free tier or trial?</summary>
             <div class="faq-answer">
-              <p>Astrology (western) maps planets to a fixed zodiac. Bazi (四柱命理) is a Chinese calendrical system that maps the specific five-element composition at your birth date and time to heavenly stems and earthly branches — a different calculus entirely. Qimen (奇門遁甲) is a tactical calendar, not a personality read. The practical difference: we tell you which direction to avoid for an important meeting this Thursday, not what your rising sign says about your relationship style.</p>
+              <p>The sample is the free tier — a real letter, written for your real chart, by the same pipeline that writes paid Sunday letters. After the sample, every letter costs us LLM credits and engineering time. We'd rather keep the writing dense and the operation small than chase free users.</p>
             </div>
           </details>
 
           <details class="faq-item">
-            <summary class="faq-question">How is this different from a generic weekly horoscope?</summary>
+            <summary class="faq-question">Isn't this just astrology?</summary>
             <div class="faq-answer">
-              <p>A generic horoscope reads the same week for everyone born in your month. Taiyi reads <em>your</em> week — calculated from your specific date, time, and place of birth, cross-referenced against the qimen calendar plate active that week, and adjusted for the latitude you actually live at. KL ≠ London. Yang fire ≠ yang water. We don't ship one letter to twelve audiences; we ship one letter to one reader.</p>
+              <p>Astrology (western) maps planets to a fixed zodiac. Bazi (<span class="cn">四柱命理</span>) is a Chinese calendrical system that reads the five-element composition at your birth date and time. Qimen (<span class="cn">奇門遁甲</span>) is a tactical forecasting calendar, not a personality read. The practical difference: we tell you how to hold this Wednesday, not what your rising sign says about your relationships.</p>
             </div>
           </details>
 
           <details class="faq-item">
-            <summary class="faq-question">Is the same letter sent to everyone?</summary>
+            <summary class="faq-question">Is every letter actually different per subscriber?</summary>
             <div class="faq-answer">
-              <p>No. Every Sunday's letter is written for a single subscriber from four inputs: your four pillars (bazi), your latitude and longitude, the current solar term, and the qimen plate active that week. Two subscribers born the same day in different cities receive different letters; two subscribers in the same city with different birth times receive different letters. The framing, citation, and day-by-day <span class="cn">宜</span> / <span class="cn">忌</span> are all yours alone.</p>
+              <p>Yes. The letter is composed from your four pillars, the current solar term, your current country, and your mid-week pulse answers — and grounded in a retrieval over our indexed library of classical sources keyed to your day master and the week's themes. Two subscribers born the same day in different cities receive different letters; two in the same city with different pulses receive different letters.</p>
             </div>
           </details>
 
           <details class="faq-item">
             <summary class="faq-question">What happens to my date-of-birth data? (PDPA / PDPL)</summary>
             <div class="faq-answer">
-              <p>Your date of birth and birth time are used only to calculate your four pillars — they are stored encrypted and never shared or sold. You can request deletion at any time; your data is purged within 7 days. We comply with Singapore PDPA 2012 and Malaysia PDPA 2010.</p>
+              <p>Your date of birth and birth time are used only to calculate your four pillars. You can request deletion at any time; your data is purged within 7 days. We comply with Singapore PDPA 2012 and Malaysia PDPA 2010.</p>
             </div>
           </details>
 
           <details class="faq-item">
-            <summary class="faq-question">Can I cancel? Will you keep emailing me?</summary>
+            <summary class="faq-question">Can I cancel?</summary>
             <div class="faq-answer">
-              <p>Cancel any time — one click from the link at the bottom of any letter, no form, no retention email. The subscription stops immediately. We send only what you signed up for: one letter per Sunday and, if you opt in, a Lunar New Year luck-pillar update. No upsells, no notifications, no ads.</p>
+              <p>One click from the link at the bottom of any letter. No form, no retention email. Subscription stops immediately. We send only the Sunday letter plus a brief mid-week pulse email. No upsells, no notifications, no ads.</p>
             </div>
           </details>
         </div>
@@ -386,6 +410,7 @@ app.innerHTML = `
     <div class="footer-inner">
       <span class="footer-brand">Taiyi · <span class="cn" style="font-size:13px">太乙</span> · SG / MY · 2026</span>
       <div class="footer-links">
+        <a href="/blog">blog</a>
         <a href="/privacy">privacy</a>
         <a href="/delete">delete my data</a>
         <a href="/contact">contact</a>
@@ -394,7 +419,7 @@ app.innerHTML = `
   </footer>
 `;
 
-// Handle Stripe post-checkout redirect: /?checkout=success
+// Stripe success redirect handling
 if (new URLSearchParams(window.location.search).get('checkout') === 'success') {
   window.history.replaceState({}, '', '/');
   const statusEl = document.querySelector<HTMLParagraphElement>('#checkout-status');
@@ -408,106 +433,94 @@ if (new URLSearchParams(window.location.search).get('checkout') === 'success') {
 const setStatus = (elementId: string, status: FormStatus, message: string) => {
   const statusNode = document.querySelector<HTMLParagraphElement>(`#${elementId}`);
   if (!statusNode) return;
-
   statusNode.textContent = message;
   statusNode.dataset.status = status;
 };
 
-const getStringValue = (formData: FormData, key: string) => {
-  const value = formData.get(key);
-  return typeof value === 'string' ? value.trim() : '';
-};
-
+// In-page anchors smooth-scroll
 document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach(link => {
   link.addEventListener('click', event => {
     const targetSelector = link.getAttribute('href');
     if (!targetSelector) return;
-
     const target = document.querySelector(targetSelector);
     if (!target) return;
-
     event.preventDefault();
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
 
-document.querySelector<HTMLFormElement>('#subscribe-form')?.addEventListener('submit', async event => {
-  event.preventDefault();
-
-  const form = event.currentTarget as HTMLFormElement;
-  const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
-  const email = getStringValue(new FormData(form), 'email');
-
-  if (!email) {
-    setStatus('subscribe-status', 'error', 'Enter an email address to get the Sunday preview.');
-    return;
-  }
-
-  if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
-
-  try {
-    const res = await fetch('/api/subscribe', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email }),
-    });
-    const data = await res.json() as { ok?: boolean; error?: string };
-    if (res.ok) {
-      setStatus('subscribe-status', 'success', `Check your inbox — confirmation on its way to ${email}.`);
-      form.reset();
-    } else {
-      setStatus('subscribe-status', 'error', data.error ?? 'Something went wrong. Try again.');
-    }
-  } catch {
-    setStatus('subscribe-status', 'error', 'Network error. Check your connection and try again.');
-  } finally {
-    if (btn) { btn.disabled = false; btn.textContent = 'Subscribe'; }
+// TOB unknown toggle
+const tobInput = document.querySelector<HTMLInputElement>('#s-tob');
+const tobUnknown = document.querySelector<HTMLInputElement>('#s-tob-unknown');
+tobUnknown?.addEventListener('change', () => {
+  if (!tobInput) return;
+  if (tobUnknown.checked) {
+    tobInput.value = '12:00';
+    tobInput.disabled = true;
+  } else {
+    tobInput.disabled = false;
   }
 });
 
-document.querySelector<HTMLFormElement>('#snapshot-form')?.addEventListener('submit', async event => {
+// Sample form
+const sampleForm = document.querySelector<HTMLFormElement>('#sample-form');
+sampleForm?.addEventListener('submit', async event => {
   event.preventDefault();
-
   const form = event.currentTarget as HTMLFormElement;
   const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
-  const formData = new FormData(form);
-  const email = getStringValue(formData, 'email');
-  const dob   = getStringValue(formData, 'dob');
-  const tob   = getStringValue(formData, 'tob');
-  const pob   = getStringValue(formData, 'pob');
+  const fd = new FormData(form);
 
-  if (!email || !dob || !tob || !pob) {
-    setStatus('snapshot-status', 'error', 'Complete all four fields to cast the snapshot.');
-    return;
-  }
+  const payload = {
+    name:            fd.get('name')?.toString().trim(),
+    email:           fd.get('email')?.toString().trim(),
+    dob:             fd.get('dob')?.toString().trim(),
+    tob:             fd.get('tob')?.toString().trim(),
+    tobUnknown:      fd.get('tobUnknown') === 'on',
+    pob:             fd.get('pob')?.toString().trim(),
+    currentCountry:  fd.get('currentCountry')?.toString().trim(),
+    gender:          fd.get('gender')?.toString().trim(),
+    energy:          fd.get('energy')?.toString().trim(),
+    focus:           fd.get('focus')?.toString().trim(),
+    weight:          fd.get('weight')?.toString().trim(),
+  };
 
-  if (btn) { btn.disabled = true; btn.textContent = 'Casting…'; }
+  if (btn) { btn.disabled = true; btn.textContent = 'Writing your letter… (~10s)'; }
+  setStatus('sample-status', 'idle', '');
 
   try {
-    const res = await fetch('/api/snapshot', {
+    const res = await fetch('/api/sample', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, dob, tob, pob }),
+      body: JSON.stringify(payload),
     });
-    const data = await res.json() as { ok?: boolean; error?: string };
-    if (res.ok) {
-      setStatus('snapshot-status', 'success', `Snapshot queued for ${email} — you'll hear from us soon.`);
+    const data = await res.json() as { ok?: boolean; error?: string; subject?: string; body?: string; cached?: boolean };
+    if (res.ok && data.body) {
+      const titleEl = document.querySelector<HTMLDivElement>('#sample-title');
+      const bodyEl  = document.querySelector<HTMLPreElement>('#sample-body');
+      const issueEl = document.querySelector<HTMLDivElement>('#sample-issue');
+      if (titleEl) titleEl.textContent = data.subject?.replace(/^Taiyi\s*·\s*/, '') ?? '—';
+      if (bodyEl)  bodyEl.textContent  = data.body;
+      if (issueEl) issueEl.textContent = data.cached
+        ? 'Taiyi · Your sample (saved from last time)'
+        : 'Taiyi · Your sample';
+      document.querySelector<HTMLDivElement>('#sample-output')?.removeAttribute('hidden');
+      document.querySelector('#sample-output')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       form.reset();
     } else {
-      setStatus('snapshot-status', 'error', data.error ?? 'Something went wrong. Try again.');
+      setStatus('sample-status', 'error', data.error ?? 'Something went wrong. Try again.');
     }
   } catch {
-    setStatus('snapshot-status', 'error', 'Network error. Check your connection and try again.');
+    setStatus('sample-status', 'error', 'Network error. Try again.');
   } finally {
-    if (btn) { btn.disabled = false; btn.textContent = 'Cast my pillars →'; }
+    if (btn) { btn.disabled = false; btn.textContent = 'Write my sample letter →'; }
   }
 });
 
-document.querySelector<HTMLButtonElement>('#checkout-button')?.addEventListener('click', async event => {
-  const btn = event.currentTarget as HTMLButtonElement;
+// Checkout (two buttons, same flow)
+async function startCheckout(btn: HTMLButtonElement, statusEl: string) {
   btn.disabled = true;
+  const originalText = btn.textContent;
   btn.textContent = 'Loading…';
-
   try {
     const res = await fetch('/api/checkout', { method: 'POST' });
     const data = await res.json() as { url?: string; error?: string };
@@ -515,11 +528,15 @@ document.querySelector<HTMLButtonElement>('#checkout-button')?.addEventListener(
       window.location.href = data.url;
       return;
     }
-    setStatus('checkout-status', 'error', data.error ?? 'Checkout unavailable. Try again shortly.');
+    setStatus(statusEl, 'error', data.error ?? 'Checkout unavailable. Try again shortly.');
   } catch {
-    setStatus('checkout-status', 'error', 'Network error. Try again.');
+    setStatus(statusEl, 'error', 'Network error. Try again.');
   }
-
   btn.disabled = false;
-  btn.textContent = 'Start — $18 / month';
-});
+  btn.textContent = originalText;
+}
+
+document.querySelector<HTMLButtonElement>('#checkout-button')?.addEventListener('click', e =>
+  startCheckout(e.currentTarget as HTMLButtonElement, 'checkout-status'));
+document.querySelector<HTMLButtonElement>('#checkout-after-sample')?.addEventListener('click', e =>
+  startCheckout(e.currentTarget as HTMLButtonElement, 'checkout-status-after'));

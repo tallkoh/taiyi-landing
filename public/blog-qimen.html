@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Qimen in plain English · Taiyi 太乙</title>
+  <meta name="description" content="A plain-English explainer of Qi Men Dun Jia: a tactical Chinese forecasting calendar. The eight doors, the nine palaces, and why qimen is about timing." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500&family=Inter+Tight:wght@400;500;600&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #faf8f3; --paper-2: #f1ede2;
+      --ink: #1a1612; --ink-2: #3a322a; --muted: #847b6a;
+      --seal: #b83828; --line-soft: rgba(26,22,18,.22);
+      --display: 'Newsreader', Georgia, serif;
+      --body: 'Inter Tight', system-ui, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, monospace;
+      --cn:   'Noto Serif SC', serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { font-family: var(--body); background: var(--paper); color: var(--ink); font-size: 15px; line-height: 1.55; min-height: 100vh; }
+    .nav { padding: 0 24px; height: 52px; display: flex; justify-content: space-between; align-items: center; background: var(--paper-2); border-bottom: 1px dashed var(--line-soft); }
+    .nav-logo { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-size: 18px; font-weight: 500; color: var(--ink); text-decoration: none; }
+    .stamp { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: var(--seal); color: var(--paper); font-family: var(--cn); font-weight: 700; font-size: 14px; border-radius: 2px; transform: rotate(-3deg); }
+    .nav-back { font-family: var(--mono); font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.06em; }
+    article { max-width: 640px; margin: 0 auto; padding: 56px 24px 80px; }
+    .eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    h1 { font-family: var(--display); font-weight: 400; font-size: 36px; line-height: 1.08; letter-spacing: -0.02em; margin: 6px 0 18px; }
+    h2 { font-family: var(--display); font-weight: 500; font-size: 22px; line-height: 1.2; margin: 36px 0 12px; }
+    h3 { font-family: var(--body); font-weight: 600; font-size: 14px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); margin: 24px 0 8px; }
+    p, li { font-size: 15.5px; line-height: 1.62; color: var(--ink-2); margin: 0 0 14px; }
+    em { color: var(--ink); }
+    .cn { font-family: var(--cn); }
+    a { color: var(--seal); }
+    .meta { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.06em; margin-bottom: 28px; }
+    table { width: 100%; border-collapse: collapse; margin: 14px 0 22px; font-size: 13.5px; }
+    table th, table td { padding: 8px 10px; border-bottom: 1px dashed var(--line-soft); text-align: left; vertical-align: top; }
+    table th { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+    code { font-family: var(--mono); font-size: 13px; background: var(--paper-2); padding: 1px 5px; border-radius: 2px; }
+    blockquote { border-left: 2.5px solid var(--seal); padding: 4px 0 4px 14px; margin: 16px 0 18px; font-style: italic; color: var(--ink-2); }
+    .end-cta { margin-top: 36px; padding: 22px; border: 1.5px solid var(--ink); background: color-mix(in srgb, var(--seal) 4%, var(--paper) 96%); box-shadow: 3px 3px 0 0 var(--ink); border-radius: 2px; text-align: center; }
+    .end-cta p { margin: 0 0 12px; font-size: 14px; }
+    .btn { display: inline-block; background: var(--seal); color: var(--paper); border: 1.5px solid var(--seal); padding: 12px 22px; font-family: var(--body); font-weight: 500; font-size: 14px; text-decoration: none; border-radius: 2px; box-shadow: 2px 2px 0 0 var(--ink); }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="/" class="nav-logo"><span class="stamp">太</span>Taiyi</a>
+    <a href="/blog" class="nav-back">← all posts</a>
+  </nav>
+  <article>
+    <div class="eyebrow">Qi Men Dun Jia · 奇門遁甲</div>
+    <h1>Qimen in plain English: a tactical calendar, not a horoscope.</h1>
+    <div class="meta">~7 minute read</div>
+
+    <p>
+      If bazi is your chart, qimen is the week. <em>Qi Men Dun Jia</em> (<span class="cn">奇門遁甲</span>) is a Chinese
+      forecasting system that's distinct from bazi and worth understanding on its own terms. The short version:
+      bazi is identity, qimen is timing.
+    </p>
+
+    <p>
+      Qimen has a long backstory — sources tie it to military strategists in pre-imperial China, where it was used to time
+      troop movements, choose directions for attack or retreat, and read what an envoy from the other side was likely going
+      to say. By the Tang and Song dynasties it had been formalized into the system practitioners use today: a calendar of
+      <em>plates</em> (<span class="cn">局</span>) that change throughout the day, each plate carrying information about
+      which directions and decisions are favored at that hour.
+    </p>
+
+    <h2>The plate</h2>
+
+    <p>
+      A qimen plate is a 3×3 grid — nine cells, called <em>palaces</em> (<span class="cn">宮</span>) — laid out compass-style:
+      south on top, north on bottom, east on the left, west on the right. The center is the ninth palace.
+    </p>
+
+    <p>
+      Into this grid the system distributes several layers of symbols:
+    </p>
+
+    <ul>
+      <li>The <em>eight doors</em> (<span class="cn">八門</span>) — a set of named gateways, each tied to a kind of action.</li>
+      <li>The <em>nine stars</em> (<span class="cn">九星</span>) — the energetic backdrop of the time.</li>
+      <li>The <em>eight gods</em> (<span class="cn">八神</span>) — symbolic agents that color the reading.</li>
+      <li>The <em>three strange</em> and <em>six instruments</em> (<span class="cn">三奇六儀</span>) — the heavenly stems distributed into the grid.</li>
+    </ul>
+
+    <p>
+      A practitioner reads how these layers stack in a particular palace and uses that to answer a question, choose a
+      direction, or time an action. There are roughly 1,080 distinct plates that cycle through a year.
+    </p>
+
+    <h2>The eight doors</h2>
+
+    <p>
+      The doors are the most useful layer to introduce first because they map cleanly to human actions. Each door is
+      associated with one kind of thing:
+    </p>
+
+    <table>
+      <thead><tr><th>Door</th><th>Reads as</th><th>Used for</th></tr></thead>
+      <tbody>
+        <tr><td><span class="cn">休門</span></td><td>Rest Door</td><td>Recovery, stillness, gentle work</td></tr>
+        <tr><td><span class="cn">生門</span></td><td>Life Door</td><td>Wealth, growth, beginnings</td></tr>
+        <tr><td><span class="cn">傷門</span></td><td>Injury Door</td><td>Conflict, recovery of debt, hunting</td></tr>
+        <tr><td><span class="cn">杜門</span></td><td>Hidden Door</td><td>Concealment, study, retreat</td></tr>
+        <tr><td><span class="cn">景門</span></td><td>View Door</td><td>Communication, visibility, exams</td></tr>
+        <tr><td><span class="cn">死門</span></td><td>Death Door</td><td>Endings, funerary work, finality</td></tr>
+        <tr><td><span class="cn">驚門</span></td><td>Startle Door</td><td>Sudden change, legal matters, alarms</td></tr>
+        <tr><td><span class="cn">開門</span></td><td>Open Door</td><td>Authority, formal asks, official business</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      A door isn't "good" or "bad" in the abstract. It's a fit for a type of action. If the Open Door is sitting in your
+      east palace at the hour you want to send an important request, that's a fit. If the Death Door is sitting in your
+      south palace and you want to ship a launch announcement south, that's a mis-fit and a practitioner would tell you
+      to wait.
+    </p>
+
+    <h2>Why qimen isn't a horoscope</h2>
+
+    <p>
+      A horoscope reads the same week for everyone in a sign. A qimen reading is keyed to <em>your</em> question — your
+      decision, your action, your direction. Two readers asking different questions of the same hour get different answers
+      from the same plate.
+    </p>
+
+    <p>
+      In practice, qimen tends to answer questions of the form:
+    </p>
+
+    <ul>
+      <li><em>When</em> should I do this thing I'm about to do?</li>
+      <li><em>Which direction</em> should I face / travel / send?</li>
+      <li><em>What's the texture</em> of this week or this day — is it for shipping or for editing?</li>
+    </ul>
+
+    <p>
+      It doesn't tend to answer:
+    </p>
+
+    <ul>
+      <li>What's my personality?</li>
+      <li>When will I find love?</li>
+      <li>Am I a good or bad person?</li>
+    </ul>
+
+    <p>
+      Those are bazi questions, or therapy questions, or neither. Mixing the systems is what turns a reading into
+      pseudo-horoscope copy. The practitioners we draw from keep the lines clear.
+    </p>
+
+    <h2>How Taiyi uses qimen in the weekly letter</h2>
+
+    <p>
+      We don't try to teach qimen in a Sunday letter. Each letter draws on the current week's plate to color the
+      forecasting sections — when to act, when to wait, what to watch for — but the language stays in plain English,
+      with Chinese terms glossed when they appear. The grounding is in classical sources; the writing is for an English-reading
+      adult who wants to make a decision this week.
+    </p>
+
+    <blockquote>
+      In Qi Men terms, good forecasting starts with three parts: who is asking, what is happening now, and what outcome
+      actually matters.
+    </blockquote>
+
+    <p>
+      Qimen, used well, is a discipline of asking better questions. The plate gives a structure; the practitioner brings
+      the judgment; the reader brings the action. The letter is the bridge between the three.
+    </p>
+
+    <div class="end-cta">
+      <p>Want to see this week's qimen read against your own chart?</p>
+      <a class="btn" href="/#sample">Generate a free sample →</a>
+    </div>
+  </article>
+</body>
+</html>

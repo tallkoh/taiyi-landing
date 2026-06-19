@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blog · Taiyi 太乙</title>
+  <meta name="description" content="Plain-English explainers on bazi (four pillars), qimen dunjia, and the systems behind Taiyi's weekly letter." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&family=Inter+Tight:wght@400;500;600&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #faf8f3; --paper-2: #f1ede2;
+      --ink: #1a1612; --ink-2: #3a322a; --muted: #847b6a;
+      --seal: #b83828; --line-soft: rgba(26,22,18,.22);
+      --display: 'Newsreader', Georgia, serif;
+      --body: 'Inter Tight', system-ui, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, monospace;
+      --cn:   'Noto Serif SC', serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { font-family: var(--body); background: var(--paper); color: var(--ink); font-size: 15px; line-height: 1.55; min-height: 100vh; }
+    .nav { padding: 0 24px; height: 52px; display: flex; justify-content: space-between; align-items: center; background: var(--paper-2); border-bottom: 1px dashed var(--line-soft); }
+    .nav-logo { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-size: 18px; font-weight: 500; color: var(--ink); text-decoration: none; }
+    .stamp { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: var(--seal); color: var(--paper); font-family: var(--cn); font-weight: 700; font-size: 14px; border-radius: 2px; transform: rotate(-3deg); }
+    .nav-back { font-family: var(--mono); font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.06em; }
+    main { max-width: 680px; margin: 0 auto; padding: 56px 24px 80px; }
+    .eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    h1 { font-family: var(--display); font-weight: 400; font-size: 38px; line-height: 1.05; letter-spacing: -0.02em; margin: 6px 0 14px; }
+    .lede { font-size: 16px; color: var(--ink-2); margin: 0 0 36px; max-width: 540px; }
+    .posts { display: flex; flex-direction: column; gap: 20px; }
+    .post-card { display: block; padding: 22px; border: 1.5px solid var(--ink); background: var(--paper-2); text-decoration: none; color: inherit; border-radius: 2px; transition: transform 0.12s, box-shadow 0.12s; box-shadow: 2px 2px 0 0 var(--ink); }
+    .post-card:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 0 var(--ink); }
+    .post-card .eyebrow { margin-bottom: 6px; }
+    .post-card h2 { font-family: var(--display); font-weight: 500; font-size: 22px; line-height: 1.2; margin: 0 0 8px; color: var(--ink); }
+    .post-card p { font-size: 14px; color: var(--ink-2); margin: 0; }
+    .post-card .meta { margin-top: 12px; font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.06em; }
+    a { color: var(--seal); }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="/" class="nav-logo"><span class="stamp">太</span>Taiyi</a>
+    <a href="/" class="nav-back">← back to taiyi</a>
+  </nav>
+  <main>
+    <div class="eyebrow">The Taiyi Blog</div>
+    <h1>What's actually inside the letter.</h1>
+    <p class="lede">
+      Taiyi's weekly letter draws on systems most readers in the English-speaking world have heard of vaguely
+      but rarely seen explained simply. Two plain-English starts.
+    </p>
+    <div class="posts">
+      <a class="post-card" href="/blog-bazi">
+        <div class="eyebrow">Bazi · 四柱命理</div>
+        <h2>Bazi in plain English: what the four pillars actually are</h2>
+        <p>The Chinese system for reading a person from their birth date and time. No mysticism — a calendar-based five-element calculus you can follow on paper. What a "day master" is, why the same birthday in different cities gives different charts, and where the system is honest about what it can't say.</p>
+        <div class="meta">~6 minute read</div>
+      </a>
+      <a class="post-card" href="/blog-qimen">
+        <div class="eyebrow">Qi Men Dun Jia · 奇門遁甲</div>
+        <h2>Qimen in plain English: a tactical calendar, not a horoscope</h2>
+        <p>If bazi is your chart, qimen is the week. A 1,080-plate forecasting system used historically for timing decisions — when to ship a deal, which direction to face for a hard conversation, when to wait. What the eight doors and nine palaces mean, and why qimen is mostly about <em>when</em>, not who.</p>
+        <div class="meta">~7 minute read</div>
+      </a>
+    </div>
+  </main>
+</body>
+</html>

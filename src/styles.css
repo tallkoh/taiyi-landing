@@ -794,3 +794,144 @@ section[id], footer[id] {
 
 body { overflow-x: hidden; }
 img, video, iframe { max-width: 100%; }
+
+/* ── Masthead CTAs ─────────────────────────────────────────────────── */
+.masthead-ctas {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 18px auto 8px;
+  max-width: 440px;
+  flex-wrap: wrap;
+}
+.masthead-ctas .btn { flex: 1 1 180px; }
+.masthead-hint {
+  max-width: 380px;
+  margin: 0 auto;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+/* ── Sample form card ──────────────────────────────────────────────── */
+.sample-card {
+  border: 1.5px dashed var(--line-soft);
+  padding: 22px;
+  background: rgba(0,0,0,0.015);
+  margin-top: 18px;
+  border-radius: 2px;
+}
+.sample-cta { margin-top: 14px; }
+
+.micro-check {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--body); font-size: 11px; color: var(--muted);
+  margin-top: 6px;
+}
+.micro-check input { margin: 0; }
+.micro-note {
+  font-family: var(--mono); font-size: 10px; color: var(--muted);
+  margin-top: 4px; letter-spacing: 0.03em;
+}
+
+/* ── Pulse questions block ─────────────────────────────────────────── */
+.pulse-block {
+  margin: 18px 0 6px;
+  padding: 14px 0;
+  border-top: 1px dashed var(--line-soft);
+  border-bottom: 1px dashed var(--line-soft);
+}
+.pulse-eyebrow {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.pulse-q { margin-bottom: 14px; }
+.pulse-q:last-child { margin-bottom: 0; }
+.pulse-q-label {
+  font-family: var(--body);
+  font-size: 13px;
+  color: var(--ink-2);
+  margin-bottom: 8px;
+}
+.pulse-q-opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.pulse-opt {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1.25px solid var(--line-soft);
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--paper) 80%, white 20%);
+  font-family: var(--body);
+  font-size: 12.5px;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+.pulse-opt:hover { border-color: var(--ink); color: var(--ink); }
+.pulse-opt input { margin: 0; }
+.pulse-opt input:checked + span {
+  font-weight: 600;
+  color: var(--seal);
+}
+.pulse-opt:has(input:checked) {
+  border-color: var(--seal);
+  background: color-mix(in srgb, var(--seal) 6%, var(--paper) 94%);
+}
+
+/* ── Sample output (rendered letter + CTA after) ───────────────────── */
+.sample-output {
+  margin-top: 28px;
+  animation: sampleFadeIn 0.4s ease-out;
+}
+@keyframes sampleFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.nl-body {
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink-2);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin: 14px 0 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+.sample-cta-after {
+  margin-top: 22px;
+  padding: 22px;
+  border: 1.5px solid var(--ink);
+  background: color-mix(in srgb, var(--seal) 4%, var(--paper) 96%);
+  border-radius: 2px;
+  text-align: center;
+  box-shadow: 3px 3px 0 0 var(--ink);
+}
+
+/* ── Section preview (format example) ──────────────────────────────── */
+.nl-section {
+  border-top: 1px dashed var(--line-soft);
+  padding-top: 12px;
+  margin-top: 12px;
+}
+.nl-section:first-of-type { border-top: none; padding-top: 0; }
+.nl-section-h {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}

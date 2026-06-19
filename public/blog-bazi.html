@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bazi in plain English · Taiyi 太乙</title>
+  <meta name="description" content="A plain-English explainer of the Chinese four-pillars system: stems, branches, day master, and the five elements. No mysticism." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500&family=Inter+Tight:wght@400;500;600&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #faf8f3; --paper-2: #f1ede2;
+      --ink: #1a1612; --ink-2: #3a322a; --muted: #847b6a;
+      --seal: #b83828; --line-soft: rgba(26,22,18,.22);
+      --display: 'Newsreader', Georgia, serif;
+      --body: 'Inter Tight', system-ui, sans-serif;
+      --mono: 'IBM Plex Mono', ui-monospace, monospace;
+      --cn:   'Noto Serif SC', serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { font-family: var(--body); background: var(--paper); color: var(--ink); font-size: 15px; line-height: 1.55; min-height: 100vh; }
+    .nav { padding: 0 24px; height: 52px; display: flex; justify-content: space-between; align-items: center; background: var(--paper-2); border-bottom: 1px dashed var(--line-soft); }
+    .nav-logo { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-size: 18px; font-weight: 500; color: var(--ink); text-decoration: none; }
+    .stamp { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: var(--seal); color: var(--paper); font-family: var(--cn); font-weight: 700; font-size: 14px; border-radius: 2px; transform: rotate(-3deg); }
+    .nav-back { font-family: var(--mono); font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.06em; }
+    article { max-width: 640px; margin: 0 auto; padding: 56px 24px 80px; }
+    .eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    h1 { font-family: var(--display); font-weight: 400; font-size: 36px; line-height: 1.08; letter-spacing: -0.02em; margin: 6px 0 18px; }
+    h2 { font-family: var(--display); font-weight: 500; font-size: 22px; line-height: 1.2; margin: 36px 0 12px; }
+    h3 { font-family: var(--body); font-weight: 600; font-size: 14px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); margin: 24px 0 8px; }
+    p, li { font-size: 15.5px; line-height: 1.62; color: var(--ink-2); margin: 0 0 14px; }
+    em { color: var(--ink); }
+    .cn { font-family: var(--cn); }
+    a { color: var(--seal); }
+    .meta { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.06em; margin-bottom: 28px; }
+    table { width: 100%; border-collapse: collapse; margin: 14px 0 22px; font-size: 13.5px; }
+    table th, table td { padding: 8px 10px; border-bottom: 1px dashed var(--line-soft); text-align: left; vertical-align: top; }
+    table th { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+    code { font-family: var(--mono); font-size: 13px; background: var(--paper-2); padding: 1px 5px; border-radius: 2px; }
+    blockquote { border-left: 2.5px solid var(--seal); padding: 4px 0 4px 14px; margin: 16px 0 18px; font-style: italic; color: var(--ink-2); }
+    .end-cta { margin-top: 36px; padding: 22px; border: 1.5px solid var(--ink); background: color-mix(in srgb, var(--seal) 4%, var(--paper) 96%); box-shadow: 3px 3px 0 0 var(--ink); border-radius: 2px; text-align: center; }
+    .end-cta p { margin: 0 0 12px; font-size: 14px; }
+    .btn { display: inline-block; background: var(--seal); color: var(--paper); border: 1.5px solid var(--seal); padding: 12px 22px; font-family: var(--body); font-weight: 500; font-size: 14px; text-decoration: none; border-radius: 2px; box-shadow: 2px 2px 0 0 var(--ink); }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="/" class="nav-logo"><span class="stamp">太</span>Taiyi</a>
+    <a href="/blog" class="nav-back">← all posts</a>
+  </nav>
+  <article>
+    <div class="eyebrow">Bazi · 四柱命理</div>
+    <h1>Bazi in plain English: what the four pillars actually are.</h1>
+    <div class="meta">~6 minute read</div>
+
+    <p>
+      Bazi (<span class="cn">八字</span>, "eight characters") is the Chinese system for reading a person from their date and time of birth.
+      It's also called <em>four pillars</em> (<span class="cn">四柱命理</span>) — the four pillars are year, month, day, and hour,
+      and each pillar has two characters, hence eight characters total.
+    </p>
+
+    <p>
+      The first useful thing to know about bazi is that it isn't astrology. It isn't reading the planets. It's reading the
+      <em>calendar</em>. Specifically, the Chinese sexagenary calendar — a system that's been used to label days, months, and years
+      in China for at least three thousand years. Every year, month, day, and two-hour interval in the past or future has a
+      label from this calendar. Your bazi is just the labels at your birth moment.
+    </p>
+
+    <h2>The two halves of every pillar</h2>
+
+    <p>Each pillar has two pieces:</p>
+
+    <ul>
+      <li>
+        A <em>heavenly stem</em> (<span class="cn">天干</span>) — one of ten, each tied to one of five elements
+        (wood, fire, earth, metal, water) in either yang or yin polarity.
+      </li>
+      <li>
+        An <em>earthly branch</em> (<span class="cn">地支</span>) — one of twelve, the twelve animals you've heard of
+        (rat, ox, tiger, rabbit, dragon, snake, horse, goat, monkey, rooster, dog, pig), each also tied to one of the five elements.
+      </li>
+    </ul>
+
+    <h3>The ten stems</h3>
+    <table>
+      <thead><tr><th>Stem</th><th>Reads as</th><th>Element</th><th>Polarity</th></tr></thead>
+      <tbody>
+        <tr><td><span class="cn">甲</span></td><td>jiǎ</td><td>Wood</td><td>Yang</td></tr>
+        <tr><td><span class="cn">乙</span></td><td>yǐ</td><td>Wood</td><td>Yin</td></tr>
+        <tr><td><span class="cn">丙</span></td><td>bǐng</td><td>Fire</td><td>Yang</td></tr>
+        <tr><td><span class="cn">丁</span></td><td>dīng</td><td>Fire</td><td>Yin</td></tr>
+        <tr><td><span class="cn">戊</span></td><td>wù</td><td>Earth</td><td>Yang</td></tr>
+        <tr><td><span class="cn">己</span></td><td>jǐ</td><td>Earth</td><td>Yin</td></tr>
+        <tr><td><span class="cn">庚</span></td><td>gēng</td><td>Metal</td><td>Yang</td></tr>
+        <tr><td><span class="cn">辛</span></td><td>xīn</td><td>Metal</td><td>Yin</td></tr>
+        <tr><td><span class="cn">壬</span></td><td>rén</td><td>Water</td><td>Yang</td></tr>
+        <tr><td><span class="cn">癸</span></td><td>guǐ</td><td>Water</td><td>Yin</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      The five elements are not the four elements you grew up with. They're a Chinese model for how energy moves between states:
+      wood feeds fire, fire produces ash that becomes earth, earth holds metal, metal condenses water, water nourishes wood.
+      Practitioners use the relationships between elements (produce, control, weaken) to read whether a chart is balanced or skewed.
+    </p>
+
+    <h2>The day master</h2>
+
+    <p>
+      Of the four pillars, one is special: the <em>day stem</em>. This is your <em>day master</em> (<span class="cn">日主</span>) —
+      the stem that represents <em>you</em>. The other seven characters in your chart describe the environment around you:
+      family of origin, resources, supports, opposition, the year you live in.
+    </p>
+
+    <p>
+      So if your day stem is <span class="cn">甲</span> (yang wood), you're a "yang wood day master." Yang wood is conventionally
+      read as a tall tree — something that rises, takes up space, holds its shape. <span class="cn">乙</span> (yin wood) is a vine
+      or a grass — same element family, different posture. Yang fire (<span class="cn">丙</span>) is the sun; yin fire
+      (<span class="cn">丁</span>) is a candle.
+    </p>
+
+    <p>
+      These aren't personality types. They're starting positions — what kind of structure your chart is built around. Two yang
+      wood day masters can read very differently if one is surrounded by metal (which controls wood) and the other by water
+      (which nourishes wood).
+    </p>
+
+    <h2>Why the same birthday gives different charts</h2>
+
+    <p>
+      The bazi calendar moves at solar terms (<span class="cn">節氣</span>), not at midnight on January 1. The year changes
+      at <em>lichun</em> (start of spring, ~Feb 4), not at the Gregorian or even the Lunar New Year. The month changes at the
+      next solar term boundary. So someone born February 3 and someone born February 5 in the same year can have completely
+      different year pillars — and the system is internally consistent on this.
+    </p>
+
+    <p>
+      Birth time matters because the hour pillar is the two-hour window you were born in. Birth place matters because
+      "local solar time" depends on longitude — Singapore time and KL time use the same clock, but a Singapore noon and a KL
+      noon are about 20 minutes apart in true solar time, which can shift the hour pillar across a boundary.
+    </p>
+
+    <blockquote>
+      Two subscribers born the same day in different cities receive different letters; two subscribers in the same city with
+      different birth times receive different letters.
+    </blockquote>
+
+    <h2>What bazi is, and what it isn't</h2>
+
+    <p>
+      Bazi at its best is a structural read of how you tend to meet the world — what kind of resource environment shaped you,
+      what tends to feel like support and what tends to feel like resistance. It's diagnostic, not prescriptive. A serious
+      practitioner will tell you what they see in the structure and let you bring your own judgment to what to do about it.
+    </p>
+
+    <p>
+      Bazi at its worst is a Chinese horoscope — twelve animals, twelve generic predictions, no chart consulted, no
+      practitioner involved. If you've ever read a "2026 horoscope for the Tiger" listicle, you've seen this version. It
+      isn't bazi any more than a tabloid astrology column is astronomy.
+    </p>
+
+    <p>
+      Taiyi sits in the first camp. Every Sunday letter starts with your full four pillars and reads against the current
+      solar term and the week's qimen plate. The system is decades old; the writing is fresh.
+    </p>
+
+    <div class="end-cta">
+      <p>Want to see your own four pillars read against next week?</p>
+      <a class="btn" href="/#sample">Generate a free sample →</a>
+    </div>
+  </article>
+</body>
+</html>
