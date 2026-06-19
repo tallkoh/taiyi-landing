@@ -34,7 +34,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     return;
   }
 
-  const force = typeof req.query.job === 'string' ? req.query.job : '';
+  const forceFromQuery = typeof req.query.job === 'string' ? req.query.job : '';
+  const forceFromHeader = typeof req.headers['x-job'] === 'string' ? req.headers['x-job'] : '';
+  const force = forceFromQuery || forceFromHeader;
   const dow = new Date().getUTCDay();
   const jobKey = force || DOW_TO_JOB[dow];
 
