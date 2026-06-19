@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { runSendQuestionnaire, runGenerateLetters, runSendWeekly } from '../lib/cron-jobs.js';
+import { runSendQuestionnaire, runGenerateLetters, runSendWeekly, runSmokeLlm } from '../lib/cron-jobs.js';
 
 // Vercel Hobby caps cron entries at 2/project AND each schedule must be
 // at most once-per-day. This dispatcher fires once daily at 22:00 UTC and
@@ -19,6 +19,7 @@ const JOBS: Record<string, () => Promise<Record<string, unknown>>> = {
   questionnaire: runSendQuestionnaire,
   generate:      runGenerateLetters,
   send:          runSendWeekly,
+  smoke:         runSmokeLlm,
 };
 
 const DOW_TO_JOB: Record<number, keyof typeof JOBS> = {

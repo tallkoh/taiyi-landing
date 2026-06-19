@@ -2,7 +2,8 @@ import { sql } from './db.js';
 import { createTransport, FROM } from './mailer.js';
 import { signPayload, TTL } from './token.js';
 import { calculateBazi } from './bazi.js';
-import { generateLetter, type LetterContext } from './letter.js';
+import { generateLetter } from './letter.js';
+import type { LetterContext } from './letter.js';
 
 interface ActiveSubscriber {
   id: number;
@@ -242,6 +243,43 @@ export async function runGenerateLetters(): Promise<Record<string, unknown>> {
   }
 
   return { eligible: eligible.length, approved, flagged, errored, weekStart };
+}
+
+// One-shot synthetic LLM test. Generates a single letter with hardcoded
+// context, returns the result. Does NOT touch the DB. Use it to verify
+// Vercel→OpenAI works end-to-end without needing real subscribers.
+export async function runSmokeLlm(): Promise<Record<string, unknown>> {
+  const ctx: LetterContext = {
+    subscriberId: 0,
+    email: 'smoke@example.com',
+    bazi: {
+      year:  { stem: '庚', branch: '午' },
+      month: { stem: '壬', branch: '午' },
+      day:   { stem: '甲', branch: '子' },
+      hour:  { stem: '丙', branch: '寅' },
+      dayMaster: '甲',
+    },
+    gender: 'f',
+    currentCountry: 'SG',
+    energy: 'low',
+    focus: 'work',
+    weight: 'decisions',
+    recentSubjects: [],
+    recentBodies: [],
+  };
+  const start = Date.now();
+  const letter = await generateLetter(ctx);
+  return {
+    elapsedMs: Date.now() - start,
+    model: letter.model,
+    status: letter.status,
+    guardrailFails: letter.guardrailFails,
+    inputTokens: letter.inputTokens,
+    outputTokens: letter.outputTokens,
+    costUsd: letter.costUsd,
+    subject: letter.subject,
+    bodyPreview: letter.body.slice(0, 800),
+  };
 }
 
 interface QueuedLetter {
