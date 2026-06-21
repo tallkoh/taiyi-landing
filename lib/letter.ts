@@ -27,6 +27,8 @@ export interface GeneratedLetter {
   subject: string;
   body: string;
   rawOutput: LetterOutput;
+  solarTerm: string;
+  topRetrieved: RetrievedNote | null;
   model: string;
   inputTokens: number;
   outputTokens: number;
@@ -225,6 +227,8 @@ export async function generateLetter(ctx: LetterContext): Promise<GeneratedLette
       subject: '(generation failed)',
       body: '',
       rawOutput: { subject: '', sections: { energy: '', focus: '', watch: '', practice: '' } },
+      solarTerm,
+      topRetrieved: retrieved[0] ?? null,
       model,
       inputTokens,
       outputTokens,
@@ -249,6 +253,8 @@ export async function generateLetter(ctx: LetterContext): Promise<GeneratedLette
     subject: `Taiyi · ${output.subject}`,
     body,
     rawOutput: output,
+    solarTerm,
+    topRetrieved: retrieved[0] ?? null,
     model,
     inputTokens,
     outputTokens,

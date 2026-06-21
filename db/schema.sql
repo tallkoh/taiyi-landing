@@ -70,8 +70,11 @@ CREATE TABLE IF NOT EXISTS letters (
   guardrail_fails TEXT[],
   generated_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
   sent_at         TIMESTAMPTZ,
+  raw_output      JSONB,
   UNIQUE (subscriber_id, week_start)
 );
+
+ALTER TABLE letters ADD COLUMN IF NOT EXISTS raw_output JSONB;
 
 CREATE INDEX IF NOT EXISTS letters_send_queue_idx
   ON letters (week_start, status)

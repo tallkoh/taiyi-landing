@@ -796,23 +796,39 @@ body { overflow-x: hidden; }
 img, video, iframe { max-width: 100%; }
 
 /* ── Masthead CTAs ─────────────────────────────────────────────────── */
-.masthead-ctas {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  margin: 18px auto 8px;
-  max-width: 440px;
-  flex-wrap: wrap;
+.btn--xl {
+  padding: 16px 28px;
+  font-size: 15.5px;
+  letter-spacing: 0.02em;
+  font-weight: 600;
 }
-.masthead-ctas .btn { flex: 1 1 180px; }
-.masthead-hint {
+.masthead-primary-cta {
+  display: block;
+  margin: 24px auto 14px;
+  min-width: 280px;
   max-width: 380px;
-  margin: 0 auto;
-  font-family: var(--mono);
-  font-size: 10.5px;
-  color: var(--muted);
-  letter-spacing: 0.04em;
+  width: auto;
+}
+.masthead-sample-link {
+  display: block;
   text-align: center;
+  font-family: var(--body);
+  font-size: 14px;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line-soft);
+  padding-bottom: 2px;
+  margin: 0 auto;
+  width: fit-content;
+  transition: color 0.15s, border-color 0.15s;
+}
+.masthead-sample-link:hover {
+  color: var(--seal);
+  border-bottom-color: var(--seal);
+}
+.masthead-sample-sub {
+  color: var(--muted);
+  font-size: 13px;
 }
 
 /* ── Sample form card ──────────────────────────────────────────────── */
@@ -935,3 +951,284 @@ img, video, iframe { max-width: 100%; }
   color: var(--muted);
   margin-bottom: 6px;
 }
+
+/* ── Inline sample fade-out (signals "more in the PDF") ────────────── */
+.nl-fade {
+  margin-top: 18px;
+  padding: 18px 0 6px;
+  border-top: 1px dashed var(--line-soft);
+  position: relative;
+  text-align: center;
+}
+.nl-fade-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* ── Sample CTA-after divider ──────────────────────────────────────── */
+.sample-cta-divider {
+  margin: 22px 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.sample-cta-divider::before,
+.sample-cta-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line-soft);
+}
+
+/* ── PDF source (off-screen) ───────────────────────────────────────── */
+.pdf-source {
+  position: absolute;
+  left: -10000px;
+  top: 0;
+  width: 190mm;
+  pointer-events: none;
+  visibility: hidden;
+}
+/* When html2pdf renders this, visibility/position don't apply to clones.
+   The .pdf-page rules below style the actual rendered output. */
+
+.pdf-page {
+  width: 190mm;
+  padding: 0;
+  background: #faf8f3;
+  color: #1a1612;
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 12pt;
+  line-height: 1.55;
+  box-sizing: border-box;
+}
+.pdf-cn { font-family: 'Noto Serif SC', serif; }
+
+.pdf-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1.5px solid #1a1612;
+}
+.pdf-stamp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: #b83828;
+  color: #faf8f3;
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 19px;
+  border-radius: 3px;
+  transform: rotate(-3deg);
+}
+.pdf-brand {
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 16pt;
+  font-weight: 500;
+}
+.pdf-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8.5pt;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #847b6a;
+  margin-top: 2px;
+}
+
+.pdf-title-block {
+  margin-top: 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(26,22,18,.25);
+}
+.pdf-recipient {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9pt;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #847b6a;
+  margin-bottom: 5px;
+}
+.pdf-title {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 500;
+  font-size: 22pt;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0 0 8px;
+  color: #1a1612;
+}
+.pdf-solar {
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 11pt;
+  font-style: italic;
+  color: #3a322a;
+}
+
+.pdf-pillars {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0 0;
+}
+.pdf-pillar-cell {
+  border: 1.25px solid #1a1612;
+  text-align: center;
+  padding: 10px 6px;
+  vertical-align: top;
+  background: rgba(184, 56, 40, 0.04);
+}
+.pdf-pillar-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8pt;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #847b6a;
+  margin-bottom: 4px;
+}
+.pdf-pillar-stem {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 22pt;
+  line-height: 1;
+  color: #b83828;
+}
+.pdf-pillar-branch {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 500;
+  font-size: 18pt;
+  line-height: 1;
+  color: #1a1612;
+  margin-top: 4px;
+}
+
+.pdf-callout {
+  margin: 16px 0 0;
+  padding: 14px 16px;
+  background: #f1ede2;
+  border-left: 3px solid #b83828;
+}
+.pdf-callout-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8.5pt;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #847b6a;
+  margin-bottom: 4px;
+}
+.pdf-callout-title {
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 14pt;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.pdf-callout-title .pdf-cn {
+  font-size: 16pt;
+  color: #b83828;
+  margin-right: 6px;
+}
+.pdf-callout-pinyin {
+  font-style: italic;
+  font-weight: 400;
+  color: #847b6a;
+  font-size: 11pt;
+}
+.pdf-callout-image {
+  font-style: italic;
+  font-size: 10.5pt;
+  color: #3a322a;
+  margin-bottom: 6px;
+}
+.pdf-callout-body {
+  font-size: 11pt;
+  line-height: 1.55;
+  color: #3a322a;
+  margin: 0;
+}
+
+.pdf-section {
+  margin-top: 18px;
+  page-break-inside: avoid;
+}
+.pdf-section-h {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9pt;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #847b6a;
+  margin-bottom: 6px;
+  border-top: 1px dashed rgba(26,22,18,.25);
+  padding-top: 10px;
+}
+.pdf-section:first-of-type .pdf-section-h {
+  border-top: none;
+  padding-top: 0;
+}
+.pdf-prose {
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 12pt;
+  line-height: 1.6;
+  color: #1a1612;
+  margin: 0;
+}
+
+.pdf-classical {
+  margin-top: 22px;
+  padding: 16px 18px;
+  border: 1px solid rgba(26,22,18,.3);
+  border-radius: 2px;
+  background: rgba(255,255,255,0.4);
+}
+.pdf-classical-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8.5pt;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #847b6a;
+  margin-bottom: 6px;
+}
+.pdf-classical-body {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-size: 11pt;
+  line-height: 1.55;
+  color: #3a322a;
+  margin: 0 0 8px;
+}
+.pdf-classical-source {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9pt;
+  color: #847b6a;
+  text-align: right;
+}
+
+.pdf-footer {
+  margin-top: 26px;
+  padding-top: 14px;
+  border-top: 1.5px solid #1a1612;
+}
+.pdf-sig {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-size: 12pt;
+  margin-bottom: 8px;
+}
+.pdf-foot-note {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8.5pt;
+  letter-spacing: 0.04em;
+  color: #847b6a;
+  line-height: 1.5;
+}
+.pdf-foot-note strong { color: #b83828; }

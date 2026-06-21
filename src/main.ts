@@ -2,8 +2,30 @@ import './styles.css';
 
 type FormStatus = 'idle' | 'success' | 'error';
 
-const app = document.querySelector<HTMLDivElement>('#app');
+interface SampleFull {
+  subject: string;
+  sections: { energy: string; focus: string; watch: string; practice: string };
+  pillars: { year: string; month: string; day: string; hour: string };
+  dayMasterStem: string;
+  solarTerm: string;
+  solarTermDescription: string;
+  topRetrieved: { source: string; content: string } | null;
+  name: string;
+  formattedPillars: Array<{ pillar: string; stem: string; branch: string; label: string }>;
+  dayMasterInfo: {
+    stem: string; pinyin: string; english: string; element: string;
+    polarity: 'yang' | 'yin'; image: string; callout: string;
+  } | null;
+}
 
+interface SampleResponse {
+  ok: true;
+  cached: boolean;
+  preview: { subject: string; firstSectionTitle: string; firstSectionText: string };
+  full: SampleFull;
+}
+
+const app = document.querySelector<HTMLDivElement>('#app');
 if (!app) {
   throw new Error('App mount node #app is missing.');
 }
@@ -18,7 +40,6 @@ app.innerHTML = `
       <div class="nav-links" role="list">
         <a href="#how" role="listitem">How it works</a>
         <a href="#why" role="listitem">Why Taiyi</a>
-        <a href="#sample" role="listitem">See a sample</a>
         <a href="/blog" role="listitem">Blog</a>
         <a href="#pricing" role="listitem">Pricing</a>
       </div>
@@ -37,14 +58,12 @@ app.innerHTML = `
               Four pillars + qimen + the solar calendar, read against the week ahead.
               One letter, Sunday morning, by email. $18&thinsp;/&thinsp;month — no free tier, no trial.
             </p>
-            <div class="masthead-ctas">
-              <a class="btn btn--primary btn--lg" href="#sample">See a real sample →</a>
-              <a class="btn btn--ghost btn--lg" href="#pricing">Or subscribe ($18/mo)</a>
-            </div>
-            <p class="form-hint masthead-hint">
-              The sample is the same pipeline as a paid Sunday letter.
-              One sample per email. No list, no marketing follow-up.
-            </p>
+            <button class="btn btn--primary btn--xl masthead-primary-cta" type="button" id="hero-subscribe">
+              Subscribe — $18 / month
+            </button>
+            <a class="masthead-sample-link" href="#sample">
+              View a sample <span class="masthead-sample-sub">— what you'll get weekly</span>
+            </a>
           </div>
           <div class="masthead-vertical masthead-vertical--right" aria-hidden="true">壬寅日</div>
         </div>
@@ -103,31 +122,19 @@ app.innerHTML = `
             <div class="sources-date">Use</div>
           </div>
           <div class="sources-row">
-            <div class="sources-title">
-              <span class="cn sources-cn">四柱命理</span>
-              <span class="sources-py">Bazi (Four Pillars)</span>
-            </div>
+            <div class="sources-title"><span class="cn sources-cn">四柱命理</span><span class="sources-py">Bazi (Four Pillars)</span></div>
             <div class="sources-date">Identity</div>
           </div>
           <div class="sources-row">
-            <div class="sources-title">
-              <span class="cn sources-cn">奇門遁甲</span>
-              <span class="sources-py">Qi Men Dun Jia</span>
-            </div>
+            <div class="sources-title"><span class="cn sources-cn">奇門遁甲</span><span class="sources-py">Qi Men Dun Jia</span></div>
             <div class="sources-date">Forecasting</div>
           </div>
           <div class="sources-row">
-            <div class="sources-title">
-              <span class="cn sources-cn">節氣</span>
-              <span class="sources-py">24 Solar Terms</span>
-            </div>
+            <div class="sources-title"><span class="cn sources-cn">節氣</span><span class="sources-py">24 Solar Terms</span></div>
             <div class="sources-date">Season</div>
           </div>
           <div class="sources-row">
-            <div class="sources-title">
-              <span class="cn sources-cn">擇日學</span>
-              <span class="sources-py">Date Selection</span>
-            </div>
+            <div class="sources-title"><span class="cn sources-cn">擇日學</span><span class="sources-py">Date Selection</span></div>
             <div class="sources-date">Timing</div>
           </div>
         </div>
@@ -139,12 +146,12 @@ app.innerHTML = `
 
     <section class="section section--tinted" id="sample">
       <div class="inner">
-        <span class="eyebrow">See a real sample</span>
-        <h2 class="headline headline--md">A real letter, written for your chart, in 10 seconds.</h2>
+        <span class="eyebrow">View a sample</span>
+        <h2 class="headline headline--md">What you'll get every Sunday.</h2>
         <p class="sub-headline">
-          Same pipeline, same model, same length as a Sunday letter to a paying reader.
-          We use your inputs to cast your four pillars and generate the week's letter live.
-          One sample per email. No marketing emails, no list.
+          The full sample below is written from your inputs by the same pipeline that writes paid Sunday letters.
+          Read the opening on the page; download the full letter as a PDF.
+          One sample per email. No marketing list.
         </p>
 
         <form class="sample-card" id="sample-form">
@@ -262,11 +269,26 @@ app.innerHTML = `
               </div>
               <span class="stamp" aria-hidden="true">太</span>
             </div>
-            <pre class="nl-body" id="sample-body">—</pre>
+            <div class="nl-personalization" id="sample-personalization">—</div>
+            <div class="nl-section">
+              <div class="nl-section-h" id="sample-first-h">This week's energy</div>
+              <p class="nl-prose" id="sample-first-text">—</p>
+            </div>
+            <div class="nl-fade">
+              <p class="nl-fade-label">The rest is in the full letter.</p>
+            </div>
           </div>
+
           <div class="sample-cta-after">
-            <h3 class="headline headline--md" style="margin-bottom:8px">Want one of these every Sunday?</h3>
-            <p class="sub-headline" style="margin:0 0 16px">
+            <button class="btn btn--primary btn--lg btn--block" type="button" id="download-pdf">
+              ↓ Download full letter (PDF)
+            </button>
+            <p class="form-hint" style="margin-top:8px">~2 pages, ready to print or save.</p>
+
+            <div class="sample-cta-divider"><span>or</span></div>
+
+            <h3 class="headline headline--sm" style="margin-bottom:6px">Get one of these every Sunday.</h3>
+            <p class="sub-headline" style="margin:0 0 14px;font-size:14px">
               No free tier, no trial. $18/month. Cancel one-click from any letter.
             </p>
             <button class="btn btn--primary btn--lg btn--block" type="button" id="checkout-after-sample">
@@ -293,7 +315,6 @@ app.innerHTML = `
           <div class="nl-personalization">
             For a <span class="cn">甲</span> yang-wood day master · Singapore · solar term <span class="cn">芒種</span> Grain in Ear
           </div>
-
           <div class="nl-section">
             <div class="nl-section-h">This week's energy</div>
             <p class="nl-prose">
@@ -302,7 +323,6 @@ app.innerHTML = `
               so the task is not to push harder. It is to keep your root in place while the outer pace stays busy.
             </p>
           </div>
-
           <div class="nl-section">
             <div class="nl-section-h">What to focus on</div>
             <p class="nl-prose">
@@ -311,7 +331,6 @@ app.innerHTML = `
               and what outcome actually matters. Stay with those three and the choices simplify.
             </p>
           </div>
-
           <div class="nl-section">
             <div class="nl-section-h">What to watch for</div>
             <p class="nl-prose">
@@ -320,7 +339,6 @@ app.innerHTML = `
               the immediate task from the bigger story you are telling about it.
             </p>
           </div>
-
           <div class="nl-section">
             <div class="nl-section-h">A small practice</div>
             <p class="nl-prose">
@@ -342,9 +360,7 @@ app.innerHTML = `
         </p>
         <div class="pricing-card">
           <div class="pricing-top">
-            <div class="pricing-amount">
-              $18<span class="pricing-period">/ month</span>
-            </div>
+            <div class="pricing-amount">$18<span class="pricing-period">/ month</span></div>
             <span class="stamp stamp--lg" aria-hidden="true">月</span>
           </div>
           <ul class="pricing-features">
@@ -358,7 +374,7 @@ app.innerHTML = `
           <p class="form-status" id="checkout-status" role="status" aria-live="polite"></p>
         </div>
         <p class="form-hint" style="text-align:center;margin-top:16px">
-          Curious before paying? <a href="#sample">Generate a free sample</a> with your actual chart.
+          Curious before paying? <a href="#sample">View a sample</a> with your actual chart.
         </p>
       </div>
     </section>
@@ -370,31 +386,27 @@ app.innerHTML = `
           <details class="faq-item">
             <summary class="faq-question">Why no free tier or trial?</summary>
             <div class="faq-answer">
-              <p>The sample is the free tier — a real letter, written for your real chart, by the same pipeline that writes paid Sunday letters. After the sample, every letter costs us LLM credits and engineering time. We'd rather keep the writing dense and the operation small than chase free users.</p>
+              <p>The sample is the free tier — a real letter, written for your real chart, by the same pipeline that writes paid Sunday letters. After the sample, every letter costs us LLM credits and editorial time. We'd rather keep the writing dense and the operation small than chase free users.</p>
             </div>
           </details>
-
           <details class="faq-item">
             <summary class="faq-question">Isn't this just astrology?</summary>
             <div class="faq-answer">
               <p>Astrology (western) maps planets to a fixed zodiac. Bazi (<span class="cn">四柱命理</span>) is a Chinese calendrical system that reads the five-element composition at your birth date and time. Qimen (<span class="cn">奇門遁甲</span>) is a tactical forecasting calendar, not a personality read. The practical difference: we tell you how to hold this Wednesday, not what your rising sign says about your relationships.</p>
             </div>
           </details>
-
           <details class="faq-item">
             <summary class="faq-question">Is every letter actually different per subscriber?</summary>
             <div class="faq-answer">
               <p>Yes. The letter is composed from your four pillars, the current solar term, your current country, and your mid-week pulse answers — and grounded in a retrieval over our indexed library of classical sources keyed to your day master and the week's themes. Two subscribers born the same day in different cities receive different letters; two in the same city with different pulses receive different letters.</p>
             </div>
           </details>
-
           <details class="faq-item">
             <summary class="faq-question">What happens to my date-of-birth data? (PDPA / PDPL)</summary>
             <div class="faq-answer">
               <p>Your date of birth and birth time are used only to calculate your four pillars. You can request deletion at any time; your data is purged within 7 days. We comply with Singapore PDPA 2012 and Malaysia PDPA 2010.</p>
             </div>
           </details>
-
           <details class="faq-item">
             <summary class="faq-question">Can I cancel?</summary>
             <div class="faq-answer">
@@ -417,9 +429,12 @@ app.innerHTML = `
       </div>
     </div>
   </footer>
+
+  <!-- Hidden source rendered to PDF on download -->
+  <div class="pdf-source" id="pdf-source" aria-hidden="true"></div>
 `;
 
-// Stripe success redirect handling
+// ── Stripe success
 if (new URLSearchParams(window.location.search).get('checkout') === 'success') {
   window.history.replaceState({}, '', '/');
   const statusEl = document.querySelector<HTMLParagraphElement>('#checkout-status');
@@ -437,7 +452,7 @@ const setStatus = (elementId: string, status: FormStatus, message: string) => {
   statusNode.dataset.status = status;
 };
 
-// In-page anchors smooth-scroll
+// ── Smooth scroll
 document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach(link => {
   link.addEventListener('click', event => {
     const targetSelector = link.getAttribute('href');
@@ -449,7 +464,7 @@ document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach(link => {
   });
 });
 
-// TOB unknown toggle
+// ── TOB unknown
 const tobInput = document.querySelector<HTMLInputElement>('#s-tob');
 const tobUnknown = document.querySelector<HTMLInputElement>('#s-tob-unknown');
 tobUnknown?.addEventListener('change', () => {
@@ -462,26 +477,171 @@ tobUnknown?.addEventListener('change', () => {
   }
 });
 
-// Sample form
-const sampleForm = document.querySelector<HTMLFormElement>('#sample-form');
-sampleForm?.addEventListener('submit', async event => {
+// ── Held in module scope so the Download button can read the most recent letter
+let lastSample: SampleFull | null = null;
+
+function renderPreview(resp: SampleResponse) {
+  const titleEl = document.querySelector<HTMLDivElement>('#sample-title');
+  const issueEl = document.querySelector<HTMLDivElement>('#sample-issue');
+  const personEl = document.querySelector<HTMLDivElement>('#sample-personalization');
+  const firstHEl = document.querySelector<HTMLDivElement>('#sample-first-h');
+  const firstTextEl = document.querySelector<HTMLParagraphElement>('#sample-first-text');
+
+  if (titleEl) titleEl.textContent = resp.preview.subject;
+  if (issueEl) issueEl.textContent = resp.cached
+    ? 'Taiyi · Your sample (saved from earlier)'
+    : `Taiyi · A sample for ${resp.full.name}`;
+  if (firstHEl) firstHEl.textContent = resp.preview.firstSectionTitle;
+  if (firstTextEl) firstTextEl.textContent = resp.preview.firstSectionText;
+
+  if (personEl) {
+    const dm = resp.full.dayMasterInfo;
+    const stem = resp.full.dayMasterStem;
+    const dmLabel = dm ? `${dm.english.toLowerCase()} day master` : 'day master';
+    const term = resp.full.solarTerm;
+    personEl.innerHTML = `For a <span class="cn">${stem}</span> ${dmLabel} · solar term <span class="cn">${term}</span>`;
+  }
+
+  document.querySelector<HTMLDivElement>('#sample-output')?.removeAttribute('hidden');
+  document.querySelector('#sample-output')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function buildPdfHtml(d: SampleFull): string {
+  const pillarsRow = d.formattedPillars.map(p => `
+    <td class="pdf-pillar-cell">
+      <div class="pdf-pillar-label">${p.label}</div>
+      <div class="pdf-pillar-stem">${p.stem}</div>
+      <div class="pdf-pillar-branch">${p.branch}</div>
+    </td>
+  `).join('');
+
+  const dm = d.dayMasterInfo;
+  const dmBlock = dm ? `
+    <div class="pdf-callout">
+      <div class="pdf-callout-eyebrow">Your day master</div>
+      <div class="pdf-callout-title">
+        <span class="pdf-cn">${dm.stem}</span>
+        ${dm.english} <span class="pdf-callout-pinyin">(${dm.pinyin})</span>
+      </div>
+      <div class="pdf-callout-image">Like ${dm.image}.</div>
+      <p class="pdf-callout-body">${dm.callout}</p>
+    </div>
+  ` : '';
+
+  const classical = d.topRetrieved ? `
+    <div class="pdf-classical">
+      <div class="pdf-classical-eyebrow">A reference from the source library</div>
+      <p class="pdf-classical-body">${escapeHtml(d.topRetrieved.content)}</p>
+      <div class="pdf-classical-source">— ${escapeHtml(d.topRetrieved.source.replace(/^content\//, ''))}</div>
+    </div>
+  ` : '';
+
+  return `
+    <div class="pdf-page">
+      <header class="pdf-header">
+        <div class="pdf-stamp">太</div>
+        <div class="pdf-header-text">
+          <div class="pdf-brand">Taiyi · <span class="pdf-cn">太乙</span></div>
+          <div class="pdf-eyebrow">A sample weekly letter</div>
+        </div>
+      </header>
+
+      <div class="pdf-title-block">
+        <div class="pdf-recipient">Written for ${escapeHtml(d.name)}</div>
+        <h1 class="pdf-title">${escapeHtml(d.subject)}</h1>
+        <div class="pdf-solar">
+          <span class="pdf-cn">${escapeHtml(d.solarTerm)}</span> · ${escapeHtml(d.solarTermDescription)}
+        </div>
+      </div>
+
+      <table class="pdf-pillars">
+        <tr>${pillarsRow}</tr>
+      </table>
+
+      ${dmBlock}
+
+      <section class="pdf-section">
+        <div class="pdf-section-h">This week's energy</div>
+        <p class="pdf-prose">${escapeHtml(d.sections.energy)}</p>
+      </section>
+      <section class="pdf-section">
+        <div class="pdf-section-h">What to focus on</div>
+        <p class="pdf-prose">${escapeHtml(d.sections.focus)}</p>
+      </section>
+      <section class="pdf-section">
+        <div class="pdf-section-h">What to watch for</div>
+        <p class="pdf-prose">${escapeHtml(d.sections.watch)}</p>
+      </section>
+      <section class="pdf-section">
+        <div class="pdf-section-h">A small practice</div>
+        <p class="pdf-prose">${escapeHtml(d.sections.practice)}</p>
+      </section>
+
+      ${classical}
+
+      <footer class="pdf-footer">
+        <div class="pdf-sig">— Taiyi <span class="pdf-cn">太乙</span> · Singapore</div>
+        <div class="pdf-foot-note">
+          Subscribers receive one of these every Sunday morning, tuned by a mid-week pulse.
+          $18 / month, cancel one-click. <strong>taiyi.guru</strong>
+        </div>
+      </footer>
+    </div>
+  `;
+}
+
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+async function downloadPdf() {
+  if (!lastSample) return;
+  const source = document.querySelector<HTMLDivElement>('#pdf-source');
+  if (!source) return;
+  source.innerHTML = buildPdfHtml(lastSample);
+
+  const filename = `taiyi-sample-${lastSample.name.replace(/\s+/g, '-').toLowerCase() || 'reader'}.pdf`;
+
+  // Lazy-load: keeps the landing page bundle small. ~280KB only paid on click.
+  const mod = await import('html2pdf.js');
+  const html2pdf = (mod.default ?? mod) as unknown as () => {
+    set(opts: Record<string, unknown>): { from(el: HTMLElement): { save(): Promise<void> } };
+  };
+
+  await html2pdf().set({
+    margin:       [10, 10, 10, 10],
+    filename,
+    image:        { type: 'jpeg', quality: 0.98 },
+    html2canvas:  { scale: 2, useCORS: true, backgroundColor: '#faf8f3' },
+    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] },
+  }).from(source).save();
+}
+
+// ── Sample form
+document.querySelector<HTMLFormElement>('#sample-form')?.addEventListener('submit', async event => {
   event.preventDefault();
   const form = event.currentTarget as HTMLFormElement;
   const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
   const fd = new FormData(form);
 
   const payload = {
-    name:            fd.get('name')?.toString().trim(),
-    email:           fd.get('email')?.toString().trim(),
-    dob:             fd.get('dob')?.toString().trim(),
-    tob:             fd.get('tob')?.toString().trim(),
-    tobUnknown:      fd.get('tobUnknown') === 'on',
-    pob:             fd.get('pob')?.toString().trim(),
-    currentCountry:  fd.get('currentCountry')?.toString().trim(),
-    gender:          fd.get('gender')?.toString().trim(),
-    energy:          fd.get('energy')?.toString().trim(),
-    focus:           fd.get('focus')?.toString().trim(),
-    weight:          fd.get('weight')?.toString().trim(),
+    name:           fd.get('name')?.toString().trim(),
+    email:          fd.get('email')?.toString().trim(),
+    dob:            fd.get('dob')?.toString().trim(),
+    tob:            fd.get('tob')?.toString().trim(),
+    tobUnknown:     fd.get('tobUnknown') === 'on',
+    pob:            fd.get('pob')?.toString().trim(),
+    currentCountry: fd.get('currentCountry')?.toString().trim(),
+    gender:         fd.get('gender')?.toString().trim(),
+    energy:         fd.get('energy')?.toString().trim(),
+    focus:          fd.get('focus')?.toString().trim(),
+    weight:         fd.get('weight')?.toString().trim(),
   };
 
   if (btn) { btn.disabled = true; btn.textContent = 'Writing your letter… (~10s)'; }
@@ -493,21 +653,13 @@ sampleForm?.addEventListener('submit', async event => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
-    const data = await res.json() as { ok?: boolean; error?: string; subject?: string; body?: string; cached?: boolean };
-    if (res.ok && data.body) {
-      const titleEl = document.querySelector<HTMLDivElement>('#sample-title');
-      const bodyEl  = document.querySelector<HTMLPreElement>('#sample-body');
-      const issueEl = document.querySelector<HTMLDivElement>('#sample-issue');
-      if (titleEl) titleEl.textContent = data.subject?.replace(/^Taiyi\s*·\s*/, '') ?? '—';
-      if (bodyEl)  bodyEl.textContent  = data.body;
-      if (issueEl) issueEl.textContent = data.cached
-        ? 'Taiyi · Your sample (saved from last time)'
-        : 'Taiyi · Your sample';
-      document.querySelector<HTMLDivElement>('#sample-output')?.removeAttribute('hidden');
-      document.querySelector('#sample-output')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const data = await res.json() as SampleResponse | { error?: string };
+    if (res.ok && 'full' in data) {
+      lastSample = data.full;
+      renderPreview(data);
       form.reset();
     } else {
-      setStatus('sample-status', 'error', data.error ?? 'Something went wrong. Try again.');
+      setStatus('sample-status', 'error', ('error' in data && data.error) || 'Something went wrong. Try again.');
     }
   } catch {
     setStatus('sample-status', 'error', 'Network error. Try again.');
@@ -516,26 +668,41 @@ sampleForm?.addEventListener('submit', async event => {
   }
 });
 
-// Checkout (two buttons, same flow)
-async function startCheckout(btn: HTMLButtonElement, statusEl: string) {
+document.querySelector<HTMLButtonElement>('#download-pdf')?.addEventListener('click', async event => {
+  const btn = event.currentTarget as HTMLButtonElement;
+  const original = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Preparing PDF…';
+  try {
+    await downloadPdf();
+    btn.textContent = '✓ Downloaded';
+    setTimeout(() => { btn.textContent = original; btn.disabled = false; }, 2500);
+  } catch (err) {
+    console.error(err);
+    btn.textContent = 'Try again';
+    btn.disabled = false;
+  }
+});
+
+// ── Checkout (three places: hero, pricing card, post-sample)
+async function startCheckout(btn: HTMLButtonElement, statusElId: string) {
   btn.disabled = true;
   const originalText = btn.textContent;
   btn.textContent = 'Loading…';
   try {
     const res = await fetch('/api/checkout', { method: 'POST' });
     const data = await res.json() as { url?: string; error?: string };
-    if (res.ok && data.url) {
-      window.location.href = data.url;
-      return;
-    }
-    setStatus(statusEl, 'error', data.error ?? 'Checkout unavailable. Try again shortly.');
+    if (res.ok && data.url) { window.location.href = data.url; return; }
+    setStatus(statusElId, 'error', data.error ?? 'Checkout unavailable. Try again shortly.');
   } catch {
-    setStatus(statusEl, 'error', 'Network error. Try again.');
+    setStatus(statusElId, 'error', 'Network error. Try again.');
   }
   btn.disabled = false;
   btn.textContent = originalText;
 }
 
+document.querySelector<HTMLButtonElement>('#hero-subscribe')?.addEventListener('click', e =>
+  startCheckout(e.currentTarget as HTMLButtonElement, 'checkout-status'));
 document.querySelector<HTMLButtonElement>('#checkout-button')?.addEventListener('click', e =>
   startCheckout(e.currentTarget as HTMLButtonElement, 'checkout-status'));
 document.querySelector<HTMLButtonElement>('#checkout-after-sample')?.addEventListener('click', e =>

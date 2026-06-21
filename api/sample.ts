@@ -2,6 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { sql } from '../lib/db.js';
 import { calculateBazi } from '../lib/bazi.js';
 import { generateLetter, type LetterContext } from '../lib/letter.js';
+import { DAY_MASTERS, solarTermDescription } from '../lib/day-master.js';
 
 interface SampleBody {
   name?: unknown;
@@ -31,10 +32,64 @@ function oneOf(v: unknown, allowed: Set<string>): string {
   return allowed.has(s) ? s : '';
 }
 
+interface StoredRawOutput {
+  subject: string;
+  sections: { energy: string; focus: string; watch: string; practice: string };
+  pillars: { year: string; month: string; day: string; hour: string };
+  dayMasterStem: string;
+  solarTerm: string;
+  topRetrieved: { source: string; content: string } | null;
+  name: string;
+}
+
 interface ExistingSample {
   id: number;
   subject: string | null;
-  body: string | null;
+  raw_output: StoredRawOutput | null;
+}
+
+interface SamplePayload {
+  ok: true;
+  cached: boolean;
+  preview: {
+    subject: string;
+    firstSectionTitle: string;
+    firstSectionText: string;
+  };
+  full: StoredRawOutput & {
+    formattedPillars: Array<{ pillar: string; stem: string; branch: string; label: string }>;
+    dayMasterInfo: typeof DAY_MASTERS[string] | null;
+    solarTermDescription: string;
+  };
+}
+
+function buildPayload(raw: StoredRawOutput, cached: boolean): SamplePayload {
+  const stems: Array<keyof StoredRawOutput['pillars']> = ['year', 'month', 'day', 'hour'];
+  const labels = ['Year', 'Month', 'Day', 'Hour'];
+  const formattedPillars = stems.map((key, i) => {
+    const combined = raw.pillars[key] ?? '';
+    return {
+      pillar: key,
+      label: labels[i],
+      stem: combined.charAt(0),
+      branch: combined.charAt(1) ?? '',
+    };
+  });
+  return {
+    ok: true,
+    cached,
+    preview: {
+      subject: raw.subject,
+      firstSectionTitle: "This week's energy",
+      firstSectionText: raw.sections.energy ?? '',
+    },
+    full: {
+      ...raw,
+      formattedPillars,
+      dayMasterInfo: DAY_MASTERS[raw.dayMasterStem] ?? null,
+      solarTermDescription: solarTermDescription(raw.solarTerm),
+    },
+  };
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
@@ -64,24 +119,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     return;
   }
 
-  // One sample per email. If they've already used it, return the saved letter
-  // rather than burning another OpenAI call.
+  // One sample per email — return the cached structured letter if it exists.
   const existing = (await sql`
     SELECT s.id,
-           (SELECT l.subject FROM letters l WHERE l.subscriber_id = s.id ORDER BY l.generated_at DESC LIMIT 1) AS subject,
-           (SELECT l.body    FROM letters l WHERE l.subscriber_id = s.id ORDER BY l.generated_at DESC LIMIT 1) AS body
+           (SELECT l.subject     FROM letters l WHERE l.subscriber_id = s.id ORDER BY l.generated_at DESC LIMIT 1) AS subject,
+           (SELECT l.raw_output  FROM letters l WHERE l.subscriber_id = s.id ORDER BY l.generated_at DESC LIMIT 1) AS raw_output
       FROM subscribers s
      WHERE s.email = ${email} AND s.type = 'sample'
      LIMIT 1
   `) as unknown as ExistingSample[];
 
-  if (existing[0]?.body) {
-    res.status(200).json({
-      ok: true,
-      cached: true,
-      subject: existing[0].subject,
-      body: existing[0].body,
-    });
+  if (existing[0]?.raw_output) {
+    res.status(200).json(buildPayload(existing[0].raw_output, true));
     return;
   }
 
@@ -125,21 +174,35 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     return;
   }
 
-  // Use today's date as week_start, not Monday — keeps sample rows out of the
-  // Sunday send-weekly query (which filters type='subscriber' anyway, but
-  // belt + braces).
+  const rawOutput: StoredRawOutput = {
+    subject: letter.rawOutput.subject,
+    sections: letter.rawOutput.sections,
+    pillars: {
+      year:  `${bazi.year.stem}${bazi.year.branch}`,
+      month: `${bazi.month.stem}${bazi.month.branch}`,
+      day:   `${bazi.day.stem}${bazi.day.branch}`,
+      hour:  `${bazi.hour.stem}${bazi.hour.branch}`,
+    },
+    dayMasterStem: bazi.dayMaster,
+    solarTerm: letter.solarTerm,
+    topRetrieved: letter.topRetrieved,
+    name,
+  };
+
   const today = new Date().toISOString().slice(0, 10);
   await sql`
     INSERT INTO letters (
       subscriber_id, week_start, subject, body, model,
-      input_tokens, output_tokens, cost_usd, status, guardrail_fails
+      input_tokens, output_tokens, cost_usd, status, guardrail_fails, raw_output
     )
     VALUES (
       ${subscriberId}, ${today}, ${letter.subject}, ${letter.body}, ${letter.model},
       ${letter.inputTokens}, ${letter.outputTokens}, ${letter.costUsd},
-      'sent', ${letter.guardrailFails as unknown as string}
+      'sent', ${letter.guardrailFails as unknown as string},
+      ${JSON.stringify(rawOutput)}::jsonb
     )
-    ON CONFLICT (subscriber_id, week_start) DO NOTHING
+    ON CONFLICT (subscriber_id, week_start) DO UPDATE
+      SET raw_output = EXCLUDED.raw_output
   `;
 
   console.log(JSON.stringify({
@@ -150,10 +213,5 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     tokens: letter.inputTokens + letter.outputTokens,
   }));
 
-  res.status(200).json({
-    ok: true,
-    cached: false,
-    subject: letter.subject,
-    body: letter.body,
-  });
+  res.status(200).json(buildPayload(rawOutput, false));
 }
