@@ -605,6 +605,14 @@ async function downloadPdf() {
   if (!source) return;
   source.innerHTML = buildPdfHtml(lastSample);
 
+  // Wait for the brand fonts to be ready, otherwise html2canvas captures the
+  // fallback metrics and the rendered PDF can look wrong (or empty on slow nets).
+  if (document.fonts?.ready) {
+    try { await document.fonts.ready; } catch { /* ignore — best effort */ }
+  }
+  // Force a layout pass on the freshly-set innerHTML before capture.
+  await new Promise(resolve => requestAnimationFrame(() => resolve(null)));
+
   const filename = `taiyi-sample-${lastSample.name.replace(/\s+/g, '-').toLowerCase() || 'reader'}.pdf`;
 
   // Lazy-load: keeps the landing page bundle small. ~280KB only paid on click.
@@ -617,7 +625,7 @@ async function downloadPdf() {
     margin:       [10, 10, 10, 10],
     filename,
     image:        { type: 'jpeg', quality: 0.98 },
-    html2canvas:  { scale: 2, useCORS: true, backgroundColor: '#faf8f3' },
+    html2canvas:  { scale: 2, useCORS: true, backgroundColor: '#faf8f3', logging: false },
     jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
     pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] },
   }).from(source).save();

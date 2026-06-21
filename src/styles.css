@@ -989,17 +989,17 @@ img, video, iframe { max-width: 100%; }
   background: var(--line-soft);
 }
 
-/* ── PDF source (off-screen) ───────────────────────────────────────── */
+/* ── PDF source (off-screen but rendered) ──────────────────────────── */
+/* html2canvas needs the element painted in the layout tree — visibility:hidden
+   or display:none would produce a blank capture. We park it off-screen instead. */
 .pdf-source {
-  position: absolute;
-  left: -10000px;
+  position: fixed;
+  left: -20000px;
   top: 0;
   width: 190mm;
   pointer-events: none;
-  visibility: hidden;
+  z-index: -1;
 }
-/* When html2pdf renders this, visibility/position don't apply to clones.
-   The .pdf-page rules below style the actual rendered output. */
 
 .pdf-page {
   width: 190mm;
