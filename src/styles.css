@@ -989,9 +989,7 @@ img, video, iframe { max-width: 100%; }
   background: var(--line-soft);
 }
 
-/* ── PDF source (off-screen but rendered) ──────────────────────────── */
-/* html2canvas needs the element painted in the layout tree — visibility:hidden
-   or display:none would produce a blank capture. We park it off-screen instead. */
+/* ── PDF source (off-screen on normal pages, printed full-page for PDF) ── */
 .pdf-source {
   position: fixed;
   left: -20000px;
@@ -999,6 +997,27 @@ img, video, iframe { max-width: 100%; }
   width: 190mm;
   pointer-events: none;
   z-index: -1;
+}
+
+/* Printing the letter: hide the rest of the app and let the browser's native
+   print-to-PDF render real (non-rasterized) text — sharp at any zoom, small
+   file size, correct CJK glyphs straight from the system font renderer. */
+@media print {
+  @page { size: A4; margin: 14mm; }
+}
+body.is-printing-pdf {
+  background: #faf8f3 none;
+}
+body.is-printing-pdf #app > *:not(.pdf-source) {
+  display: none !important;
+}
+body.is-printing-pdf .pdf-source {
+  position: static;
+  left: auto;
+  top: auto;
+  width: auto;
+  pointer-events: auto;
+  z-index: auto;
 }
 
 .pdf-page {

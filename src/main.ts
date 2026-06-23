@@ -281,9 +281,9 @@ app.innerHTML = `
 
           <div class="sample-cta-after">
             <button class="btn btn--primary btn--lg btn--block" type="button" id="download-pdf">
-              ↓ Download full letter (PDF)
+              ↓ Save full letter as PDF
             </button>
-            <p class="form-hint" style="margin-top:8px">~2 pages, ready to print or save.</p>
+            <p class="form-hint" style="margin-top:8px">Opens the print dialog — choose "Save as PDF" as the destination. ~2 pages.</p>
 
             <div class="sample-cta-divider"><span>or</span></div>
 
@@ -605,30 +605,28 @@ async function downloadPdf() {
   if (!source) return;
   source.innerHTML = buildPdfHtml(lastSample);
 
-  // Wait for the brand fonts to be ready, otherwise html2canvas captures the
-  // fallback metrics and the rendered PDF can look wrong (or empty on slow nets).
+  // Wait for the brand fonts to be ready so the print render uses the real
+  // metrics for Newsreader / Noto Serif SC, not fallback-font layout.
   if (document.fonts?.ready) {
     try { await document.fonts.ready; } catch { /* ignore — best effort */ }
   }
-  // Force a layout pass on the freshly-set innerHTML before capture.
+  // Force a layout pass on the freshly-set innerHTML before printing.
   await new Promise(resolve => requestAnimationFrame(() => resolve(null)));
 
-  const filename = `taiyi-sample-${lastSample.name.replace(/\s+/g, '-').toLowerCase() || 'reader'}.pdf`;
+  const previousTitle = document.title;
+  document.title = `taiyi-sample-${lastSample.name.replace(/\s+/g, '-').toLowerCase() || 'reader'}`;
 
-  // Lazy-load: keeps the landing page bundle small. ~280KB only paid on click.
-  const mod = await import('html2pdf.js');
-  const html2pdf = (mod.default ?? mod) as unknown as () => {
-    set(opts: Record<string, unknown>): { from(el: HTMLElement): { save(): Promise<void> } };
+  const restore = () => {
+    document.body.classList.remove('is-printing-pdf');
+    document.title = previousTitle;
+    window.removeEventListener('afterprint', restore);
   };
+  window.addEventListener('afterprint', restore);
 
-  await html2pdf().set({
-    margin:       [10, 10, 10, 10],
-    filename,
-    image:        { type: 'jpeg', quality: 0.98 },
-    html2canvas:  { scale: 2, useCORS: true, backgroundColor: '#faf8f3', logging: false },
-    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-    pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] },
-  }).from(source).save();
+  document.body.classList.add('is-printing-pdf');
+  window.print();
+  // Safari doesn't always fire `afterprint` reliably — restore as a fallback.
+  setTimeout(restore, 2000);
 }
 
 // ── Sample form
@@ -680,11 +678,11 @@ document.querySelector<HTMLButtonElement>('#download-pdf')?.addEventListener('cl
   const btn = event.currentTarget as HTMLButtonElement;
   const original = btn.textContent;
   btn.disabled = true;
-  btn.textContent = 'Preparing PDF…';
+  btn.textContent = 'Preparing…';
   try {
     await downloadPdf();
-    btn.textContent = '✓ Downloaded';
-    setTimeout(() => { btn.textContent = original; btn.disabled = false; }, 2500);
+    btn.textContent = original;
+    btn.disabled = false;
   } catch (err) {
     console.error(err);
     btn.textContent = 'Try again';
