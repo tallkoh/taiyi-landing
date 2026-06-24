@@ -58,7 +58,7 @@ app.innerHTML = `
             <h1 class="headline headline--lg masthead-headline">A weekly letter, written for your chart.</h1>
             <p class="sub-headline masthead-sub">
               Four pillars + qimen + the solar calendar, read against the week ahead.
-              One letter, Sunday morning, by email. $9 first month, then $18&thinsp;/&thinsp;month — no free tier, no trial.
+              One letter, Sunday morning, by email. $9 first month, then $18&thinsp;/&thinsp;month.
             </p>
             <button class="btn btn--primary btn--xl masthead-primary-cta" type="button" id="hero-subscribe">
               Subscribe — $9 first month
