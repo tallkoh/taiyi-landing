@@ -711,6 +711,27 @@ body {
   margin-left: 4px;
   letter-spacing: 0;
 }
+.pricing-was {
+  font-size: 22px;
+  color: var(--muted);
+  text-decoration: line-through;
+  margin-right: 6px;
+  font-weight: 400;
+}
+.pricing-badge {
+  position: absolute;
+  top: -11px;
+  left: 20px;
+  background: var(--seal);
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 2px;
+  box-shadow: 2px 2px 0 0 var(--ink);
+}
 .pricing-desc {
   font-family: var(--body);
   font-size: 13px;

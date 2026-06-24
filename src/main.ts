@@ -58,10 +58,10 @@ app.innerHTML = `
             <h1 class="headline headline--lg masthead-headline">A weekly letter, written for your chart.</h1>
             <p class="sub-headline masthead-sub">
               Four pillars + qimen + the solar calendar, read against the week ahead.
-              One letter, Sunday morning, by email. $18&thinsp;/&thinsp;month — no free tier, no trial.
+              One letter, Sunday morning, by email. $9 first month, then $18&thinsp;/&thinsp;month — no free tier, no trial.
             </p>
             <button class="btn btn--primary btn--xl masthead-primary-cta" type="button" id="hero-subscribe">
-              Subscribe — $18 / month
+              Subscribe — $9 first month
             </button>
             <a class="masthead-sample-link" href="#sample">
               View a sample <span class="masthead-sample-sub">— what you'll get weekly</span>
@@ -252,8 +252,9 @@ app.innerHTML = `
           Cancel anytime — one click from any letter. Your data is deleted within 7 days of cancellation.
         </p>
         <div class="pricing-card">
+          <span class="pricing-badge">First month 50% off</span>
           <div class="pricing-top">
-            <div class="pricing-amount">$18<span class="pricing-period">/ month</span></div>
+            <div class="pricing-amount"><span class="pricing-was">$18</span> $9<span class="pricing-period">first month, then $18 / month</span></div>
             <span class="stamp stamp--lg" aria-hidden="true">月</span>
           </div>
           <ul class="pricing-features">
@@ -263,7 +264,7 @@ app.innerHTML = `
             <li>Mid-week pulse — three one-tap questions, no login</li>
             <li>One-click cancel, 7-day data deletion</li>
           </ul>
-          <button class="btn btn--primary btn--lg btn--block" type="button" id="checkout-button">Subscribe — $18 / month</button>
+          <button class="btn btn--primary btn--lg btn--block" type="button" id="checkout-button">Subscribe — $9 first month</button>
           <p class="form-status" id="checkout-status" role="status" aria-live="polite"></p>
         </div>
         <p class="form-hint" style="text-align:center;margin-top:16px">
