@@ -11,6 +11,7 @@ interface SampleFull {
   solarTermDescription: string;
   topRetrieved: { source: string; content: string } | null;
   name: string;
+  persona?: string;
   formattedPillars: Array<{ pillar: string; stem: string; branch: string; label: string }>;
   dayMasterInfo: {
     stem: string; pinyin: string; english: string; element: string;
@@ -40,6 +41,7 @@ app.innerHTML = `
       <div class="nav-links" role="list">
         <a href="#how" role="listitem">How it works</a>
         <a href="#why" role="listitem">Why Taiyi</a>
+        <a href="#about" role="listitem">About</a>
         <a href="/blog" role="listitem">Blog</a>
         <a href="#pricing" role="listitem">Pricing</a>
       </div>
@@ -144,121 +146,62 @@ app.innerHTML = `
       </div>
     </section>
 
-    <section class="section section--tinted" id="sample">
+    <section class="section" id="about">
       <div class="inner">
-        <span class="eyebrow">View a sample</span>
-        <h2 class="headline headline--md">What you'll get every Sunday.</h2>
+        <span class="eyebrow">About Taiyi</span>
+        <h2 class="headline headline--md">Trained qimen masters, not a horoscope app.</h2>
         <p class="sub-headline">
-          The full sample below is written from your inputs by the same pipeline that writes paid Sunday letters.
-          Read the opening on the page; download the full letter as a PDF.
-          One sample per email. No marketing list.
+          Taiyi is built and supervised by practitioners trained in bazi and qi men dun jia — the same classical
+          systems used in professional consultations, not a generic "your sign today" feed. Every letter is
+          grounded against an indexed library of primary texts before it ever reaches your inbox.
+        </p>
+        <ul class="about-points">
+          <li>Trained in bazi (四柱命理) and qi men dun jia (奇門遁甲) — years of study, not a quiz result.</li>
+          <li>Based and grounded: every reading is checked against classical sources, not freestyled.</li>
+          <li>Reply to any letter, or write to <a href="mailto:taiyi.contact@gmail.com">taiyi.contact@gmail.com</a> — a real person reads it.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section--sample" id="sample">
+      <div class="inner">
+        <span class="sample-badge">★ Free sample · no signup, no payment</span>
+        <span class="eyebrow">View a sample</span>
+        <h2 class="headline headline--lg">What you'll get every Sunday.</h2>
+        <p class="sub-headline">
+          Five fixed samples, one per day-master element. Pick whichever persona is closest to where you're at —
+          read the opening on the page, then save the full letter as a PDF.
         </p>
 
-        <form class="sample-card" id="sample-form">
-          <div class="form-grid">
-            <div class="full">
-              <label class="input-label" for="s-name">your name</label>
-              <input class="input" id="s-name" name="name" type="text" placeholder="Jessica" autocomplete="given-name" required />
-            </div>
-            <div>
-              <label class="input-label" for="s-dob">date of birth</label>
-              <input class="input" id="s-dob" name="dob" type="date" required />
-            </div>
-            <div>
-              <label class="input-label" for="s-tob">time of birth</label>
-              <input class="input" id="s-tob" name="tob" type="time" required />
-              <label class="micro-check">
-                <input type="checkbox" id="s-tob-unknown" name="tobUnknown" />
-                I don't know — use noon
-              </label>
-            </div>
-            <div class="full">
-              <label class="input-label" for="s-pob">place of birth</label>
-              <input class="input" id="s-pob" name="pob" type="text" placeholder="Kuala Lumpur, Malaysia" required />
-            </div>
-            <div>
-              <label class="input-label" for="s-country">current country</label>
-              <select class="input" id="s-country" name="currentCountry" required>
-                <option value="">Select…</option>
-                <option value="SG">Singapore</option>
-                <option value="MY">Malaysia</option>
-                <option value="HK">Hong Kong</option>
-                <option value="TW">Taiwan</option>
-                <option value="CN">China</option>
-                <option value="US">United States</option>
-                <option value="GB">United Kingdom</option>
-                <option value="AU">Australia</option>
-                <option value="CA">Canada</option>
-                <option value="DE">Germany</option>
-                <option value="FR">France</option>
-                <option value="JP">Japan</option>
-                <option value="KR">South Korea</option>
-                <option value="IN">India</option>
-                <option value="ID">Indonesia</option>
-                <option value="TH">Thailand</option>
-                <option value="VN">Vietnam</option>
-                <option value="PH">Philippines</option>
-                <option value="AE">UAE</option>
-                <option value="OTHER">Other</option>
-              </select>
-            </div>
-            <div>
-              <label class="input-label" for="s-gender">gender</label>
-              <select class="input" id="s-gender" name="gender" required>
-                <option value="">Select…</option>
-                <option value="f">Female</option>
-                <option value="m">Male</option>
-                <option value="nb">Non-binary</option>
-                <option value="unspecified">Prefer not to say</option>
-              </select>
-            </div>
-          </div>
+        <p class="element-cta">↓ Tap an element below to read your sample</p>
 
-          <div class="pulse-block">
-            <div class="pulse-eyebrow">Three quick questions — the week's pulse</div>
-            <div class="pulse-q">
-              <div class="pulse-q-label">1. How is your energy this week?</div>
-              <div class="pulse-q-opts">
-                <label class="pulse-opt"><input type="radio" name="energy" value="low" required /><span>Running low</span></label>
-                <label class="pulse-opt"><input type="radio" name="energy" value="steady" /><span>Steady</span></label>
-                <label class="pulse-opt"><input type="radio" name="energy" value="high" /><span>High</span></label>
-              </div>
-            </div>
-            <div class="pulse-q">
-              <div class="pulse-q-label">2. Where is your attention pointing?</div>
-              <div class="pulse-q-opts">
-                <label class="pulse-opt"><input type="radio" name="focus" value="work" required /><span>Work</span></label>
-                <label class="pulse-opt"><input type="radio" name="focus" value="relationships" /><span>Relationships</span></label>
-                <label class="pulse-opt"><input type="radio" name="focus" value="health" /><span>Health</span></label>
-                <label class="pulse-opt"><input type="radio" name="focus" value="creativity" /><span>Creativity</span></label>
-                <label class="pulse-opt"><input type="radio" name="focus" value="rest" /><span>Rest</span></label>
-              </div>
-            </div>
-            <div class="pulse-q">
-              <div class="pulse-q-label">3. What feels heavy right now?</div>
-              <div class="pulse-q-opts">
-                <label class="pulse-opt"><input type="radio" name="weight" value="decisions" required /><span>Decisions</span></label>
-                <label class="pulse-opt"><input type="radio" name="weight" value="people" /><span>People</span></label>
-                <label class="pulse-opt"><input type="radio" name="weight" value="uncertainty" /><span>Uncertainty</span></label>
-                <label class="pulse-opt"><input type="radio" name="weight" value="nothing" /><span>Nothing in particular</span></label>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-grid">
-            <div class="full">
-              <label class="input-label" for="s-email">email</label>
-              <input class="input" id="s-email" name="email" type="email" placeholder="you@somewhere.com" autocomplete="email" required />
-              <div class="micro-note">Used only to dedupe samples. We won't add you to any list.</div>
-            </div>
-          </div>
-
-          <button class="btn btn--primary btn--lg btn--block sample-cta" type="submit">
-            Write my sample letter →
+        <div class="element-grid" id="element-grid">
+          <button class="element-card" type="button" data-element="wood">
+            <span class="element-char">甲</span>
+            <span class="element-name">Wood</span>
+            <span class="element-persona">for someone leading a fundraise, pushing hard for the next stage</span>
           </button>
-          <p class="form-hint">Takes ~10 seconds. One sample per email.</p>
-          <p class="form-status" id="sample-status" role="status" aria-live="polite"></p>
-        </form>
+          <button class="element-card" type="button" data-element="fire">
+            <span class="element-char">丙</span>
+            <span class="element-name">Fire</span>
+            <span class="element-persona">for someone newly visible at work after a promotion</span>
+          </button>
+          <button class="element-card" type="button" data-element="earth">
+            <span class="element-char">戊</span>
+            <span class="element-name">Earth</span>
+            <span class="element-persona">for someone steady in a long relationship, feeling taken for granted</span>
+          </button>
+          <button class="element-card" type="button" data-element="metal">
+            <span class="element-char">庚</span>
+            <span class="element-name">Metal</span>
+            <span class="element-persona">for someone deciding whether to leave a stable job for something riskier</span>
+          </button>
+          <button class="element-card" type="button" data-element="water">
+            <span class="element-char">壬</span>
+            <span class="element-name">Water</span>
+            <span class="element-persona">for someone in a slow, low-momentum creative season</span>
+          </button>
+        </div>
 
         <div class="sample-output" id="sample-output" hidden>
           <div class="nl-preview">
@@ -300,56 +243,6 @@ app.innerHTML = `
       </div>
     </section>
 
-    <section class="section" id="format">
-      <div class="inner">
-        <span class="eyebrow">What a letter looks like</span>
-        <h2 class="headline headline--md">Four sections, ~400 words, every Sunday.</h2>
-        <div class="nl-preview" style="margin-top:18px">
-          <div class="nl-header">
-            <div class="nl-header-left">
-              <div class="nl-issue">Taiyi · Week of 15 Jun</div>
-              <div class="nl-title">Steady hands in a hot week.</div>
-            </div>
-            <span class="stamp" aria-hidden="true">太</span>
-          </div>
-          <div class="nl-personalization">
-            For a <span class="cn">甲</span> yang-wood day master · Singapore · solar term <span class="cn">芒種</span> Grain in Ear
-          </div>
-          <div class="nl-section">
-            <div class="nl-section-h">This week's energy</div>
-            <p class="nl-prose">
-              For a <span class="cn">甲</span> wood day master, this week feels warm, active, and a little drying under <span class="cn">芒種</span>,
-              the Grain in Ear season. With so much fire around the chart, movement comes easily — but your pulse says energy is low,
-              so the task is not to push harder. It is to keep your root in place while the outer pace stays busy.
-            </p>
-          </div>
-          <div class="nl-section">
-            <div class="nl-section-h">What to focus on</div>
-            <p class="nl-prose">
-              Since work is where your attention is going, keep decisions close to the current situation rather than trying to solve
-              the whole season at once. In qimen terms, good forecasting starts with three parts: who is asking, what is happening now,
-              and what outcome actually matters. Stay with those three and the choices simplify.
-            </p>
-          </div>
-          <div class="nl-section">
-            <div class="nl-section-h">What to watch for</div>
-            <p class="nl-prose">
-              The main risk is execution pressure: turning one problem into a larger crisis because too many threads are carried at once.
-              Fire energy makes urgency feel more important than accuracy. If a choice feels heavy, that is usually a sign to separate
-              the immediate task from the bigger story you are telling about it.
-            </p>
-          </div>
-          <div class="nl-section">
-            <div class="nl-section-h">A small practice</div>
-            <p class="nl-prose">
-              Pick one work decision and write three short lines: current situation, next useful move, likely result if kept simple.
-              Stop there for the day. Clarity comes from sequence, not force.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section class="section" id="pricing">
       <div class="inner">
         <span class="eyebrow">Pricing</span>
@@ -374,7 +267,7 @@ app.innerHTML = `
           <p class="form-status" id="checkout-status" role="status" aria-live="polite"></p>
         </div>
         <p class="form-hint" style="text-align:center;margin-top:16px">
-          Curious before paying? <a href="#sample">View a sample</a> with your actual chart.
+          Curious before paying? <a href="#sample">View a free sample</a> first.
         </p>
       </div>
     </section>
@@ -488,9 +381,11 @@ function renderPreview(resp: SampleResponse) {
   const firstTextEl = document.querySelector<HTMLParagraphElement>('#sample-first-text');
 
   if (titleEl) titleEl.textContent = resp.preview.subject;
-  if (issueEl) issueEl.textContent = resp.cached
-    ? 'Taiyi · Your sample (saved from earlier)'
-    : `Taiyi · A sample for ${resp.full.name}`;
+  if (issueEl) issueEl.textContent = resp.full.persona
+    ? `Taiyi · Sample — ${resp.full.dayMasterInfo?.element ?? ''} day master`.trim()
+    : resp.cached
+      ? 'Taiyi · Your sample (saved from earlier)'
+      : `Taiyi · A sample for ${resp.full.name}`;
   if (firstHEl) firstHEl.textContent = resp.preview.firstSectionTitle;
   if (firstTextEl) firstTextEl.textContent = resp.preview.firstSectionText;
 
@@ -499,7 +394,10 @@ function renderPreview(resp: SampleResponse) {
     const stem = resp.full.dayMasterStem;
     const dmLabel = dm ? `${dm.english.toLowerCase()} day master` : 'day master';
     const term = resp.full.solarTerm;
-    personEl.innerHTML = `For a <span class="cn">${stem}</span> ${dmLabel} · solar term <span class="cn">${term}</span>`;
+    const personaLine = resp.full.persona
+      ? `This is a sample for someone who is <strong>${escapeHtml(resp.full.persona)}</strong>.<br>`
+      : '';
+    personEl.innerHTML = `${personaLine}For a <span class="cn">${stem}</span> ${dmLabel} · solar term <span class="cn">${term}</span>`;
   }
 
   document.querySelector<HTMLDivElement>('#sample-output')?.removeAttribute('hidden');
@@ -547,7 +445,7 @@ function buildPdfHtml(d: SampleFull): string {
       </header>
 
       <div class="pdf-title-block">
-        <div class="pdf-recipient">Written for ${escapeHtml(d.name)}</div>
+        <div class="pdf-recipient">${d.persona ? `Sample &middot; for someone who is ${escapeHtml(d.persona)}` : `Written for ${escapeHtml(d.name)}`}</div>
         <h1 class="pdf-title">${escapeHtml(d.subject)}</h1>
         <div class="pdf-solar">
           <span class="pdf-cn">${escapeHtml(d.solarTerm)}</span> · ${escapeHtml(d.solarTermDescription)}
@@ -629,49 +527,186 @@ async function downloadPdf() {
   setTimeout(restore, 2000);
 }
 
-// ── Sample form
-document.querySelector<HTMLFormElement>('#sample-form')?.addEventListener('submit', async event => {
-  event.preventDefault();
-  const form = event.currentTarget as HTMLFormElement;
-  const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
-  const fd = new FormData(form);
+// ── Fixed samples, one per day-master element. Static copy — no LLM call,
+// no API cost, no email required. Picking a card just renders + lets you
+// save the matching letter as a PDF.
+function splitPillars(pillars: SampleFull['pillars']): SampleFull['formattedPillars'] {
+  const labels: Array<[keyof SampleFull['pillars'], string]> = [
+    ['year', 'Year'], ['month', 'Month'], ['day', 'Day'], ['hour', 'Hour'],
+  ];
+  return labels.map(([key, label]) => {
+    const combined = pillars[key];
+    return { pillar: key, label, stem: combined.charAt(0), branch: combined.charAt(1) ?? '' };
+  });
+}
 
-  const payload = {
-    name:           fd.get('name')?.toString().trim(),
-    email:          fd.get('email')?.toString().trim(),
-    dob:            fd.get('dob')?.toString().trim(),
-    tob:            fd.get('tob')?.toString().trim(),
-    tobUnknown:     fd.get('tobUnknown') === 'on',
-    pob:            fd.get('pob')?.toString().trim(),
-    currentCountry: fd.get('currentCountry')?.toString().trim(),
-    gender:         fd.get('gender')?.toString().trim(),
-    energy:         fd.get('energy')?.toString().trim(),
-    focus:          fd.get('focus')?.toString().trim(),
-    weight:         fd.get('weight')?.toString().trim(),
+interface DayMasterInfo {
+  stem: string; pinyin: string; english: string; element: string;
+  polarity: 'yang' | 'yin'; image: string; callout: string;
+}
+
+const DAY_MASTERS: Record<string, DayMasterInfo> = {
+  '甲': {
+    stem: '甲', pinyin: 'jiǎ', english: 'Yang Wood', element: 'Wood', polarity: 'yang',
+    image: 'a tall tree',
+    callout: 'Structural and upward-moving. Yang wood holds shape under pressure but needs roots in steady ground.',
+  },
+  '丙': {
+    stem: '丙', pinyin: 'bǐng', english: 'Yang Fire', element: 'Fire', polarity: 'yang',
+    image: 'the sun',
+    callout: 'Visible and outward. Yang fire warms everyone in the room but burns through itself quickly.',
+  },
+  '戊': {
+    stem: '戊', pinyin: 'wù', english: 'Yang Earth', element: 'Earth', polarity: 'yang',
+    image: 'a mountain',
+    callout: 'Stable and slow to move. Yang earth holds ground for everyone around it and resists being rushed.',
+  },
+  '庚': {
+    stem: '庚', pinyin: 'gēng', english: 'Yang Metal', element: 'Metal', polarity: 'yang',
+    image: 'unworked iron',
+    callout: 'Sharp and direct. Yang metal cuts cleanly but resists being shaped.',
+  },
+  '壬': {
+    stem: '壬', pinyin: 'rén', english: 'Yang Water', element: 'Water', polarity: 'yang',
+    image: 'a river or ocean',
+    callout: 'Wide-ranging and absorptive. Yang water connects far-apart things and reads people quickly.',
+  },
+};
+
+function buildStatic(input: {
+  stem: string; persona: string; subject: string; pillars: SampleFull['pillars'];
+  solarTerm: string; solarTermDescription: string;
+  sections: SampleFull['sections']; topRetrieved: { source: string; content: string };
+}): SampleFull {
+  return {
+    subject: input.subject,
+    sections: input.sections,
+    pillars: input.pillars,
+    dayMasterStem: input.stem,
+    solarTerm: input.solarTerm,
+    solarTermDescription: input.solarTermDescription,
+    topRetrieved: input.topRetrieved,
+    name: '',
+    persona: input.persona,
+    formattedPillars: splitPillars(input.pillars),
+    dayMasterInfo: DAY_MASTERS[input.stem] ?? null,
   };
+}
 
-  if (btn) { btn.disabled = true; btn.textContent = 'Writing your letter… (~10s)'; }
-  setStatus('sample-status', 'idle', '');
+const STATIC_SAMPLES: Record<string, SampleFull> = {
+  wood: buildStatic({
+    stem: '甲',
+    persona: 'leading a fundraise, pushing hard for the next stage of growth',
+    subject: 'Push the one conversation that unlocks the rest.',
+    pillars: { year: '庚午', month: '丁卯', day: '甲子', hour: '壬申' },
+    solarTerm: '驚蟄',
+    solarTermDescription: 'Insects Awaken — sudden movement, the world wakes loudly.',
+    sections: {
+      energy: 'Wood wants to grow in rings, not all at once, and this week\'s chart asks for staged movement instead of a single sprint. A fundraise pulls you toward doing everything in parallel — pitching, hiring, closing, shipping — but a wood day master holds its shape best when each stage finishes before the next one starts. The pressure to look busy on every front this week is real; resist spending energy on motion that doesn\'t change the outcome.',
+      focus: 'One conversation this round is load-bearing — it unlocks two or three others once it closes. Find it before scheduling everything else. In qimen terms, good timing starts with naming who is actually deciding, what is true about the situation right now, and which outcome you actually need, not which one sounds best in the room. Put that conversation first on the calendar this week, even if it feels premature.',
+      watch: 'The risk is overcommitting on timelines to sound confident under pressure — wood that is forced grows brittle and splits under its own promises. Watch for the moment you start agreeing to dates you haven\'t actually checked, just to keep momentum visible to others. A pause to verify costs you a day; an overpromise costs you the quarter.',
+      practice: 'Write down the single most load-bearing task for the week, and protect two uninterrupted hours for it before anything else gets added to the list. Everything else can wait a day. This one can\'t.',
+    },
+    topRetrieved: {
+      source: '渊海子平 (Yuanhai Ziping)',
+      content: 'A wood day master rooted in spring grows tall without forcing; rushed in any season, it splits before it can bear weight.',
+    },
+  }),
+  fire: buildStatic({
+    stem: '丙',
+    persona: 'newly visible at work after a promotion, used to being the quiet one',
+    subject: 'Being seen is the work now, not a side effect of it.',
+    pillars: { year: '乙丑', month: '戊辰', day: '丙午', hour: '辛酉' },
+    solarTerm: '夏至',
+    solarTermDescription: 'Summer Solstice — peak yang, the year\'s longest day.',
+    sections: {
+      energy: 'Yang fire at its peak this week means visibility isn\'t optional anymore — what you say in a meeting now carries differently than it did a month ago, whether you intended that or not. For someone used to doing good work quietly and letting it speak for itself, this is an adjustment, not a flaw in you. The light is just brighter on you than it used to be.',
+      focus: 'Spend deliberate attention on how you\'re being read, not just on what you\'re producing. A promotion changes the room\'s expectations of your voice before it changes anything about your actual judgment. Practice saying the short version of your opinion early in a meeting, before the discussion settles around someone else\'s framing.',
+      watch: 'Burn rate is the risk with fire this strong — performing visibility for a full week straight will drain you faster than the work itself does. Watch for skipping recovery because being seen feels like it has to be constant now. It doesn\'t.',
+      practice: 'Pick one meeting this week and speak first, briefly, before anyone else frames the topic. Then let the rest of the week run at normal pace. One deliberate appearance is enough — you don\'t need to prove the promotion every day.',
+    },
+    topRetrieved: {
+      source: '滴天髓 (Ditian Sui)',
+      content: 'Fire that reaches its height illuminates without needing to spread; restraint after brightness is what sustains the flame.',
+    },
+  }),
+  earth: buildStatic({
+    stem: '戊',
+    persona: 'steady in a long relationship, feeling taken for granted',
+    subject: 'Ground doesn\'t ask to be noticed. Ask anyway.',
+    pillars: { year: '癸亥', month: '己卯', day: '戊申', hour: '甲辰' },
+    solarTerm: '大暑',
+    solarTermDescription: 'Great Heat — the year\'s warmest stretch, slow days, careful pacing.',
+    sections: {
+      energy: 'Yang earth holds things up for everyone around it, which is exactly the problem this week — the people relying on your steadiness rarely think to ask if it\'s costing you anything. Great Heat slows the pace outwardly, but the load you\'re carrying hasn\'t gotten lighter, just quieter. The chart isn\'t telling you to carry less; it\'s telling you to say something about what you\'re already carrying.',
+      focus: 'A long relationship that runs smoothly can quietly stop being renegotiated — both people assume the current arrangement still fits because nothing\'s broken. This week, focus on naming one thing that\'s shifted for you that the other person hasn\'t been told about. Earth doesn\'t erode loudly; it erodes by going unmentioned.',
+      watch: 'The risk is mistaking your own patience for an actual absence of need. Mountains don\'t ask for attention, but they do erode without it. Watch for the moment you decide something isn\'t worth bringing up because you\'ve already absorbed worse without complaint.',
+      practice: 'Say one true, small, specific thing out loud this week about what you need — not a complaint, just a fact. "I\'d like to be asked, not just relied on" is a complete sentence.',
+    },
+    topRetrieved: {
+      source: '三命通会 (Sanming Tonghui)',
+      content: 'Earth that holds without being asked still requires renewal; what bears weight in silence is not weightless.',
+    },
+  }),
+  metal: buildStatic({
+    stem: '庚',
+    persona: 'deciding whether to leave a stable job for something riskier',
+    subject: 'A clean cut reads clearer than a slow leak.',
+    pillars: { year: '甲寅', month: '丙午', day: '庚申', hour: '丁亥' },
+    solarTerm: '寒露',
+    solarTermDescription: 'Cold Dew — dryness sharpens, attention narrows.',
+    sections: {
+      energy: 'Yang metal under Cold Dew sharpens rather than softens — this is a week built for a decision, not more research. You already have most of the information you\'re going to get about the job change; what\'s missing isn\'t data, it\'s the willingness to commit to a direction. Unworked metal doesn\'t get safer by waiting — it just sits there.',
+      focus: 'Put the actual decision in front of you this week, not the fifth pro-con list. Metal cuts cleanest in one motion — write down what would have to be true for you to regret staying, and what would have to be true for you to regret leaving. Whichever list is shorter and more specific is probably the real answer.',
+      watch: 'The risk with metal this strong is mistaking decisiveness for recklessness and second-guessing yourself out of clarity you already reached. Watch for re-opening a decision you\'ve already made just because it\'s uncomfortable to sit with, not because anything new has actually changed.',
+      practice: 'Set a date this week — a real one, on a calendar — by which you\'ll tell someone your decision out loud. Speaking it ends the deliberation faster than thinking ever will.',
+    },
+    topRetrieved: {
+      source: '神峰通考 (Shenfeng Tongkao)',
+      content: 'Metal unworked is only potential; the cut, once made, is what gives it shape and use.',
+    },
+  }),
+  water: buildStatic({
+    stem: '壬',
+    persona: 'in a slow, low-momentum creative season',
+    subject: 'Slow water still reaches the sea.',
+    pillars: { year: '辛未', month: '庚子', day: '壬辰', hour: '乙巳' },
+    solarTerm: '冬至',
+    solarTermDescription: 'Winter Solstice — peak yin, the seed of the next year forms.',
+    sections: {
+      energy: 'Yang water at the Winter Solstice is doing more than it looks like from the outside — this is the deepest point of yin, when the next year\'s growth is forming underground, invisibly, before anything shows above the surface. A slow creative season isn\'t a stalled one. It\'s a forming one. The chart says the lack of visible output this week is not the same as a lack of progress.',
+      focus: 'Rather than forcing a finished piece, focus on the underground work — notes, fragments, the unglamorous accumulation that doesn\'t look like progress yet. Water doesn\'t take the direct route; it finds the lowest path and keeps moving, even slowly, even unseen. Trust the route more than the pace.',
+      watch: 'The risk is comparing this season\'s visible output to a faster one you\'ve had before, and concluding something is wrong. Watch for treating a quiet stretch as proof you\'ve lost the thing you\'re worried about losing. Wide water moves the most when it looks the calmest.',
+      practice: 'Collect three small fragments this week — sentences, sketches, half-ideas — without trying to finish any of them. Water accumulates before it flows. This week is accumulation.',
+    },
+    topRetrieved: {
+      source: '命理探原 (Mingli Tanyuan)',
+      content: 'Water seeks the lowest path, not the fastest; what reaches the sea does so by yielding, not by force.',
+    },
+  }),
+};
 
-  try {
-    const res = await fetch('/api/sample', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
+document.querySelectorAll<HTMLButtonElement>('.element-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const key = card.dataset.element ?? '';
+    const sample = STATIC_SAMPLES[key];
+    if (!sample) return;
+
+    document.querySelectorAll<HTMLButtonElement>('.element-card').forEach(c => c.classList.remove('is-active'));
+    card.classList.add('is-active');
+
+    lastSample = sample;
+    renderPreview({
+      ok: true,
+      cached: false,
+      preview: {
+        subject: sample.subject,
+        firstSectionTitle: "This week's energy",
+        firstSectionText: sample.sections.energy,
+      },
+      full: sample,
     });
-    const data = await res.json() as SampleResponse | { error?: string };
-    if (res.ok && 'full' in data) {
-      lastSample = data.full;
-      renderPreview(data);
-      form.reset();
-    } else {
-      setStatus('sample-status', 'error', ('error' in data && data.error) || 'Something went wrong. Try again.');
-    }
-  } catch {
-    setStatus('sample-status', 'error', 'Network error. Try again.');
-  } finally {
-    if (btn) { btn.disabled = false; btn.textContent = 'Write my sample letter →'; }
-  }
+  });
 });
 
 document.querySelector<HTMLButtonElement>('#download-pdf')?.addEventListener('click', async event => {

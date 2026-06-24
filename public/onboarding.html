@@ -4,6 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Set up your account · Taiyi 太乙</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <script defer src="/analytics.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500&family=IBM+Plex+Mono:wght@400&family=Inter+Tight:wght@400;500&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet" />
@@ -199,7 +201,7 @@
     }
 
     if (!sessionId) {
-      showError('Missing checkout session. If you just paid, please check your receipt email for the onboarding link, or contact hello@taiyi.guru.');
+      showError('Missing checkout session. If you just paid, please check your receipt email for the onboarding link, or contact taiyi.contact@gmail.com.');
     }
 
     let clerk = null;
@@ -310,7 +312,7 @@
         }
       } catch (err) {
         console.error(err);
-        showError('Could not load the account widget. Refresh the page or contact hello@taiyi.guru.');
+        showError('Could not load the account widget. Refresh the page or contact taiyi.contact@gmail.com.');
       }
     })();
   </script>
